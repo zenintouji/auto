@@ -1,1 +1,4 @@
-playwright/
+playwright/node_modules/
+playwright/playwright-report/
+node_modules/
+.DS_Store
