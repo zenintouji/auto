@@ -1,0 +1,35 @@
+import { test, expect } from '@playwright/test';
+
+test.setTimeout(90000);
+
+test.use({
+  // web setting =>
+//   viewport: {
+//     height: 1080,
+//     width: 1920
+//   }
+  // mobile setting =>
+  viewport: { width: 820, height: 1180 }, // ipad 크기로 진행해봄
+  deviceScaleFactor: 2, // 고해상도 디스플레이
+  isMobile: true, // 모바일 환경으로 인식 ㄱㄱ
+  hasTouch: true, // 터치 지원
+});
+
+test('test', async ({ page }) => {
+  await page.goto('https://app.test.unocare.co.kr/login'); // 로그인 화면
+  // 로그인
+  await expect(page.getByRole('img', { name: '고객을 관리하는 가장 좋은 선택 "UNO CRM"' })).toBeVisible();
+  await expect(page.getByRole('textbox', { name: '이메일' })).toBeVisible();
+  await page.getByRole('textbox', { name: '이메일' }).click();
+  await page.getByRole('textbox', { name: '이메일' }).fill('dev@test.com');
+  await expect(page.getByRole('textbox', { name: '●●●●●●●●' })).toBeVisible();
+  await page.getByRole('textbox', { name: '●●●●●●●●' }).click();
+  await page.getByRole('textbox', { name: '●●●●●●●●' }).fill('asdf1234!');
+  await expect(page.getByRole('button', { name: '로그인' })).toBeVisible();
+  await page.getByRole('button', { name: '로그인' }).click();
+  // 메인 화면 
+  await expect(page.getByRole('button', { name: '+ 고객 등록' })).toBeVisible();
+
+
+
+});
