@@ -31,10 +31,9 @@ test('test', async ({ page }) => {
   await page.waitForTimeout(2000);
   await exception.closePopupIfExists();
 
-  // const popupButton = page.getByText('오늘하루 보지않기');
-  // if (await popupButton.isVisible()) {
-  //   await popupButton.click();
-  // }
+  // 배너 처리
+  await page.waitForTimeout(1000);
+  await exception.closeBannerIfExists();
 
   // 로그인 성공 여부 확인
   await page.waitForTimeout(2000);

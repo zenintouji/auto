@@ -25,11 +25,10 @@ test('Login Test', async ({ page }) => {
   await page.waitForTimeout(2000);
   await exception.closePopupIfExists();
 
-  // const popupButton = page.getByText('오늘하루 보지않기');
-  // if (await popupButton.isVisible()) {
-  //   await popupButton.click();
-  // }
-
+  // 배너 처리
+  await page.waitForTimeout(1000);
+  await exception.closeBannerIfExists();
+  
   // 로그인 성공 여부 확인
   await page.waitForTimeout(2000);
   expect(await loginPage.isLoggedin()).toBeTruthy();
@@ -39,7 +38,7 @@ test('Login Test', async ({ page }) => {
   // await expect(page.getByRole('button', { name: 'icon-calendar 예약 캘린더' })).toBeVisible();
   // await page.getByRole('button', { name: 'icon-calendar 예약 캘린더' }).click();
 
-  // await page.locator('div').filter({ hasText: /^신안주영\/F\/만 30세$/ }).nth(1).click({
+  // await page.locator('div').filter({ hasText: /^제이린\/F\/만 30세$/ }).nth(1).click({
   //   button: 'right'
   // });
   // await expect(page.locator('li').filter({ hasText: '상태변경' })).toBeVisible();

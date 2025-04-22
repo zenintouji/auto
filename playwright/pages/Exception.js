@@ -14,6 +14,17 @@ class Exception {
         console.log('팝업 종료 성공');
     }
 
+    async closeBannerIfExists() {
+        const refreshButton = this.page.getByText(/^새로고침$/);
+
+        if (await refreshButton.isVisible()) {
+            await refreshButton.click();
+            await this.page.waitForTimeout(2000);
+            await this.page.waitForLoadState('domcontentloaded');
+        }
+        console.log('새로고침 선택 후 대기 성공')
+    }
+
 }
 
 

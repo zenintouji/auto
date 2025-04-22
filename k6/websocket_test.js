@@ -14,8 +14,8 @@ export const options = {
     gracefulRampDown: '30',
 }
 
-const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NTIxMTIxMSwianRpIjoiYmE4MzEzZTQtMDNmNy00NzdkLThkYWMtOTJkZDY3N2E1MDFkIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0NTIxMTIxMSwiZXhwIjoxNzQ1MjY4ODExfQ.S-x0j0wzGPQK1tpCZuupnuxb7BtLrQcUPAM5DmCg_ZQ'; // 토큰 ㄱㄱㄱ
-const WS_URL = 'wss://ws.dev.unocare.co.kr/ws/clinics/1';    // websocket 주소
+const TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NTI0ODEyMywianRpIjoiYjk2ZjRkNzEtYzk1NC00OGFkLWI4MjUtMjk2M2I2MzY3NjhlIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjo0LCJlbWFpbCI6Imp3cGFya0B2MnRlc3QuY29tIiwidHlwZSI6InVzZXIifSwibmJmIjoxNzQ1MjQ4MTIzLCJleHAiOjE3NDUzMDU3MjN9.fovkscjxDqBuW1vZABbl2BeFcfSl-QsyAZmeOIfn5Og'; // 토큰 ㄱㄱㄱ
+const WS_URL = 'wss://ws.unocare.co.kr/ws/clinics/1';    // websocket 주소
 
 export default function() {
     const res = ws.connect(WS_URL, {
