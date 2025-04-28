@@ -23,11 +23,17 @@ class LoginPage {
     await this.logo.isVisible();
   }
 
-  async login(username, password) {
+  async login(username, password, retryCount = 0) {
+    const MAX_RETRY = 3;
+
+    console.log(`로그인 시도: ${retryCount + 1}회차`);
+
     await expect(this.emailInput).toBeVisible();
     await this.emailInput.fill(username);
+
     await expect(this.passwordInput).toBeVisible();
     await this.passwordInput.fill(password);
+
     await expect(this.loginButton).toBeVisible();
     // await this.loginButton.click();
 
@@ -42,13 +48,82 @@ class LoginPage {
     // if (await this.page.url() === 'https://unocare.co.kr/login') {
     //   throw new Error("Login fail: Login screen shows again");
     // }
+    const currentURL = await this.page.url();
+    console.log('📍현재 URL: ', currentURL); // 이모찌 ㅋㅋㅋ
 
-    if (await this.isLoginFailed()) {
-      console.log("Login failed, then retry");
-      await this.retryLogin(username, password);
+    if (currentURL.includes('login')) {
+      if (retryCount >= MAX_RETRY) {
+        throw new Error("로그인 실패 => 최대 시도 초과함")
+      }
+      
+      console.log('⚠️ 로그인 실패 감지됨 → 다시 시도함');
+      await this.page.reload();
+      await this.login(username, password, retryCount + 1);
     }
 
-    await expect(this.page).not.toHaveURL('https://unocare.co.kr/login');
+    // if (await this.isLoginFailed()) {
+    //   if (retryCount >= MAX_RETRY) {
+    //     throw new Error("로그인 실패 => 최대 시도 초과함")
+    //   }
+    //   console.log("Login failed, then retry");
+    //   // await this.retryLogin(username, password);
+    //   await this.page.reload();
+    //   await this.login(username, password, retryCount + 1);
+    //   return;
+    // }
+
+    // await expect(this.page).not.toHaveURL('https://unocare.co.kr/login');
+    const VALID_PATHS = [
+      'home',
+      'appointment-boards',
+      'cti',
+      'consulting-requests',
+      'consulting-requests-counselors',
+      'consulting-requests-connects',
+      'message-histories',
+      'sms-point',
+      'sms-notification-codes',
+      'customers',
+      'appointments',
+      'registrations',
+      'consultings',
+      'treatments',
+      'payments',
+      'surgeries',
+      'nurses',
+      'survey/results',
+      'daily-settlements',
+      'monthly-settlements',
+      'statistics',
+      'statistics/sales',
+      'statistics/acquisition-channels',
+      'statistics/counselors',
+      'statistics/doctors',
+      'statistics/customers',
+      'statistics/surgeries',
+      'statistics/regions',
+      'statistics/recommenders',
+      'statistics/messages',
+      'prescription-issue',
+      'prescription-list',
+      'prescription-statistics',
+      'customer-codes',
+      'appointment-codes',
+      'consulting-codes',
+      'payment-codes',
+      'nurse-codes',
+      'external-linked-codes',
+      'survey-codes/templates',
+      'simple-registration-codes',
+      'access-control',
+      'security-log',
+      'organizations',
+      'organizations-staff',
+      'clinic-info',
+      'chart-sample',
+    ];
+    const urlRegex = new RegExp(`/crm/(${VALID_PATHS.map(p => p.replace(/\//g, '\\').replace(/-/g, '\\-')).join('|')})`);
+    await expect(this.page).toHaveURL(urlRegex);
     console.log('로그인 성공');
   }
 
@@ -58,13 +133,13 @@ class LoginPage {
 
   // 로그인 실패하면
   async isLoginFailed() {
-    return this.loginButton.isVisible();
+    return await this.loginButton.isVisible();
   }
 
-  async retryLogin(username, password) {
-    await this.page.reload();
-    await this.login(username, password);
-  }
+  // async retryLogin(username, password) {
+  //   await this.page.reload();
+  //   await this.login(username, password);
+  // }
 }
 
 export { LoginPage };
