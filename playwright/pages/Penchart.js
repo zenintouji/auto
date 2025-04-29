@@ -12,6 +12,7 @@ class Penchart {
         this.newFolderModalText = page.getByRole('heading', { name: '새 폴더' });
         this.inputNewFolderName = page.getByRole('textbox', { name: '폴더명을 입력하세요' });
         this.enteredFolderNameText = '';
+        this.enteredImageNameText = '';
 
         this.saveButton = page.getByRole('button', { name: '저장' });
         this.deleteModalButton = page.getByRole('menuitem', { name: '삭제' });
@@ -48,6 +49,8 @@ class Penchart {
         // 펜차트 샘플함
         this.penchartSampleButton = page.getByRole('button', { name: 'icon-image 펜차트 샘플함' });
         this.penchartSampleHeader = page.getByLabel('펜차트 샘플함').getByText('펜차트 샘플함');
+
+        this.loadedImageLabel = '';
 
     }
 
@@ -98,7 +101,7 @@ class Penchart {
         console.log('폴더 생성 스낵바 확인 성공');
     }
 
-    async addToImportantCharts() {
+    async folderToImportantCharts() {
         await expect(this.createdFolder).toBeVisible();
         console.log('createdfolder: ', this.createdFolder);
         await this.createdFolder.click({ button: 'right' });
@@ -151,9 +154,10 @@ class Penchart {
         await this.page.waitForLoadState("domcontentloaded");
         await this.inputChangeNameField.type('새_폴더_자동화_이름_변경', { delay: 50 });
         await this.page.waitForLoadState("domcontentloaded");
-        this.enteredFolderNameText = await this.inputChangeNameField.innerText();
+        this.enteredFolderNameText = await this.inputChangeNameField.inputValue();
         console.log('수정 폴더 이름: ', this.enteredFolderNameText);
         await this.page.waitForLoadState("domcontentloaded");
+        console.log('폴더 이름 변경 성공');
     }
 
     async checkChangeSuccessText() {
@@ -161,7 +165,7 @@ class Penchart {
         console.log('변경 완료 스낵바 노출 확인 성공');
     }
 
-    async unmarkImportant() {
+    async unmarkFolderImportant() {
         await expect(this.createdFolder).toBeVisible();
         await this.createdFolder.click({ button: 'right' });
         await this.page.waitForLoadState("domcontentloaded");
@@ -176,7 +180,7 @@ class Penchart {
         console.log('폴더에 차트 없음 확인 성공');
     }
 
-    async selectDeleteModal() {
+    async selectFolderDelete() {
         await expect(this.createdFolder).toBeVisible();
         await this.createdFolder.click({ button: 'right' });
         await this.page.waitForLoadState("domcontentloaded");
@@ -186,12 +190,12 @@ class Penchart {
         console.log('폴더 삭제 선택 성공');
     }
 
-    async deleteFolder() {
+    async delete() {
         await expect(this.deleteModalText).toBeVisible();
         await expect(this.deleteButton).toBeVisible();
         await this.deleteButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('폴더 삭제 성공');
+        console.log('삭제 성공');
     }
 
     async checkDeleteSuccessText() {
@@ -214,6 +218,8 @@ class Penchart {
     async loadImageToCustomer() {
         const firstImage = this.page.locator('[aria-label$=".jpg"], [aria-label$=".png"]').first();
         await expect(firstImage).toBeVisible();
+        this.loadedImageLabel = await firstImage.getAttribute('aria-label');
+        console.log('선택한 이미지 라벨: ', this.loadedImageLabel);
         await firstImage.click();
         await this.page.waitForLoadState("domcontentloaded");
         console.log('임의의 이미지 선택 성공');
@@ -251,6 +257,126 @@ class Penchart {
     async checkLoadSuccessText() {
         await expect(this.loadSuccessText).toBeVisible();
         console.log('불러오기 완료 스낵바 확인 성공');
+    }
+
+    async imageToImportantCharts() {
+        const imageName = this.page.getByText(this.loadedImageLabel);
+        console.log('loadedImageLabel: ', this.loadedImageLabel);
+        const imageBox = imageName.locator('..');
+        await expect(imageBox).toBeVisible();
+        await imageBox.click({ button: 'right' });
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.addToImportantButton).toBeVisible();
+        await this.addToImportantButton.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('중요 차트함에 추가 성공');
+    }
+
+    async checkMovedImage() {
+        const imageCheck = this.page.getByText(this.loadedImageLabel);
+        await expect(imageCheck).toBeVisible();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이미지 이동 성공 확인');
+    }
+
+    async checkChangeImageName() {
+        const imageChange = this.page.getByText(this.loadedImageLabel);
+        await expect(imageChange).toBeVisible();
+        await imageChange.click({ button: 'right' });
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.changeName).toBeVisible();
+        await this.changeName.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이름변경 선택 성공');
+    }
+
+    async changeImageName() {
+        await expect(this.changeNameModalHeader).toBeVisible();
+        await expect(this.inputChangeNameField).toBeVisible();
+        await this.inputChangeNameField.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        await this.inputChangeNameField.fill(''); // 입력값 초기화
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.inputChangeNameField).toBeVisible();
+        await this.inputChangeNameField.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        await this.inputChangeNameField.type('이미지_이름_변경', { delay: 50 });
+        await this.page.waitForLoadState("domcontentloaded");
+        this.enteredImageNameText = await this.inputChangeNameField.inputValue();
+        console.log('수정 이미지 이름: ', this.enteredImageNameText);
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이미지 이름 변경 성공');
+    }
+
+    async unmarkImageImportant() {
+        const editedImage = this.page.getByText(this.enteredImageNameText);
+        await expect(editedImage).toBeVisible();
+        await editedImage.click({ button: 'right' });
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.unmarkFromImportantButton).toBeVisible();
+        await this.unmarkFromImportantButton.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('중요 차트함에서 제거 성공');
+    }
+
+    async checkUnmarkedImage() {
+        const unmarkedImage = this.page.getByText(this.enteredImageNameText);
+        await expect(unmarkedImage).toBeVisible();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이미지 이동 성공 확인');
+    }
+
+    async selectImageDelete() {
+        const imageItem = this.page.getByText(this.enteredImageNameText);
+        // this.page.getByText('이미지_이름_변경', { exact: true });
+
+        await expect(imageItem.first()).toBeVisible();
+        await imageItem.first().click({ button: 'right' });
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.deleteModalButton).toBeVisible();
+        await this.deleteModalButton.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이미지 삭제 선택 성공');
+    }
+
+    async drawingOnImage() {
+        const drawingImage = this.page.getByText(this.enteredImageNameText);
+        await expect(drawingImage).toBeVisible();
+        const page2Promise = this.page.waitForEvent('popup');
+        await drawingImage.dblclick();
+        const page2 = await page2Promise;
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(page2.locator('div').filter({ hasText: /^텍스트$/ }).getByRole('button')).toBeVisible();
+        console.log('펜차트 에디터 화면 진입 성공');
+        await page2.locator('div').filter({ hasText: /^텍스트$/ }).getByRole('button').click();
+        await this.page.waitForLoadState("domcontentloaded");
+        await page2.locator('canvas').nth(1).click({
+            position: {
+              x: 930,
+              y: 467
+            }
+          });
+          await this.page.waitForLoadState("domcontentloaded");
+        await page2.getByRole('textbox').fill('자동화');
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이미지 에디터 텍스트 입력 성공');
+        await page2.locator('canvas').nth(1).click({
+          position: {
+            x: 1615,
+            y: 477
+          }
+        });
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(page2.locator('div').filter({ hasText: /^오늘날짜$/ }).getByRole('button')).toBeVisible();
+        await page2.locator('div').filter({ hasText: /^오늘날짜$/ }).getByRole('button').click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('이미지에 오늘날짜 추가 성공');
+        await expect(page2.getByRole('button', { name: '저장' })).toBeVisible();
+        await page2.getByRole('button', { name: '저장' }).click();
+        await expect(page2.getByText('수정되었습니다')).toBeVisible();
+        console.log('이미지 저장 스낵바 확인 성공');
+        await this.page.bringToFront();
+        console.log('이미지 에디터에서 메인으로 이동 확인 성공');
     }
 
     
