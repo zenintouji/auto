@@ -20,7 +20,7 @@ test('test', async ({ page }) => {
   const exception = new Exception(page);
   const search = new customerSearch(page);
   const walkInReception = new WalkInReception(page);
-  const precsription = new Prescription(page);
+  const presription = new Prescription(page);
 
   // 로그인 페이지 접속
   await loginPage.goto();
@@ -44,10 +44,13 @@ test('test', async ({ page }) => {
   await search.searchCustomerName();
   // 통합 차트 진입
   await walkInReception.enterInIntegratedChart();
-  await precsription.enterPrescription();
+  await presription.enterPrescription();
 
-  await precsription.enterCreatePrescription();
-  await precsription.closeAlertPopup();
+  await presription.enterCreatePrescription();
+  await presription.closeAlertPopup();
+
+  // 처방전 확인 및 등록
+  await presription.registerPrescription();
 
 
 
