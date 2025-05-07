@@ -1,32 +1,12 @@
-import { expect } from '@playwright/test';
+import { expect } from "playwright/test";
 
-class WalkInReception {
+class Reception {
     constructor(page) {
         this.page = page;
+        this.reception = page.locator("li span", { hasText: /^접수/ }).nth(1);
 
-        this.receptionButton = page.getByRole('button', { name: '접수' });
-        
-        this.receptionEditTitle = page.getByText('접수 수정');
-
-        this.receptionMessage = page.getByText('오늘 예약이 없는 고객입니다.접수하시겠습니까?');
-        this.cancelMessage = page.getByText('접수가 취소됩니다.예약 상태로 변경하려면 캘린더에서 [예약전환] 처리 하세요');
-        this.deleteMessage = page.getByText('접수차트를 삭제하시겠습니까? [예약차트 함께 삭제]삭제 후 복구할 수 없습니다.예약 상태로 변경하려면 캘린더에서 [예약전환] 처리 하세요');
-
-        this.confirmButton = page.getByRole('button', { name: '확인' });
-        this.editButton = page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > tr > td:nth-child(2)');
-        this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
-        this.addingSurgeryCategoryButton = page.getByRole('button', { name: '+', exact: true });
-        this.cancelReceptionButton = page.getByRole('button', { name: '접수취소' });
-        this.deleteReceptionButton = page.getByRole('button', { name: '삭제' });
-        
-        // 접수 취소 상태 확인
-        this.checkCancelStatus = page.getByRole('cell', { name: '접수취소' });
-
-        // 항목 선택
-        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(2);
-
-        this.headerPopup = page.getByRole('heading', { name: '접수 자동화_신규고객 (여성/32/940505)' });
-        this.customerInfo = page.getByText('자동화_신규고객 (여성/32/940505)');
+        this.createReceptionButton = page.getByRole('button', { name: '+ 접수등록' });
+        this.createReceptionTitle = page.getByText('접수 등록');
 
         // 첫 번째 옵션
         this.selectOptionValue = page.getByRole('option').nth(0);
@@ -37,7 +17,7 @@ class WalkInReception {
 
         // 접수 종류
         this.receptionTitle = page.locator('label').filter({ hasText: '접수종류' });
-        // this.receptionType = page.getByRole('combobox').nth(0);
+        this.receptionType = page.getByRole('combobox').nth(0);
         this.editReceptionType = page.locator(`input[role="combobox"][value="상담접수"]`);
         this.selectedReceptionText = '';
 
@@ -60,34 +40,34 @@ class WalkInReception {
         this.visitRouteTitle = page.locator('label').filter({ hasText: '내원경로' });
         this.visitRouteType = page.getByRole('combobox', { name: '내원경로를 선택하세요' });
         this.selectedVisitRouteText = '';
-
+ 
         // 의사
         this.doctorTitle = page.locator('label').filter({ hasText: '의사' });
         this.doctorType = page.getByRole('combobox', { name: '의사를 선택하세요' });
         this.selectedDoctorText = '';
-
+ 
         // 상담사
         this.counselorTitle = page.locator('label').filter({ hasText: '상담사' });
         this.counselorType = page.getByRole('combobox', { name: '상담사를 선택하세요' });
         this.selectedCounselorText = '';
-
+ 
         // 어시스트
         this.assistTitle = page.locator('label').filter({ hasText: '어시스트' });
         this.assistType = page.getByRole('combobox', { name: '어시스트를 선택하세요' });
         this.selectedAssistText = '';
-
+ 
         // 작성자
         this.writerTitle = page.locator('label').filter({ hasText: '작성자' });
         this.editWriterTitle = page.getByText('작성자').nth(1);
         this.writerType = page.getByRole('combobox', { name: '작성자를 선택하세요' });
         this.selectedWriterText = '';
-
+ 
         // 시/수술 카테고리
         this.surgicalCategoryTitle = page.locator('label').filter({ hasText: '시/수술 카테고리' });
         this.surgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' });
         this.editSurgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' }).nth(1);
         this.selectedSurgicalCategoryText = '';
-
+ 
         // 시/수술명
         this.surgeryTitle = page.locator('label').filter({ hasText: '시/수술명' });
         this.surgeryType = page.getByRole('combobox', { name: '시/수술명을 선택하세요' });
@@ -103,7 +83,7 @@ class WalkInReception {
 
         // 저장버튼
         this.saveButton = page.getByRole('button', { name: '저장' });
-        
+
         // 스낵바
         this.saveSuccessText = page.getByText('접수를 생성했습니다');
         this.editSuccessText = page.getByText('접수를 변경했습니다');
@@ -112,32 +92,43 @@ class WalkInReception {
 
         // 고객명
         this.customerName = page.getByRole('cell', { name: '자동화_신규고객' });
+        this.confirmButton = page.getByRole('button', { name: '확인' });
 
-        // 통합차트
-        this.integratedChartTitle = page.getByText('통합차트');
-        this.receptionChart = page.locator('li span', { hasText: /^접수/ }).nth(1);
+        // 수정 버튼
+        this.editButton = page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > tr > td:nth-child(2)');
+
+        this.receptionEditTitle = page.getByText('접수 수정');
+        this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
+        this.addingSurgeryCategoryButton = page.getByRole('button', { name: '+', exact: true });
+
+        // 취소
+        this.cancelReceptionButton = page.getByRole('button', { name: '접수취소' });
+        this.cancelMessage = page.getByText('접수가 취소됩니다.예약 상태로 변경하려면 캘린더에서 [예약전환] 처리 하세요');
+        this.checkCancelStatus = page.getByRole('cell', { name: '접수취소' });
+
+        // 삭제
+        this.deleteReceptionButton = page.getByRole('button', { name: '삭제' });
+        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(2);
+        this.deleteMessage = page.getByText('접수차트를 삭제하시겠습니까? [예약차트 함께 삭제]삭제 후 복구할 수 없습니다.예약 상태로 변경하려면 캘린더에서 [예약전환] 처리 하세요');
 
     }
 
-    // 당일접수 신청까지
-    async dailyReception() {
-        await expect(this.receptionButton).toBeVisible();
-        await this.receptionButton.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        await expect(this.receptionMessage).toBeVisible();
-        await expect(this.confirmButton).toBeVisible();
-        await this.confirmButton.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('당일접수 신청 성공');
+    async enterReception() {
+        await expect(this.reception).toBeVisible();
+        await this.reception.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('접수 진입 성공');
     }
 
-    // 당일접수 차트 진입 확인
-    async isChartEntered() {
-        await expect(this.headerPopup).toBeVisible();
-        await expect(this.customerInfo).toBeVisible();
+    async selectCreateReception() {
+        await expect(this.createReceptionButton).toBeVisible();
+        await this.createReceptionButton.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.createReceptionTitle).toBeVisible();
+        console.log('접수 등록 진입 성공');
     }
 
-    // 당일 접수종류 선택
+    // 접수종류 선택
     async selectType() {
         await expect(this.receptionTitle).toBeVisible();
         await expect(this.editReceptionType).toBeVisible();
@@ -150,7 +141,7 @@ class WalkInReception {
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    // 당일 접수부서 선택
+    // 접수부서 선택
     async selectDepartment() {
         await expect(this.departmentTitle).toBeVisible();
         await expect(this.departmentType).toBeVisible();
@@ -176,7 +167,7 @@ class WalkInReception {
         console.log('일자: ', dateValue);
         expect(dateValue).toBe(formattedToday);
     }
-    
+
     // 방문시간
     async selectVisitTime() {
         await expect(this.visitTimeTitle).toBeVisible();
@@ -320,24 +311,7 @@ class WalkInReception {
         await expect(this.saveSuccessText).toBeVisible();
         console.log('저장 완료 스낵바 확인 성공');
     }
-    
-    // 통합차트 진입
-    async enterInIntegratedChart() {
-        await expect(this.customerName).toBeVisible();
-        await this.customerName.dblclick();
-        await this.page.waitForLoadState('domcontentloaded');
-        await expect(this.integratedChartTitle).toBeVisible();
-        console.log('통합차트 진입 성공');
-    }
 
-    // 접수차트 진입
-    async enterReceptionChart() {
-        await expect(this.receptionChart).toBeVisible();
-        await this.receptionChart.click();
-        console.log('접수 차트 진입 성공');
-    }
-    
-    // 
     // async checkReceptionSuccess() {
     //     await expect(this.page.getByRole('cell', { name: this.selectedReceptionText })).toBeVisible(); 
     //     await expect(this.page.getByRole('cell', { name: this.selectedVisitRouteText })).toBeVisible();
@@ -411,9 +385,8 @@ class WalkInReception {
         }
     }
 
-    ////////
-    // 여기서 부터 수정
-    /////////
+    // 접수 수정
+    //////////
 
     async selectEdit() {
         await expect(this.page.getByRole('cell', { name: this.selectedVisitRouteText })).toBeVisible();
@@ -610,10 +583,8 @@ class WalkInReception {
         console.log('접수 수정 성공');
     }
 
-
-    /////
     // 접수 취소
-    ////
+    ////////
 
     async cancelReception() {
         await expect(this.selectChart).toBeVisible();
@@ -641,9 +612,8 @@ class WalkInReception {
         console.log('접수 취소 상태 확인 성공');
     }
 
-    /////
     // 접수 삭제
-    /////
+    //////////
 
     async deleteReception() {
         await expect(this.selectChart).toBeVisible();
@@ -670,6 +640,7 @@ class WalkInReception {
         await expect(this.page.getByRole('cell', { name: this.selectedReceptionText })).not.toBeVisible(); 
         console.log('접수 삭제 상태 확인 성공');
     }
-}
 
-export { WalkInReception }
+
+
+} export { Reception };
