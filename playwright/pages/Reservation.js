@@ -1,13 +1,15 @@
 import { expect } from "playwright/test";
 
-class Reception {
+class Reservation {
     constructor(page) {
         this.page = page;
-        this.reception = page.locator("li span", { hasText: /^접수/ }).nth(1);
+        this.reservation = page.locator("li span", { hasText: /^예약/ }).nth(3);
 
-        this.createReceptionButton = page.getByRole('button', { name: '+ 접수등록' });
-        this.createReceptionTitle = page.getByText('접수 등록');
+        // 예약 등록
+        this.createReservationButton = page.getByRole('button', { name: '+ 예약등록' });
+        this.createReservationTitle = page.getByText('예약 등록');
 
+        
         // 첫 번째 옵션
         this.selectOptionValue = page.getByRole('option').nth(0);
         this.selectMenuitemValue = page.getByRole('menuitem').nth(0);
@@ -15,17 +17,16 @@ class Reception {
         this.editOptionValue = page.getByRole('option').nth(1);
         this.editMenuitemValue = page.getByRole('menuitem').nth(1);
 
-        // 접수 종류
-        this.receptionTitle = page.locator('label').filter({ hasText: '접수종류' });
-        this.receptionType = page.getByRole('combobox').nth(0);
-        this.editReceptionType = page.locator(`input[role="combobox"][value="상담접수"]`);
-        this.selectedReceptionText = '';
+        // 예약 종류
+        this.reservationType = page.locator(`input[role="combobox"][value="상담예약"]`);
+        this.reservationTitle = page.locator('label').filter({ hasText: '예약종류' });
+        this.selectedReservationText = '';
 
-        // 접수 부서
-        this.departmentTitle = page.locator('label').filter({ hasText: '접수부서' });
+        // 예약 부서
+        this.departmentTitle = page.locator('label').filter({ hasText: '예약부서' });
         this.departmentType = page.getByRole('combobox', { name: '부서를 선택하세요' });
         this.selectedDepartmentText = '';
-
+ 
         // 방문 시간
         this.visitTimeTitle = page.locator('label').filter({ hasText: '방문시간' });
         this.visitTimeType = page.getByRole('combobox', { name: '-' });
@@ -40,7 +41,7 @@ class Reception {
         this.visitRouteTitle = page.locator('label').filter({ hasText: '내원경로' });
         this.visitRouteType = page.getByRole('combobox', { name: '내원경로를 선택하세요' });
         this.selectedVisitRouteText = '';
- 
+
         // 의사
         this.doctorTitle = page.locator('label').filter({ hasText: '의사' });
         this.doctorType = page.getByRole('combobox', { name: '의사를 선택하세요' });
@@ -50,7 +51,7 @@ class Reception {
         this.counselorTitle = page.locator('label').filter({ hasText: '상담사' });
         this.counselorType = page.getByRole('combobox', { name: '상담사를 선택하세요' });
         this.selectedCounselorText = '';
- 
+
         // 어시스트
         this.assistTitle = page.locator('label').filter({ hasText: '어시스트' });
         this.assistType = page.getByRole('combobox', { name: '어시스트를 선택하세요' });
@@ -61,7 +62,7 @@ class Reception {
         this.editWriterTitle = page.getByText('작성자').nth(1);
         this.writerType = page.getByRole('combobox', { name: '작성자를 선택하세요' });
         this.selectedWriterText = '';
- 
+
         // 시/수술 카테고리
         this.surgicalCategoryTitle = page.locator('label').filter({ hasText: '시/수술 카테고리' });
         this.surgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' });
@@ -75,7 +76,7 @@ class Reception {
         this.selectedSurgeryText = '';
 
         // 접수메모
-        this.memoTitle = page.locator('label').filter({ hasText: '접수메모' });
+        this.memoTitle = page.locator('label').filter({ hasText: '예약메모' });
         this.memoTemplate = page.getByText('자주 쓰는 상용구');
         this.memoEnter = page.locator('.ql-editor p'); // quill 에디터 라서 일부러 locator 이용
         // page.getByRole('paragraph').filter({ hasText: /^$/ });
@@ -83,65 +84,53 @@ class Reception {
 
         // 저장버튼
         this.saveButton = page.getByRole('button', { name: '저장' });
+        this.savedTime = '';
 
         // 스낵바
-        this.saveSuccessText = page.getByText('접수를 생성했습니다');
-        this.editSuccessText = page.getByText('접수를 변경했습니다');
-        this.cancelSuccessText = page.getByText('접수가 취소되었습니다');
-        this.deleteSuccessText = page.getByText('접수가 삭제되었습니다');
+        this.saveSuccessText = page.getByText('예약을 등록했습니다');
+        this.editSuccessText = page.getByText('예약 및 예약문자를 변경했습니다');
+        this.cancelSuccessText = page.getByText('예약이 취소되었습니다');
+        this.deleteSuccessText = page.getByText('삭제되었습니다');
 
-        // 고객명
-        this.customerName = page.getByRole('cell', { name: '자동화_신규고객' });
-        this.confirmButton = page.getByRole('button', { name: '확인' });
+        // 예약 수정
+        ////
 
-        // 수정 버튼
-        this.editButton = page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > tr > td:nth-child(2)');
-
-        this.receptionEditTitle = page.getByText('접수 수정');
-        this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
+        this.reservationEditTitle = page.getByText('예약 수정');
         this.addingSurgeryCategoryButton = page.getByRole('button', { name: '+', exact: true });
+        this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
 
-        // 취소
-        this.cancelReceptionButton = page.getByRole('button', { name: '접수취소' });
-        this.cancelMessage = page.getByText('접수가 취소됩니다.예약 상태로 변경하려면 캘린더에서 [예약전환] 처리 하세요');
-        this.checkCancelStatus = page.getByRole('cell', { name: '접수취소' });
-
-        // 삭제
-        this.deleteReceptionButton = page.getByRole('button', { name: '삭제' });
-        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(2);
-        this.deleteMessage = page.getByText('접수차트를 삭제하시겠습니까? [예약차트 함께 삭제]삭제 후 복구할 수 없습니다.예약 상태로 변경하려면 캘린더에서 [예약전환] 처리 하세요');
-
+        
     }
 
-    async enterReception() {
-        await expect(this.reception).toBeVisible();
-        await this.reception.click();
+    async enterReservation() {
+        await expect(this.reservation).toBeVisible();
+        await this.reservation.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('접수 진입 성공');
+        console.log('예약 진입 성공');
     }
 
-    async selectCreateReception() {
-        await expect(this.createReceptionButton).toBeVisible();
-        await this.createReceptionButton.click();
+    async selectCreateReservation() {
+        await expect(this.createReservationButton).toBeVisible();
+        await this.createReservationButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        await expect(this.createReceptionTitle).toBeVisible();
-        console.log('접수 등록 진입 성공');
+        await expect(this.createReservationTitle).toBeVisible();
+        console.log('예약 등록 진입 성공');
     }
 
-    // 접수종류 선택
+    // 예약 종류 선택
     async selectType() {
-        await expect(this.receptionTitle).toBeVisible();
-        await expect(this.editReceptionType).toBeVisible();
-        await this.editReceptionType.click();
+        await expect(this.reservationTitle).toBeVisible();
+        await expect(this.reservationType).toBeVisible();
+        await this.reservationType.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.selectOptionValue).toBeVisible();
-        this.selectedReceptionText = await this.selectOptionValue.innerText();
+        this.selectedReservationText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('접수종류: ', this.selectedReceptionText);
+        console.log('예약종류: ', this.selectedReservationText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    // 접수부서 선택
+    // 예약 부서 선택
     async selectDepartment() {
         await expect(this.departmentTitle).toBeVisible();
         await expect(this.departmentType).toBeVisible();
@@ -150,7 +139,7 @@ class Reception {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedDepartmentText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('접수부서: ', this.selectedDepartmentText);
+        console.log('예약부서: ', this.selectedDepartmentText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -168,7 +157,7 @@ class Reception {
         expect(dateValue).toBe(formattedToday);
     }
 
-    // 방문시간
+    // 방문 시간
     async selectVisitTime() {
         await expect(this.visitTimeTitle).toBeVisible();
         await expect(this.visitTimeType).toBeVisible();
@@ -233,7 +222,6 @@ class Reception {
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    // 어시스트
     async selectAssist() {
         await expect(this.assistTitle).toBeVisible();
         await expect(this.assistType).toBeVisible();
@@ -285,7 +273,7 @@ class Reception {
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    // 접수메모
+    // 예약 메모
     async enterMemo() {
         await expect(this.memoTitle).toBeVisible();
         await expect(this.memoTemplate).toBeVisible();
@@ -295,7 +283,7 @@ class Reception {
         await this.memoEnter.type('당일_접수_메모_입력_자동화', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('접수메모: ', this.enteredMemoText);
+        console.log('예약메모: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -304,6 +292,17 @@ class Reception {
         await expect(this.saveButton).toBeVisible();
         await this.saveButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('예약 저장 성공');
+
+        const now = new Date();
+
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mi = String(now.getMinutes()).padStart(2, '0');
+
+        const formattedTime = `${hh}:${mi}`;
+        
+        this.savedTime = formattedTime;
+        console.log('저장 시간: ', this.savedTime);
     }
 
     // 저장 완료 스낵바 확인
@@ -312,52 +311,53 @@ class Reception {
         console.log('저장 완료 스낵바 확인 성공');
     }
 
-    // async checkReceptionSuccess() {
-    //     await expect(this.page.getByRole('cell', { name: this.selectedReceptionText })).toBeVisible(); 
-    //     await expect(this.page.getByRole('cell', { name: this.selectedVisitRouteText })).toBeVisible();
-    //     const ifNameSame = this.page.getByRole('cell', { name: this.selectedDoctorText });
-    //     const nameCount = await ifNameSame.count();
+    async checkReservationSuccess() {
+        const today = new Date();
+        const mm = String(today.getMonth() + 1).padStart(2, '0');
+        const dd = String(today.getDate()).padStart(2, '0');
+        const formattedDate = `-${mm}-${dd}`;
+        await this.page.waitForLoadState('domcontentloaded');
 
-    //     let verified = false;
 
-    //     if (nameCount > 1) {
-    //         for (let i = 0; i < nameCount; i++) {
-    //             const text = await ifNameSame.nth(i).innerText();
-    //             if (text.trim() === this.selectedDoctorText.trim()) {
-    //                 await expect(ifNameSame.nth(i)).toBeVisible();
-    //                 verified = true;
-    //                 break;
-    //             }
-    //         }
-    //         if (!verified) {
-    //             console.log(`망했습니다.`);
-    //         } else {
-    //             console.log(`이름에 중복값이 있을 경우, 전부 다 잘 들어있어요~`);
-    //         }
-    //     } else {
-    //         await expect(this.page.getByRole('cell', { name: this.selectedDoctorText })).toBeVisible();
-    //         await expect(this.page.getByRole('cell', { name: this.selectedCounselorText })).toBeVisible();
-    //         await expect(this.page.getByRole('cell', { name: this.selectedAssistText })).toBeVisible();
-    //         await expect(this.page.getByRole('cell', { name: this.selectedWriterText })).toBeVisible();
-    //     }        
-    //     await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
-    //     await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
-    //     await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();
-    //     console.log('접수 결과 확인 성공');
-    // }
+        let time = this.selectVisitTimeText.trim();
 
-    async checkReceptionSuccess() {
-        await expect(this.page.getByRole('cell', { name: this.selectedReceptionText })).toBeVisible(); 
-        await expect(this.page.getByRole('cell', { name: this.selectedVisitRouteText })).toBeVisible();
+        // if (/^\d:\d{2}$/.test(time)) {
+        //     time = '0' + time;
+        // }
+
+        time = time.replace(/\s*\(\d+\)$/, ''); // 9:00 (1) > 9:00
+        
+        const [hh = '', mi = ''] = time.split(':');
+        time = `${hh.padStart(2, '0')}:${mi}`;
+
+        const combinedText = `${formattedDate} ${time}`;
+        await expect(this.page.getByRole('cell', { name: combinedText })).toBeVisible();
+        console.log('일시: ', combinedText);
+        await expect(this.page.getByRole('cell', { name: this.selectedReservationText })).toBeVisible(); 
+        
+        const departmentInfo = this.selectedDepartmentText.split('-');
+        const category = departmentInfo[0];
+        const detail = departmentInfo[1];
+
+        console.log('부서: ', category);
+        console.log('세부부서: ', detail);
+
+        await expect(this.page.getByRole('cell', { name: category, exact: true })).toBeVisible();
+        console.log('부서 잘 들어가 있네여~');
+        await expect(this.page.getByRole('cell', { name: detail, exact: true })).toBeVisible();
+        console.log('세부부서 잘 들어가 있네여~');
 
         await this.verifyVisibleByName('cell', this.selectedDoctorText);
         await this.verifyVisibleByName('cell', this.selectedCounselorText);
         await this.verifyVisibleByName('cell', this.selectedAssistText);
-        await this.verifyVisibleByName('cell', this.selectedWriterText);
-
+        
         await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();
+        await this.verifyVisibleByName('cell', this.selectedWriterText);
+        const combinedTime = `${formattedDate} ${this.savedTime}`;
+        await expect(this.page.getByRole('cell', { name: combinedTime })).toBeVisible(); 
+        console.log('작성일: ', combinedTime);
     }
 
     async verifyVisibleByName(role, nameText) {
@@ -385,26 +385,27 @@ class Reception {
         }
     }
 
-    // 접수 수정
-    //////////
-
+    
+    // 예약 수정
+    ///////////
+    
     async selectEdit() {
-        await expect(this.page.getByRole('cell', { name: this.selectedVisitRouteText })).toBeVisible();
-        await this.page.getByRole('cell', { name: this.selectedVisitRouteText }).dblclick();
+        await expect(this.page.getByRole('cell', { name: this.selectedReservationText })).toBeVisible();
+        await this.page.getByRole('cell', { name: this.selectedReservationText }).dblclick();
         await this.page.waitForLoadState('domcontentloaded');
-        await expect(this.receptionEditTitle).toBeVisible();
-        console.log('접수 수정 진입 성공');
+        await expect(this.reservationEditTitle).toBeVisible();
+        console.log('예약 수정 진입 성공');
     }
 
     async editType() {
-        await expect(this.receptionTitle).toBeVisible();
-        await expect(this.editReceptionType).toBeVisible();
-        await this.editReceptionType.click();
+        await expect(this.reservationTitle).toBeVisible();
+        await expect(this.reservationType).toBeVisible();
+        await this.reservationType.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.editOptionValue).toBeVisible();
-        this.selectedReceptionText = await this.editOptionValue.innerText();
+        this.selectedReservationText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log('접수종류 수정: ', this.selectedReceptionText);
+        console.log('예약종류 수정: ', this.selectedReservationText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -416,7 +417,7 @@ class Reception {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedDepartmentText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log('접수부서 수정: ', this.selectedDepartmentText);
+        console.log('예약부서 수정: ', this.selectedDepartmentText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -558,8 +559,8 @@ class Reception {
         await this.page.waitForLoadState('domcontentloaded');
     }
 
-    // 접수메모 수정
-    async editMemo() {
+     // 예약 메모 수정
+     async editMemo() {
         await expect(this.memoTitle).toBeVisible();
         await expect(this.memoTemplate).toBeVisible();
         await expect(this.memoEnter).toBeVisible();
@@ -568,7 +569,7 @@ class Reception {
         await this.memoEnter.type('당일_접수_메모_입력_자동화_수정', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('접수메모 수정: ', this.enteredMemoText);
+        console.log('예약메모 수정: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -576,71 +577,25 @@ class Reception {
         await expect(this.editCompleteButton).toBeVisible();
         await this.editCompleteButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('예약 수정 성공');
+
+        const now = new Date();
+
+        const hh = String(now.getHours()).padStart(2, '0');
+        const mi = String(now.getMinutes()).padStart(2, '0');
+
+        const formattedTime = `${hh}:${mi}`;
+        
+        this.savedTime = formattedTime;
+        console.log('수정 시간: ', this.savedTime);
     }
 
     async checkEditSuccessText() {
         await expect(this.editSuccessText).toBeVisible();
-        console.log('접수 수정 성공');
+        console.log('예약 수정 스낵바 확인 성공');
     }
 
-    // 접수 취소
-    ////////
-
-    async cancelReception() {
-        await expect(this.selectChart).toBeVisible();
-        await this.selectChart.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 선택 성공');
-        await expect(this.cancelReceptionButton).toBeVisible();
-        await this.cancelReceptionButton.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('접수 취소 선택 성공');
-        await expect(this.cancelMessage).toBeVisible();
-        await expect(this.confirmButton).toBeVisible();
-        await this.confirmButton.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('접수 취소 버튼 선택 성공');
-    }
-
-    async checkCancelSuccessText() {
-        await expect(this.cancelSuccessText).toBeVisible();
-        console.log('접수 취소 성공');
-    }
-
-    async cancelStatus() {
-        await expect(this.checkCancelStatus).toBeVisible();
-        console.log('접수 취소 상태 확인 성공');
-    }
-
-    // 접수 삭제
-    //////////
-
-    async deleteReception() {
-        await expect(this.selectChart).toBeVisible();
-        await this.selectChart.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 선택 성공');
-        await expect(this.deleteReceptionButton).toBeVisible();
-        await this.deleteReceptionButton.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('접수 삭제 선택 성공');
-        await expect(this.deleteMessage).toBeVisible();
-        await expect(this.confirmButton).toBeVisible();
-        await this.confirmButton.click();
-        await this.page.waitForLoadState('domcontentloaded');
-        console.log('접수 삭제 버튼 선택 성공');
-    }
-
-    async checkDeleteSuccessText() {
-        await expect(this.deleteSuccessText).toBeVisible();
-        console.log('접수 삭제 성공');
-    }
-
-    async checkDeleteSucess() {
-        await expect(this.page.getByRole('cell', { name: this.selectedReceptionText })).not.toBeVisible(); 
-        console.log('접수 삭제 상태 확인 성공');
-    }
+    
 
 
-
-} export { Reception };
+} export { Reservation };
