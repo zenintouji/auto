@@ -24,7 +24,7 @@ class LoginPage {
   }
 
   async login(username, password, retryCount = 0) {
-    const MAX_RETRY = 3;
+    const MAX_RETRY = 5;
 
     console.log(`로그인 시도: ${retryCount + 1}회차`);
 
@@ -35,23 +35,15 @@ class LoginPage {
     await this.passwordInput.fill(password);
 
     await expect(this.loginButton).toBeVisible();
-    // await this.loginButton.click();
 
     await Promise.all([
       this.page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
       this.loginButton.click()
     ]);
-    // 네트워크 안정화 대기
-    // await this.page.waitForLoadState('networkidle');
-    // await this.page.waitForLoadState('domcontentloaded'); // <------
-
-    // if (await this.page.url() === 'https://unocare.co.kr/login') {
-    //   throw new Error("Login fail: Login screen shows again");
-    // }
     const currentURL = await this.page.url();
     console.log('📍현재 URL: ', currentURL); // 이모찌 ㅋㅋㅋ
 
-    if (currentURL.includes('login')) {
+    if (currentURL.includes('/login') || await this.loginButton.isVisible()) {
       if (retryCount >= MAX_RETRY) {
         throw new Error("로그인 실패 => 최대 시도 초과함")
       }
@@ -61,18 +53,6 @@ class LoginPage {
       await this.login(username, password, retryCount + 1);
     }
 
-    // if (await this.isLoginFailed()) {
-    //   if (retryCount >= MAX_RETRY) {
-    //     throw new Error("로그인 실패 => 최대 시도 초과함")
-    //   }
-    //   console.log("Login failed, then retry");
-    //   // await this.retryLogin(username, password);
-    //   await this.page.reload();
-    //   await this.login(username, password, retryCount + 1);
-    //   return;
-    // }
-
-    // await expect(this.page).not.toHaveURL('https://unocare.co.kr/login');
     const VALID_PATHS = [
       'home',
       'appointment-boards',

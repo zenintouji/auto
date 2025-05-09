@@ -91,6 +91,7 @@ class Reservation {
         this.editSuccessText = page.getByText('예약 및 예약문자를 변경했습니다');
         this.cancelSuccessText = page.getByText('예약이 취소되었습니다');
         this.deleteSuccessText = page.getByText('삭제되었습니다');
+        
 
         // 예약 수정
         ////
@@ -99,7 +100,22 @@ class Reservation {
         this.addingSurgeryCategoryButton = page.getByRole('button', { name: '+', exact: true });
         this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
 
-        
+        // 예약 취소
+        //////////
+
+        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(2);
+        this.cancelReservationButton = page.getByRole('button', { name: '예약취소' });
+        this.cancelMessage = page.getByText('[즉시 전송 예약문자]가 있습니다.전송하시겠습니까?다른 예약문자 취소는 [문자설정]에서 가능합니다.미리보기');
+        this.cancelMessageNow = page.getByText('[즉시 전송 문자]가 있습니다. 전송하시겠습니까?');
+        this.notSending = page.getByRole('button', { name: '미전송' });
+        this.checkCancelStatus = page.getByRole('cell', { name: '예약취소' });
+
+        // 예약 삭제
+        //////////
+
+        this.deleteButton = page.getByRole('button', { name: '삭제' });
+        this.deleteMessage = page.getByText('예약차트를 삭제하시겠습니까?삭제 후 복구할 수 없습니다.취소 건은 [예약취소] 로 처리 하세요');
+
     }
 
     async enterReservation() {
@@ -280,7 +296,7 @@ class Reservation {
         await expect(this.memoEnter).toBeVisible();
         await this.memoEnter.click();
         await this.page.waitForLoadState('domcontentloaded');
-        await this.memoEnter.type('당일_접수_메모_입력_자동화', { delay: 50});
+        await this.memoEnter.type('예약_메모_입력_자동화', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
         console.log('예약메모: ', this.enteredMemoText);
@@ -566,7 +582,7 @@ class Reservation {
         await expect(this.memoEnter).toBeVisible();
         await this.memoEnter.click();
         await this.page.waitForLoadState('domcontentloaded');
-        await this.memoEnter.type('당일_접수_메모_입력_자동화_수정', { delay: 50});
+        await this.memoEnter.type('예약_메모_입력_자동화_수정', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
         console.log('예약메모 수정: ', this.enteredMemoText);
@@ -589,10 +605,85 @@ class Reservation {
         this.savedTime = formattedTime;
         console.log('수정 시간: ', this.savedTime);
     }
+    
 
     async checkEditSuccessText() {
         await expect(this.editSuccessText).toBeVisible();
         console.log('예약 수정 스낵바 확인 성공');
+    }
+
+
+    // 예약 취소
+    //////////
+
+
+    async cancelReservation() {
+        await expect(this.selectChart).toBeVisible();
+        await this.selectChart.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트 선택 성공');
+
+        await expect(this.cancelReservationButton).toBeVisible();
+        await this.cancelReservationButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('예약 취소 선택 성공');
+
+        await this.page.waitForTimeout(2000);
+
+        if (await this.cancelMessage.count() > 0) {
+            await expect(this.cancelMessage).toBeVisible();
+            console.log('즉시 전송 예약 문자 내용 나왔어여~');
+        } else if (await this.cancelMessageNow.count() > 0){
+            await expect(this.cancelMessageNow).toBeVisible();
+            console.log('즉시 전송 내용 나왔어여~');
+        } else {
+            console.log('⚠️ 취소 메시지 없어여, 예외 처리 좀 더 필요할 듯');
+            return;
+        }
+
+        await expect(this.notSending).toBeVisible();
+        await this.notSending.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('접수 취소 버튼 선택 성공');
+    }
+
+    async checkCancelSuccessText() {
+        await expect(this.cancelSuccessText).toBeVisible();
+        console.log('접수 취소 성공');
+    }
+
+    async cancelStatus() {
+        await expect(this.checkCancelStatus).toBeVisible();
+        console.log('접수 취소 상태 확인 성공');
+    }
+
+    // 예약 삭제
+    //////////
+
+    async deleteReservation() {
+        await expect(this.selectChart).toBeVisible();
+        await this.selectChart.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트 선택 성공');
+        await expect(this.deleteButton).toBeVisible();
+        await this.deleteButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('예약 삭제 선택 성공');
+        await expect(this.deleteMessage).toBeVisible();
+        await expect(this.saveButton).toBeVisible();
+        await this.saveButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('예약 삭제 버튼 선택 성공');
+    }
+
+    async checkDeleteSuccessText() {
+        await expect(this.deleteSuccessText).toBeVisible();
+        console.log('예약 삭제 성공');
+    }
+
+    async checkDeleteSucess() {
+        await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).not.toBeVisible(); 
+        console.log('예약 삭제 상태 확인 성공');
     }
 
     
