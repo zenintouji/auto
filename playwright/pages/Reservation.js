@@ -75,7 +75,7 @@ class Reservation {
         this.editSurgeryType = page.getByRole('combobox', { name: '시/수술명을 선택하세요' }).nth(1);
         this.selectedSurgeryText = '';
 
-        // 접수메모
+        // 예약메모
         this.memoTitle = page.locator('label').filter({ hasText: '예약메모' });
         this.memoTemplate = page.getByText('자주 쓰는 상용구');
         this.memoEnter = page.locator('.ql-editor p'); // quill 에디터 라서 일부러 locator 이용

@@ -14,7 +14,7 @@ test.use({
   }
 });
 
-test('test', async ({ page }) => {
+test('Integrated Chart > See Doctor Test', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const exception = new Exception(page);
@@ -89,60 +89,28 @@ test('test', async ({ page }) => {
 
   await seedoctor.checkTreatmentSuccess();
 
-
-
-
-
-
-
-
-
-
-
+  // 차트 출력
+  //////////
   
+  await seedoctor.selectPrintTreatment();
+  await seedoctor.checkPrintTreatment();
+
+  await seedoctor.compareValueFromPrintModal(); 
+
+  // 차트 삭제
+  /////////
+
+  await seedoctor.selectDeleteButton();
+  await seedoctor.deleteChart();
+
+  await seedoctor.checkDeleteSuccessText();
+
+  // 처방전 삭제
+  ///////////
+
+  await seedoctor.enterPrescriptionMenu();
+  await seedoctor.deletePrescription();
+  await seedoctor.deletePopup();
+  await seedoctor.checkDeleteSuccess();
   
-  // // 차트 출력
-  // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > tr > td').first()).toBeVisible();
-  // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > tr > td').first().click();
-  // await expect(page.getByRole('button', { name: '차트 출력' })).toBeVisible();
-  // await page.getByRole('button', { name: '차트 출력' }).click();
-  // // 차트 출력 카테고리 출력
-  // await expect(page.getByRole('heading', { name: '차트 출력 close' })).toBeVisible();
-  // await expect(page.getByRole('heading', { name: '정보 확인' })).toBeVisible();
-  // await expect(page.getByLabel('차트 출력').getByText('차트번호')).toBeVisible();
-  // await expect(page.getByText('환자 성명')).toBeVisible();
-  // await expect(page.getByText('주민등록번호')).toBeVisible();
-  // await expect(page.getByLabel('차트 출력').getByText('전화번호')).toBeVisible();
-  // await expect(page.getByLabel('차트 출력').getByText('주소')).toBeVisible();
-  // await expect(page.getByRole('heading', { name: '처방전 선택' })).toBeVisible();
-  // await expect(page.getByRole('button', { name: '취소' })).toBeVisible();
-  // await page.getByRole('button', { name: '취소' }).click();
-  // await expect(page.getByText('통합차트')).toBeVisible();
-  // // 진료 삭제
-  // await expect(page.getByRole('button', { name: '삭제' }).nth(1)).toBeVisible();
-  // await page.getByRole('button', { name: '삭제' }).nth(1).click();
-  // await expect(page.getByText('연동된 펜차트를 함께 삭제 하시겠습니까?')).toBeVisible();
-  // await expect(page.getByText('펜차트 포함 삭제')).toBeVisible();
-  // await expect(page.getByText('차트만 삭제')).toBeVisible();
-  // await expect(page.getByRole('button', { name: '확인' })).toBeVisible();
-  // await page.getByRole('button', { name: '확인' }).click();
-  // await page.waitForTimeout(3000);
-  // await expect(page.getByText('삭제되었습니다')).toBeVisible();
-  // // 처방전 
-  // await expect(page.getByText('처방전 (1)')).toBeVisible();
-  // await page.getByText('처방전 (1)').click();
-  // await expect(page.getByRole('paragraph').filter({ hasText: '처방전' })).toBeVisible();
-  // // 처방전 삭제
-  // await expect(page.getByRole('paragraph').filter({ hasText: '처방전' })).toBeVisible();
-  // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first()).toBeVisible();
-  // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first().click();
-  // await expect(page.getByRole('button', { name: '삭제' }).nth(1)).toBeVisible();
-  // await page.getByRole('button', { name: '삭제' }).nth(1).click();
-  // // 삭제 안내 팝업
-  // await expect(page.getByText('정말로 삭제하시겠습니까?')).toBeVisible();
-  // await expect(page.getByRole('button', { name: '확인' })).toBeVisible();
-  // await page.getByRole('button', { name: '확인' }).click();
-  // await expect(page.getByText('삭제되었습니다')).toBeVisible();
-  // await expect(page.getByRole('paragraph').filter({ hasText: '처방전' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '등록된 내용이 없습니다' })).toBeVisible();
 });

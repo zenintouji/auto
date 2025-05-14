@@ -142,42 +142,57 @@ class Payment {
         await expect(this.addingSurgeryButton).toBeVisible();
         await this.addingSurgeryButton.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         console.log('시/수술 추가 팝업 진입 성공 확인');
+
         await expect(this.addingPopupTitle).toBeVisible();
         await expect(this.addingSurgeryTabTitle).toBeVisible();
+
         // 시/수술 카테고리 검색 > 선택
         await expect(this.searchSurgeryCategory).toBeVisible();
         await this.searchSurgeryCategory.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         await expect(this.selectOptionValue).toBeVisible();
         this.searchedSurgeryCategory = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         console.log('시/수술 카테고리 :', this.searchedSurgeryCategory);
+
         // 시/수술명 검색 > 선택
+
         await expect(this.searchSurgeryName).toBeVisible();
         await this.searchSurgeryName.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         await expect(this.selectOptionValue).toBeVisible();
         this.searchedSurgeryName = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         console.log('시/수술명: ', this.searchedSurgeryName);
+
         // 검색
+
         await expect(this.searchButton).toBeVisible();
         await this.searchButton.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         console.log('시/수술 카테고리, 시/수술명 검색 성공 확인');
+
         // 값 전부 넣기
         this.surgeryPrice = await this.page.getByRole('row', { name: this.searchedSurgeryCategory }).getByRole('textbox').nth(1).inputValue();
-        // this.surgeryPrice = await this.page.getByRole('row', { name: '수납자동화 카테고리' }).getByRole('textbox').nth(2);
         this.surgeryVat = await this.page.getByRole('row', { name: this.searchedSurgeryCategory }).getByRole('textbox').nth(2).inputValue();
+
         await expect(this.addingButton).toBeVisible();
         await this.addingButton.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         console.log('시/수술 카테고리 추가 성공 확인');
         console.log('시/수술 가격: ', this.surgeryPrice);
         console.log('시/수술 VAT제외 가격: ', this.surgeryVat);
+
         // 팝업 닫기
         await expect(this.closePopupButton).toBeVisible();
         await this.closePopupButton.click();
@@ -190,6 +205,7 @@ class Payment {
         await this.addingProductionButton.click();
         await this.page.waitForLoadState("domcontentloaded");
         console.log('제품 추가 팝업 진입 성공 확인');
+
         await expect(this.addingPopupTitle).toBeVisible();
         await expect(this.addingProductionTabTitle).toBeVisible();
         // 검색 제품 입력
@@ -198,11 +214,14 @@ class Payment {
         await this.page.waitForLoadState("domcontentloaded");
         await this.searchProduction.fill('수납자동화 제품명');
         await this.page.waitForLoadState("domcontentloaded");
+
         // 검색
         await expect(this.searchButton).toBeVisible();
         await this.searchButton.click();
         await this.page.waitForLoadState("domcontentloaded");
+
         console.log('제품 검색 성공 확인');
+        
         this.productionName = await this.page.getByRole('cell', { name: '수납자동화 제품명 과세' }).innerText();
         this.productionNameFree = await this.page.getByRole('cell', { name: '수납자동화 제품명 비과세' }).innerText();
         ////////////

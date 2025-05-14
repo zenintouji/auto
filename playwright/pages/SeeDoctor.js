@@ -69,6 +69,66 @@ class SeeDoctor {
         this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
 
         this.editSuccessText = page.getByText('진료를 수정했습니다. 연결된 접수정보가 업데이트 됩니다');
+
+        // 진료 삭제
+        //////////
+
+        this.deleteButton = page.getByRole('button', { name: '삭제' });
+
+        this.deleteModalText = page.getByText('연동된 펜차트를 함께 삭제 하시겠습니까?');
+        this.deleteIncludePenchart = page.getByText('펜차트 포함 삭제');
+        this.deleteOnlyChart = page.getByText('차트만 삭제');
+
+        this.confirmButton = page.getByRole('button', { name: '확인' });
+
+        this.deleteSuccessText = page.getByText('삭제되었습니다');
+
+
+        // 차트 출력
+        //////////
+
+        this.printChartButton = page.getByRole('button', { name: '차트 출력' });
+
+        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(2);
+
+        this.notSending = page.getByRole('button', { name: '미전송' });
+        this.checkCancelStatus = page.getByRole('cell', { name: '예약취소' });
+
+        this.printChartModalHeader = page.getByRole('heading', { name: '차트 출력 close' });
+        this.checkUserInfoHeader = page.getByRole('heading', { name: '정보 확인' });
+
+        this.chartNumberHeader = page.getByLabel('차트 출력').getByText('차트번호');
+        this.chartNumber = '';
+
+        this.patientNameHeader = page.getByText('환자 성명');
+        this.patientName = '';
+
+        this.patientIDnumberHeader = page.getByText('주민등록번호');
+
+        this.patientPhoneNumberHeader = page.getByLabel('차트 출력').getByText('전화번호');
+        this.patientPhoneNumber = '';
+
+        this.prescriptionSelectHeader = page.getByRole('heading', { name: '처방전 선택' });
+        
+        this.cancelButton = page.getByRole('button', { name: '취소' });
+
+        this.patientAddress = page.getByLabel('차트 출력').getByText('주소');
+
+        // 처방전
+        ////////
+
+        this.precsription = page.locator("li span", { hasText: /^처방전/ }).nth(4);
+
+        this.prescriptionItem = page.getByRole('checkbox').nth(1);
+        this.deleteButtonInPrescription = page.getByRole('button', { name: '삭제' });
+
+        this.deletePopupText = page.getByText('정말로 삭제하시겠습니까?');
+        this.confirmButtonInPrescription = page.getByRole('button', { name: '확인' });
+
+        this.deleteSuccessText = page.getByText('삭제되었습니다');
+
+
+
     }
 
     async enterTreatment() {
@@ -431,6 +491,125 @@ class SeeDoctor {
         await expect(this.editSuccessText).toBeVisible();
         console.log('진료 수정 스낵바 확인 성공');
     }
+
+    // 차트출력
+    /////////
+
+    async selectPrintTreatment() {
+        await expect(this.selectChart).toBeVisible();
+        await expect(this.printChartButton).toBeDisabled();
+        console.log('차트 미선택 시, 버튼 비활성화 확인 성공');
+
+        await this.selectChart.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트 선택 성공');
+
+        await expect(this.printChartButton).toBeVisible();
+        await expect(this.printChartButton).toBeEnabled();
+        console.log('차트출력 버튼 선택 가능 확인 성공');
+
+        await this.printChartButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트출력 모달 진입 성공');
+    }
+
+    async checkPrintTreatment() {
+        await expect(this.printChartModalHeader).toBeVisible();
+        await expect(this.checkUserInfoHeader).toBeVisible();
+
+        await expect(this.chartNumberHeader).toBeVisible();
+        this.chartNumber = await this.page.locator('input.MuiInputBase-input.Mui-disabled[value]').first().inputValue();
+        console.log('차트번호 가져오기: ', this.chartNumber);
+
+        await expect(this.patientNameHeader).toBeVisible();
+        this.patientName = await this.page.locator('input.MuiInputBase-input.Mui-disabled[value]').nth(1).inputValue();
+        console.log('환자 성명 가져오기: ', this.patientName);
+
+        await expect(this.patientPhoneNumberHeader).toBeVisible();
+        this.patientPhoneNumber = await this.page.locator('input.MuiInputBase-input.Mui-disabled[value]').nth(3).inputValue();
+        console.log('환자 전화번호 가져오기: ', this.patientPhoneNumber);
+
+        await expect(this.prescriptionSelectHeader).toBeVisible();
+        await expect(this.cancelButton).toBeVisible();
+        await this.cancelButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트 출력 모달 닫기 성공');
+    }
+
+    async compareValueFromPrintModal() {
+        await expect(this.page.locator('.chart-number')).toHaveText(this.chartNumber);
+        console.log('통합차트 > 고객정보에 차트번호랑 같아여~');
+        await expect(this.page.locator('div.name').filter({ hasText: this.patientName })).toBeVisible();
+        console.log('통합차트 > 고객정보에 이름이랑 같아여~');
+        await expect(this.page.locator('div.MuiStack-root').filter({ hasText: this.patientPhoneNumber })).toBeVisible();
+        console.log('통합차트 > 고객정보에 전화번호랑 같아여~');
+    }
+
+    // 진료 삭제
+    //////////
+
+    async selectDeleteButton() {
+        await expect(this.deleteButton).toBeVisible();
+        await this.deleteButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await expect(this.deleteModalText).toBeVisible();
+        console.log('진료 삭제 팝업 노출 확인 성공');
+    }
+
+    async deleteChart() {
+        await expect(this.deleteModalText).toBeVisible();
+        await expect(this.deleteIncludePenchart).toBeVisible();
+        console.log('펜차트 포함 삭제 라디오 버튼 노출 확인 성공');
+        await this.deleteIncludePenchart.click();
+        await this.page.waitForLoadState('domcontentloaded');
+
+        await expect(this.deleteOnlyChart).toBeVisible();
+        console.log('차트만 삭제 라디오 버튼 노출 확인 성공');
+
+        await expect(this.confirmButton).toBeVisible();
+        await this.confirmButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트 삭제 버튼 선택 성공');
+    }
+
+    async checkDeleteSuccessText() {
+        await expect(this.deleteSuccessText).toBeVisible();
+        console.log('차트 삭제 스낵바 확인 성공');
+    }
+
+    // 처방전 진입
+    ///////////
+
+    async enterPrescriptionMenu() {
+        await expect(this.precsription).toBeVisible();
+        await this.precsription.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('처방전 진입 성공');
+    }
+
+    async deletePrescription() {
+        await expect(this.prescriptionItem).toBeVisible();
+        await this.prescriptionItem.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        await this.page.waitForTimeout(2000);
+        await expect(this.deleteButtonInPrescription).toBeVisible();
+        await this.deleteButtonInPrescription.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        console.log('처방전 삭제 버튼 선택 성공');
+    }
+
+    async deletePopup() {
+        await expect(this.deletePopupText).toBeVisible();
+        await expect(this.confirmButtonInPrescription).toBeVisible();
+        await this.confirmButtonInPrescription.click();
+        console.log('처방전 삭제 확인 성공');
+    }
+
+    async checkDeleteSuccess() {
+        await expect(this.deleteSuccessText).toBeVisible();
+        console.log('삭제 스낵바 확인 성공');
+    }
+
 
 
 } export { SeeDoctor };
