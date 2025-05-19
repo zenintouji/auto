@@ -86,17 +86,6 @@ test('test', async ({ page }) => {
 
 
   
-  // // 피부관리 진행내역
-  // await expect(page.getByText('피부관리 진행내역')).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '피부관리내용 입력 자동화' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '최지안' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '황범석' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '노윤이' }).nth(2)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '성형' }).nth(1)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '눈매교정' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1', exact: true }).nth(1)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1회차' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1', exact: true }).nth(2)).toBeVisible(); // 사용
   // // 수정
   // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td:nth-child(2)')).toBeVisible();
   // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td:nth-child(2)').click();

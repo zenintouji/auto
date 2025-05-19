@@ -250,8 +250,8 @@ class Skincare {
         await this.verifyVisibleByName('cell', this.selectedDoctorText);
         await this.verifyVisibleByName('cell', this.selectedCounselorText);
 
-        await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
+        await expect(this.page.getByRole('cell', { name: this.searchedSurgeryCategory })).toBeVisible();
+        await expect(this.page.getByRole('cell', { name: this.searchedSurgeryName })).toBeVisible();
     }
 
     async verifyVisibleByName(role, nameText) {
