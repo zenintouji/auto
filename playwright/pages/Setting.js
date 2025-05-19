@@ -1,7 +1,5 @@
 import { expect } from "playwright/test";
 
-
-
 class Setting {
     constructor(page) {
         this.page = page;
