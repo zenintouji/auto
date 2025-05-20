@@ -6,18 +6,18 @@ import { check, sleep } from "k6";
 export const options = {
   vus: 10, // 동시 사용자 수
   //   duration: '30s', // 테스트 시간
-  iterations: 100, // 1000번 요청 하는거
+  iterations: 120, // 1000번 요청 하는거
 };
 
-const BASE_URL = "https://api.dev.unocare.co.kr/registrations"; // 접수
+const BASE_URL = "https://api.test.unocare.co.kr/registrations"; // 접수
 // const BASE_URL = "https://api.dev.unocare.co.kr/consultings"; // 상담
 // const BASE_URL = "https://api.dev.unocare.co.kr/treatments"; // 진료
 
-const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzYxNjQzOSwianRpIjoiM2I0MDVjOWYtODA0Yy00NTkyLWFmNGQtZTg3YzBlNzYwOTczIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0NzYxNjQzOSwiZXhwIjoxNzQ3Njc0MDM5fQ.huOSLg0ah_k03AbuMsD0DsiiK0L6WIABpvj65LQWx18"; // 필요 시 토큰 추가
+const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzcwMzIxMywianRpIjoiNWRlMGEyNDAtMTg5Yi00NzJhLWJiYzUtMGU4NTcyNWE4ZTdkIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0NzcwMzIxMywiZXhwIjoxNzQ3NzYwODEzfQ.AYL8bCB7QsZRCYrYhIx1zvhfppFbyJ551Knbzkv1fOk"; // 필요 시 토큰 추가
 
 export default function () {
 
-  const baseHour = 10; // 시작 시간
+  const baseHour = 9; // 시작 시간
   const intervalMin = 30; // 30분 간격으로
   const iter = __ITER; // 현재 반복 횟수 (0부터 시작함 ㅇㅇ)
 
@@ -29,7 +29,7 @@ export default function () {
   const endHour = baseHour + Math.floor((totalMinutes + 30) / 60);
   const endMinute = (totalMinutes + 30) % 60;
 
-  const formatTime = (h, m) => `2025-05-20 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  const formatTime = (h, m) => `2025-05-23 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 
   const startAt = formatTime(startHour, startMinute);
   const endAt = formatTime(endHour, endMinute); // 30분 후로 설정
@@ -40,11 +40,11 @@ export default function () {
     category: "CONSULTING",
     counselorId: 1,
     createdBy: 1,
-    customerId: 837173, // 고정 고객 ID ㅇㅇ
-    date: "2025-05-20",
+    customerId: 602906, // 고정 고객 ID ㅇㅇ
+    date: "2025-05-23",
     // departmentId: 69, // 상담5
-    departmentId: 1592, // 상담2
-    doctorId: 1,
+    departmentId: 1909, // 상담2
+    doctorId: null,
     endAt: endAt,
     estimatedServiceMinutes: 30,
     isNewCustomer: false,

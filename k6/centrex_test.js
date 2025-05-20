@@ -7,7 +7,7 @@ export const options = {
 };
 
 const BASE_URL = 'https://api.dev.unocare.co.kr/admin/centrex'; // API 엔드포인트
-const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzY0NTAzOSwianRpIjoiOTMzNDk5NzAtOTViMS00YzE0LWI0YjUtY2I5NTVkZDJhODY0IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJ0eXBlIjoiYWRtaW4ifSwibmJmIjoxNzQ3NjQ1MDM5LCJleHAiOjE3NDc2NTU4Mzl9.z5xmDWeYHeK5jbOwgNrbvV_p_FbhPHYffeQa0bolB2Q'; // JWT 토큰 입력
+const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzY0NzQ0MCwianRpIjoiM2Q4ZWMxMDQtYWMwNC00MmIwLWE0ZGUtN2IwNmE3ZDg2ZWFjIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJ0eXBlIjoiYWRtaW4ifSwibmJmIjoxNzQ3NjQ3NDQwLCJleHAiOjE3NDc2NTgyNDB9.iz8mduYzzYkTLGRamjIKe8q4BPOp-znrd83_c3iTZo4'; // JWT 토큰 입력
 
 export default function () {
   const iter = __ITER; // 현재 반복 횟수
@@ -15,7 +15,7 @@ export default function () {
   const payload = JSON.stringify({
     accountId: `${iter + 1}`, // 예: 1, 2, 3, ...
     accountPassword: `${iter + 1}`,
-    carrier: 'SK',
+    carrier: 'LGI',
     clinicId: 1,
   });
 

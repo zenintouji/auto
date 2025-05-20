@@ -14,7 +14,7 @@ test.use({
   }
 });
 
-test('test', async ({ page }) => {
+test('Integrated Chart > Skincare Test', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const exception = new Exception(page);
@@ -63,15 +63,38 @@ test('test', async ({ page }) => {
   await skincare.selectSkincareCounselor();
   await skincare.selectDoctor();
   await skincare.selectCounselor();
-
   await skincare.checkAddedSurgery();
   await skincare.enterMemo();
-  await skincare.saveSkincare();
 
+  await skincare.saveSkincare();
   await skincare.checkSaveSuccessText();
 
   await skincare.checkSkincareSuccess();
 
+  // 수정
+  await skincare.selectEdit();
+
+  await skincare.editSkincareCounselor();
+  await skincare.editDoctor();
+  await skincare.editCounselor();
+  await skincare.checkAddedSurgery();
+  await skincare.editMemo();
+
+  await skincare.editSkincare();
+  await skincare.checkEditSuccessText();
+
+  await skincare.checkSkincareSuccess();
+
+  // 삭제
+  await skincare.selectSkincare();
+  await skincare.deleteSkincare();
+  await skincare.deletePopup();
+  await skincare.checkDeleteSuccessText();
+
+  // 시/수술 삭제
+  await skincare.deleteRemainingSkincare();
+  await skincare.deleteSurgeryPopup();
+  await skincare.checkDeleteSurgerySuccessText();
 
 
 
@@ -86,50 +109,6 @@ test('test', async ({ page }) => {
 
 
   
-  // // 수정
-  // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td:nth-child(2)')).toBeVisible();
-  // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td:nth-child(2)').click();
-  // await expect(page.getByText('피부관리 진행', { exact: true })).toBeVisible();
-  // // 피부관리사
-  // await expect(page.locator('label').filter({ hasText: '피부관리사' })).toBeVisible();
-  // await page.getByRole('combobox', { name: '피부관리사를 선택하세요' }).click();
-  // await page.getByRole('option', { name: '홍명희' }).click();
-  // // 의사
-  // await expect(page.locator('label').filter({ hasText: '의사' })).toBeVisible();
-  // await page.getByRole('combobox', { name: '의사를 선택하세요' }).click();
-  // await page.getByRole('option', { name: '최지안' }).click();
-  // // 상담사
-  // await expect(page.locator('label').filter({ hasText: '상담사' })).toBeVisible();
-  // await page.getByRole('combobox', { name: '상담사를 선택하세요' }).click();
-  // await page.getByRole('option', { name: '이지혜' }).click();
-  // // 진행 시/수술
-  // await expect(page.getByText('진행 시/수술')).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '성형' }).nth(1)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '눈매교정' }).nth(1)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1', exact: true }).nth(3)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '0', exact: true })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '회차' }).nth(3)).toBeVisible();
-  // // 피부관리내용
-  // await expect(page.locator('label').filter({ hasText: '피부관리내용' })).toBeVisible();
-  // await expect(page.getByText('자주 쓰는 상용구')).toBeVisible();
-  // await page.locator('pre').getByText('피부관리내용 입력 자동화').click();
-  // await page.locator('pre div').filter({ hasText: '피부관리내용 입력 자동화' }).fill('피부관리내용 입력 자동화 수정');
-  // // 수정완료
-  // await expect(page.getByRole('button', { name: '수정완료' })).toBeVisible();
-  // await page.getByRole('button', { name: '수정완료' }).click();
-  // await expect(page.getByText('피부관리를 수정했습니다. 연결된 접수정보가 업데이트 됩니다')).toBeVisible();
-  // await expect(page.getByText('잔여 있는 피부관리 내역이 없습니다')).toBeVisible();
-  // await expect(page.getByText('피부관리 진행내역')).toBeVisible();
-  // // 피부관리차트 수정 확인
-  // await expect(page.getByRole('cell', { name: '피부관리내용 입력 자동화 수정' })).toBeVisible(); // 피부관리내용
-  // await expect(page.getByRole('cell', { name: '홍명희' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '최지안' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '이지혜' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '성형' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '눈매교정' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1', exact: true }).nth(1)).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1회차' })).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '1', exact: true }).nth(2)).toBeVisible(); // 사용
   // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first()).toBeVisible();
   // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first().click();
   // // 피부관리차트 삭제

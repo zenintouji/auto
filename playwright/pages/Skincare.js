@@ -56,6 +56,22 @@ class Skincare {
         this.saveButton = page.getByRole('button', { name: '저장' });
         this.saveSuccessText = page.getByText('피부관리를 생성했습니다');
 
+        //////
+        // 저장
+        this.editButton = page.getByRole('button', { name: '수정완료' });
+        this.editSuccessText = page.getByText('피부관리를 수정했습니다. 연결된 접수정보가 업데이트 됩니다');
+
+        // 삭제
+        this.selectChart = page.locator('input[type="checkbox"][data-indeterminate="false"]').nth(1);
+        this.deleteButton = page.getByRole('button', { name: '삭제' });
+        this.deletePopupText = page.getByText('정말로 삭제하시겠습니까?');
+        this.confirmButton = page.getByRole('button', { name: '확인' });
+
+        this.deleteSuccessText = page.getByText('삭제되었습니다');
+        this.deleteIconButton = page.locator('td button svg[width="10"][height="12"]');
+        this.deleteSurgeryText = page.getByText('시/수술 항목을 삭제하시겠습니까?');
+
+        this.deleteSurgeryPopupText = page.getByText('삭제되었습니다');
     }
 
     async enterSkincare() {
@@ -278,6 +294,146 @@ class Skincare {
             return false;
         }
     }
+
+    async selectEdit() {
+        await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();
+        await this.page.getByRole('cell', { name: this.enteredMemoText }).dblclick();
+        await this.page.waitForLoadState('domcontentloaded');
+        await expect(this.progressSkincareTitle).toBeVisible();
+        console.log('예약 수정 진입 성공');
+    }
+
+    // 피부 관리사
+    async editSkincareCounselor() {
+        await expect(this.skincareCounselorTitle).toBeVisible();
+        await expect(this.skincareCounselorType).toBeVisible();
+        await this.skincareCounselorType.click();
+        await this.page.waitForLoadState('domcontentloaded');
+
+        await expect(this.editOptionValue).toBeVisible();
+        this.selectedSkincareCounselorText = await this.editOptionValue.innerText();
+        await this.editOptionValue.click();
+
+        console.log('피부관리사 수정: ', this.selectedSkincareCounselorText);
+
+        await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    // 의사
+    async editDoctor() {
+        await expect(this.doctorTitle).toBeVisible();
+        await expect(this.doctorType).toBeVisible();
+        await this.doctorType.click();
+        await this.page.waitForLoadState('domcontentloaded');
+
+        await expect(this.editOptionValue).toBeVisible();
+        this.selectedDoctorText = await this.editOptionValue.innerText();
+        await this.editOptionValue.click();
+
+        console.log('의사 수정: ', this.selectedDoctorText);
+
+        await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    // 상담사
+    async editCounselor() {
+        await expect(this.counselorTitle).toBeVisible();
+        await expect(this.counselorType).toBeVisible();
+        await this.counselorType.click();
+        await this.page.waitForLoadState('domcontentloaded');
+
+        await expect(this.editOptionValue).toBeVisible();
+        this.selectedCounselorText = await this.editOptionValue.innerText();
+        await this.editOptionValue.click(); 
+
+        console.log('상담사 수정: ', this.selectedCounselorText);
+
+        await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    // 피부관리내용
+    async editMemo() {
+        await expect(this.memoTitle).toBeVisible();
+        await expect(this.memoTemplate).toBeVisible();
+        await expect(this.memoEnter).toBeVisible();
+
+        await this.memoEnter.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.memoEnter.fill('');
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.memoEnter.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.memoEnter.type('피부_관리_내용_입력_자동화_수정', { delay: 50});
+        await this.page.waitForLoadState('domcontentloaded');
+
+        this.enteredMemoText = await this.memoEnter.innerText();
+
+        console.log('피부관리내용 수정: ', this.enteredMemoText);
+        await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    async editSkincare() {
+        await expect(this.editButton).toBeVisible();
+        await this.editButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('피부관리 수정 버튼 선택 성공');
+    }
+
+    async checkEditSuccessText() {
+        await expect(this.editSuccessText).toBeVisible();
+        console.log('수정 스낵바 확인 성공');
+    }
+
+    async selectSkincare() {
+        await expect(this.selectChart).toBeVisible();
+        await this.selectChart.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('차트 선택 성공');
+    }
+
+    async deleteSkincare() {
+        await expect(this.deleteButton).toBeVisible();
+        await this.deleteButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('삭제 버튼 선택 성공');
+    }
+
+    async deletePopup() {
+        await expect(this.deletePopupText).toBeVisible();
+        await expect(this.confirmButton).toBeVisible();
+        await this.confirmButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('삭제 성공');
+    }
+
+    async checkDeleteSuccessText() {
+        await expect(this.deleteSuccessText).toBeVisible();
+        console.log('삭제 스낵바 확인 성공');
+    }
+
+    async deleteRemainingSkincare() {
+        await expect(this.deleteIconButton).toBeVisible();
+        await this.deleteIconButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('시/수술 항목 삭제 버튼 선택 성공');
+    }
+
+    async deleteSurgeryPopup() {
+        await expect(this.deleteSurgeryText).toBeVisible();
+        await expect(this.confirmButton).toBeVisible();
+        await this.confirmButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('시/수술 삭제 성공');
+    }
+
+    async checkDeleteSurgerySuccessText() {
+        await expect(this.deleteSurgeryPopupText).toBeVisible();
+        console.log('시/수술 항목 삭제 스낵바 확인 성공');
+    }
+
+
+
+    
 
 
 } export { Skincare };
