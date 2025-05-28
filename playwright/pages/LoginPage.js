@@ -3,17 +3,11 @@ import { expect } from '@playwright/test';
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.emailInput = page.getByRole("textbox", {
-      name: "아이디(이메일)를 입력하세요",
-    });
-    this.passwordInput = page.getByRole("textbox", {
-      name: "비밀번호를 입력하세요",
-    });
+    this.emailInput = page.getByRole("textbox", {name: "아이디(이메일)를 입력하세요"});
+    this.passwordInput = page.getByRole("textbox", {name: "비밀번호를 입력하세요"});
     this.loginButton = page.getByRole("button", { name: "로그인" });
     this.logoutButton = page.getByRole("button", { name: "로그아웃" });
-    this.logo = page.getByRole("img", {
-      name: '고객을 관리하는 가장 좋은 선택 "UNO CRM"',
-    });
+    this.logo = page.getByRole("img", {name: '고객을 관리하는 가장 좋은 선택 "UNO CRM"'});
   }
 
   async goto() {
@@ -40,6 +34,8 @@ class LoginPage {
       this.page.waitForNavigation({ waitUntil: 'domcontentloaded' }),
       this.loginButton.click()
     ]);
+
+    await this.page.waitForURL(/\/(login|crm)/);
     const currentURL = await this.page.url();
     console.log('📍현재 URL: ', currentURL); // 이모찌 ㅋㅋㅋ
 
@@ -51,6 +47,7 @@ class LoginPage {
       console.log('⚠️ 로그인 실패 감지됨 → 다시 시도함');
       await this.page.reload();
       await this.login(username, password, retryCount + 1);
+      return;
     }
 
     const VALID_PATHS = [

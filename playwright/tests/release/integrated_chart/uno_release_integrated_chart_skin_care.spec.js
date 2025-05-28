@@ -97,34 +97,4 @@ test('Integrated Chart > Skincare Test', async ({ page }) => {
   await skincare.checkDeleteSurgerySuccessText();
 
 
-
-
-
-
-
-
-
-
-
-
-
-  
-  // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first()).toBeVisible();
-  // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first().click();
-  // // 피부관리차트 삭제
-  // await expect(page.getByRole('button', { name: '삭제' }).nth(1)).toBeVisible();
-  // await page.getByRole('button', { name: '삭제' }).nth(1).click();
-  // await expect(page.getByText('정말로 삭제하시겠습니까?')).toBeVisible();
-  // await expect(page.getByRole('button', { name: '확인' })).toBeVisible();
-  // await page.getByRole('button', { name: '확인' }).click();
-  // await expect(page.getByText('삭제되었습니다')).toBeVisible();
-  // await expect(page.getByRole('cell', { name: '등록된 내용이 없습니다' })).toBeVisible();
-  // // 피부관리 잔여 삭제
-  // await expect(page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first()).toBeVisible();
-  // await page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td').first().click();
-  // await expect(page.getByText('시/수술 항목을 삭제하시겠습니까?')).toBeVisible();
-  // await expect(page.getByRole('button', { name: '확인' })).toBeVisible();
-  // await page.getByRole('button', { name: '확인' }).click();
-  // await expect(page.getByText('삭제되었습니다')).toBeVisible();
-  // await expect(page.getByText('잔여 있는 피부관리 내역이 없습니다')).toBeVisible();
 });

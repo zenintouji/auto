@@ -14,7 +14,7 @@ test.use({
   }
 });
 
-test('test', async ({ page }) => {
+test('Integrated Chart > Surgery Test', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   const exception = new Exception(page);

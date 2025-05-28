@@ -9,15 +9,14 @@ export const options = {
   iterations: 120, // 1000번 요청 하는거
 };
 
-const BASE_URL = "https://api.test.unocare.co.kr/registrations"; // 접수
-// const BASE_URL = "https://api.dev.unocare.co.kr/consultings"; // 상담
-// const BASE_URL = "https://api.dev.unocare.co.kr/treatments"; // 진료
+// const BASE_URL = "https://api.dev.unocare.co.kr/registrations"; // 접수 dev
+const BASE_URL = "https://api.test.unocare.co.kr/registrations"; // 접수 test
 
-const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0NzcwMzIxMywianRpIjoiNWRlMGEyNDAtMTg5Yi00NzJhLWJiYzUtMGU4NTcyNWE4ZTdkIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0NzcwMzIxMywiZXhwIjoxNzQ3NzYwODEzfQ.AYL8bCB7QsZRCYrYhIx1zvhfppFbyJ551Knbzkv1fOk"; // 필요 시 토큰 추가
+const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg3NTU0MSwianRpIjoiNDkxZDUzZmUtZmMwMi00ZDdjLTg4NGYtNjAxZGQ5MDFkZjliIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0Nzg3NTU0MSwiZXhwIjoxNzQ3OTMzMTQxfQ.GfD658kCNb48als4yNSljWxFj1TUjMgB1CR8db6Psx4"; // 필요 시 토큰 추가
 
 export default function () {
 
-  const baseHour = 9; // 시작 시간
+  const baseHour = 10; // 시작 시간
   const intervalMin = 30; // 30분 간격으로
   const iter = __ITER; // 현재 반복 횟수 (0부터 시작함 ㅇㅇ)
 
@@ -29,22 +28,31 @@ export default function () {
   const endHour = baseHour + Math.floor((totalMinutes + 30) / 60);
   const endMinute = (totalMinutes + 30) % 60;
 
-  const formatTime = (h, m) => `2025-05-23 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  const formatTime = (h, m) => `2025-05-22 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 
   const startAt = formatTime(startHour, startMinute);
   const endAt = formatTime(endHour, endMinute); // 30분 후로 설정
 
   const payload = JSON.stringify({
     acquisitionChannelId: null,
-    assistId: null,
+    assistId: 3906,
+    // 3906, 3905, 3885, 3884, 3883, 3882, => test
+
     category: "CONSULTING",
-    counselorId: 1,
+    counselorId: 3884,
+    // 3890, 3887, 3886, 3885, 3884, 3883, => test
+
     createdBy: 1,
-    customerId: 602906, // 고정 고객 ID ㅇㅇ
-    date: "2025-05-23",
-    // departmentId: 69, // 상담5
-    departmentId: 1909, // 상담2
-    doctorId: null,
+    customerId: 602895, 
+    // 602906, 602903, 602766, 521815, 602740, 602895, => test
+
+    date: "2025-05-22",
+    departmentId: 1782,
+    // 1913, 1914, 1915, 1916, 1924, 1925, 1926, 1781, 1782, => test
+
+    doctorId: 3886,
+    // 3889, 3888, 3886, 3885, 3884, 3883, => test
+
     endAt: endAt,
     estimatedServiceMinutes: 30,
     isNewCustomer: false,
@@ -53,23 +61,7 @@ export default function () {
     treatmentItemIds: [],
   });
 
-//   const payload = JSON.stringify({
-//     counselorId: 1,
-//     customerId: 837173,
-//     date: '2025-05-19',
-//     memo: `<p>상담 부하 테스트 시도 ${iter + 1}</p>`,
-//     registrationId: 9317671,
-//     resultId: null,
-//     treatmentItemIds: [],
-//   });
 
-//   const payload = JSON.stringify({
-//     customerId: 837173,
-//     date: '2025-05-19',
-//     doctorId: 1,
-//     memo: '<p>진료 부하 테스트</p>',
-//     registrationId: 9317671,
-//     treatmentItemIds: [],
 //   });
 
   const headers = {

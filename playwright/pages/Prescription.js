@@ -6,7 +6,7 @@ class Prescription {
         this.precsription = page.locator("li span", { hasText: /^처방전/ }).nth(4);
 
         this.createPrescriptionButton = page.getByRole('button', { name: '처방전 작성' });
-        this.prescriptionHeader = page.getByRole('paragraph').filter({ hasText: '처방전' })
+        this.prescriptionHeader = page.getByRole('paragraph').filter({ hasText: '처방전' });
         
         this.doctorName = '';
         this.doctorNameLocation = page.getByRole('paragraph').first();

@@ -94,7 +94,7 @@ class ChartHistory {
         await this.comboDepart.click();
         console.log('부서 선택 성공');
     }
-    
+
     async uncheckDepartment() {
         for (let i = 0; i < 7; i++) {
             const selectDepartment = this.department.nth(i);

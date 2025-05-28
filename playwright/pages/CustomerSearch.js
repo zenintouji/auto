@@ -25,9 +25,6 @@ class customerSearch {
         this.resultSearchBirth = page.getByRole('cell', { name: '-05-05' });
 
         this.notFoundMessage = page.getByRole('cell', { name: '검색된 고객이 없습니다' });
-
-        
-
         
     }
 

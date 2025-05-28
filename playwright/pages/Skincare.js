@@ -40,7 +40,7 @@ class Skincare {
         this.doctorTitle = page.locator('label').filter({ hasText: '의사' });
         this.doctorType = page.getByRole('combobox', { name: '의사를 선택하세요' });
         this.selectedDoctorText = '';
- 
+
         // 상담사
         this.counselorTitle = page.locator('label').filter({ hasText: '상담사' });
         this.counselorType = page.getByRole('combobox', { name: '상담사를 선택하세요' });
@@ -430,10 +430,5 @@ class Skincare {
         await expect(this.deleteSurgeryPopupText).toBeVisible();
         console.log('시/수술 항목 삭제 스낵바 확인 성공');
     }
-
-
-
-    
-
 
 } export { Skincare };

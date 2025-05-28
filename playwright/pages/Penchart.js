@@ -352,19 +352,19 @@ class Penchart {
         await this.page.waitForLoadState("domcontentloaded");
         await page2.locator('canvas').nth(1).click({
             position: {
-              x: 930,
-              y: 467
+                x: 930,
+                y: 467
             }
-          });
-          await this.page.waitForLoadState("domcontentloaded");
+        });
+        await this.page.waitForLoadState("domcontentloaded");
         await page2.getByRole('textbox').fill('자동화');
         await this.page.waitForLoadState("domcontentloaded");
         console.log('이미지 에디터 텍스트 입력 성공');
         await page2.locator('canvas').nth(1).click({
-          position: {
-            x: 1615,
-            y: 477
-          }
+            position: {
+                x: 1615,
+                y: 477
+            }
         });
         await this.page.waitForLoadState("domcontentloaded");
         await expect(page2.locator('div').filter({ hasText: /^오늘날짜$/ }).getByRole('button')).toBeVisible();
@@ -378,9 +378,6 @@ class Penchart {
         await this.page.bringToFront();
         console.log('이미지 에디터에서 메인으로 이동 확인 성공');
     }
-
-    
-
 
 }
 

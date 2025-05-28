@@ -44,8 +44,6 @@ class HistoryTaking {
 
     this.deletePopupText = page.getByText("정말로 삭제하시겠습니까?");
 
-
-
   }
 
   // 문진 차트 진입
@@ -203,7 +201,6 @@ class HistoryTaking {
     await expect(this.deleteSuccessText).toBeVisible();
     console.log('삭제 스낵바 확인 성공');
   }
-
 
 }
 

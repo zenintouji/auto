@@ -10,7 +10,6 @@ class Announcement {
         
         this.typeOfAnnounce = page.getByText('종류선택');
 
-
         this.createButton = page.getByRole('button', { name: '작성' });
         this.saveButton = page.getByRole('button', { name: '저장' });
         this.cancelButton = page.getByRole('button', { name: '취소', exact: true });

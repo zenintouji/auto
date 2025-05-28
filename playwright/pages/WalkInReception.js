@@ -228,7 +228,7 @@ class WalkInReception {
         console.log('의사: ', this.selectedDoctorText);
         await this.page.waitForLoadState('domcontentloaded');
     }
-    
+
     // 상담사
     async selectCounselor() {
         await expect(this.counselorTitle).toBeVisible();
@@ -512,7 +512,7 @@ class WalkInReception {
         console.log('의사 수정: ', this.selectedDoctorText);
         await this.page.waitForLoadState('domcontentloaded');
     }
-    
+
     // 상담사
     async editCounselor() {
         await expect(this.counselorTitle).toBeVisible();
@@ -670,6 +670,7 @@ class WalkInReception {
         await expect(this.page.getByRole('cell', { name: this.selectedReceptionText })).not.toBeVisible(); 
         console.log('접수 삭제 상태 확인 성공');
     }
+
 }
 
 export { WalkInReception }

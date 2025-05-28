@@ -392,9 +392,6 @@ class Consultation {
         console.log('상담 삭제 성공');
     }
 
-
-
-
 }
 
 export { Consultation };

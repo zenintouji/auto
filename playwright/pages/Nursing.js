@@ -29,31 +29,19 @@ class Nursing {
 
     // 간호사
     this.nurseTitle = page.locator("label").filter({ hasText: "간호사" });
-    this.nurseType = page.getByRole("combobox", {
-      name: "간호사를 선택하세요",
-    });
+    this.nurseType = page.getByRole("combobox", {name: "간호사를 선택하세요"});
     this.selectedNurseText = "";
 
     // 시/수술 카테고리
-    this.surgicalCategoryTitle = page
-      .locator("label")
-      .filter({ hasText: "시/수술 카테고리" });
-    this.surgicalCategoryType = page.getByRole("combobox", {
-      name: "시/수술 카테고리를 선택하세요",
-    });
-    this.editSurgicalCategoryType = page
-      .getByRole("combobox", { name: "시/수술 카테고리를 선택하세요" })
-      .nth(1);
+    this.surgicalCategoryTitle = page.locator("label").filter({ hasText: "시/수술 카테고리" });
+    this.surgicalCategoryType = page.getByRole("combobox", {name: "시/수술 카테고리를 선택하세요"});
+    this.editSurgicalCategoryType = page.getByRole("combobox", { name: "시/수술 카테고리를 선택하세요" }).nth(1);
     this.selectedSurgicalCategoryText = "";
 
     // 시/수술명
     this.surgeryTitle = page.locator("label").filter({ hasText: "시/수술명" });
-    this.surgeryType = page.getByRole("combobox", {
-      name: "시/수술명을 선택하세요",
-    });
-    this.editSurgeryType = page
-      .getByRole("combobox", { name: "시/수술명을 선택하세요" })
-      .nth(1);
+    this.surgeryType = page.getByRole("combobox", {name: "시/수술명을 선택하세요"});
+    this.editSurgeryType = page.getByRole("combobox", { name: "시/수술명을 선택하세요" }).nth(1);
     this.selectedSurgeryText = "";
 
     // 바이탈
@@ -66,9 +54,7 @@ class Nursing {
 
     // 투약 약품명
     this.nameOfMedicine = page.getByText("투약 약품명");
-    this.medicineTitle = page.getByRole("combobox", {
-      name: "투약 약품명을 선택하세요",
-    });
+    this.medicineTitle = page.getByRole("combobox", {name: "투약 약품명을 선택하세요"});
     this.selectedMedicine = "";
 
     // 투약량
@@ -79,7 +65,6 @@ class Nursing {
     this.memoTitle = page.locator('label').filter({ hasText: '간호내용' });
     this.memoTemplate = page.getByText('자주 쓰는 상용구');
     this.memoEnter = page.locator('.ql-editor p'); // quill 에디터 라서 일부러 locator 이용
-    // page.getByRole('paragraph').filter({ hasText: /^$/ });
     this.enteredMemoText = '';
 
     // 삭제

@@ -26,7 +26,7 @@ class Reservation {
         this.departmentTitle = page.locator('label').filter({ hasText: '예약부서' });
         this.departmentType = page.getByRole('combobox', { name: '부서를 선택하세요' });
         this.selectedDepartmentText = '';
- 
+
         // 방문 시간
         this.visitTimeTitle = page.locator('label').filter({ hasText: '방문시간' });
         this.visitTimeType = page.getByRole('combobox', { name: '-' });
@@ -46,7 +46,7 @@ class Reservation {
         this.doctorTitle = page.locator('label').filter({ hasText: '의사' });
         this.doctorType = page.getByRole('combobox', { name: '의사를 선택하세요' });
         this.selectedDoctorText = '';
- 
+
         // 상담사
         this.counselorTitle = page.locator('label').filter({ hasText: '상담사' });
         this.counselorType = page.getByRole('combobox', { name: '상담사를 선택하세요' });
@@ -56,7 +56,7 @@ class Reservation {
         this.assistTitle = page.locator('label').filter({ hasText: '어시스트' });
         this.assistType = page.getByRole('combobox', { name: '어시스트를 선택하세요' });
         this.selectedAssistText = '';
- 
+
         // 작성자
         this.writerTitle = page.locator('label').filter({ hasText: '작성자' });
         this.editWriterTitle = page.getByText('작성자').nth(1);
@@ -68,7 +68,7 @@ class Reservation {
         this.surgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' });
         this.editSurgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' }).nth(1);
         this.selectedSurgicalCategoryText = '';
- 
+
         // 시/수술명
         this.surgeryTitle = page.locator('label').filter({ hasText: '시/수술명' });
         this.surgeryType = page.getByRole('combobox', { name: '시/수술명을 선택하세요' });
@@ -79,7 +79,6 @@ class Reservation {
         this.memoTitle = page.locator('label').filter({ hasText: '예약메모' });
         this.memoTemplate = page.getByText('자주 쓰는 상용구');
         this.memoEnter = page.locator('.ql-editor p'); // quill 에디터 라서 일부러 locator 이용
-        // page.getByRole('paragraph').filter({ hasText: /^$/ });
         this.enteredMemoText = '';
 
         // 저장버튼

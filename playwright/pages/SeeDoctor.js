@@ -466,7 +466,7 @@ class SeeDoctor {
     }
 
      // 진료 메모 수정
-     async editMemo() {
+    async editMemo() {
         await expect(this.memoTitle).toBeVisible();
         await expect(this.memoTemplate).toBeVisible();
         await expect(this.memoEnter).toBeVisible();

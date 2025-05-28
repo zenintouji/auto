@@ -16,7 +16,7 @@ class Exception {
 
     async closeBannerIfExists() {
         const refreshButton = this.page.getByText(/^새로고침$/);
-
+        
         if (await refreshButton.isVisible()) {
             await refreshButton.click();
             await this.page.waitForTimeout(2000);

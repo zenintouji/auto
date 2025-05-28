@@ -40,34 +40,34 @@ class Reception {
         this.visitRouteTitle = page.locator('label').filter({ hasText: '내원경로' });
         this.visitRouteType = page.getByRole('combobox', { name: '내원경로를 선택하세요' });
         this.selectedVisitRouteText = '';
- 
+
         // 의사
         this.doctorTitle = page.locator('label').filter({ hasText: '의사' });
         this.doctorType = page.getByRole('combobox', { name: '의사를 선택하세요' });
         this.selectedDoctorText = '';
- 
+
         // 상담사
         this.counselorTitle = page.locator('label').filter({ hasText: '상담사' });
         this.counselorType = page.getByRole('combobox', { name: '상담사를 선택하세요' });
         this.selectedCounselorText = '';
- 
+
         // 어시스트
         this.assistTitle = page.locator('label').filter({ hasText: '어시스트' });
         this.assistType = page.getByRole('combobox', { name: '어시스트를 선택하세요' });
         this.selectedAssistText = '';
- 
+
         // 작성자
         this.writerTitle = page.locator('label').filter({ hasText: '작성자' });
         this.editWriterTitle = page.getByText('작성자').nth(1);
         this.writerType = page.getByRole('combobox', { name: '작성자를 선택하세요' });
         this.selectedWriterText = '';
- 
+
         // 시/수술 카테고리
         this.surgicalCategoryTitle = page.locator('label').filter({ hasText: '시/수술 카테고리' });
         this.surgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' });
         this.editSurgicalCategoryType = page.getByRole('combobox', { name: '시/수술 카테고리를 선택하세요' }).nth(1);
         this.selectedSurgicalCategoryText = '';
- 
+
         // 시/수술명
         this.surgeryTitle = page.locator('label').filter({ hasText: '시/수술명' });
         this.surgeryType = page.getByRole('combobox', { name: '시/수술명을 선택하세요' });

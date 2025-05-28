@@ -19,7 +19,6 @@ class Setting {
         this.reservationTitle = page.getByText(/등록$/).nth(2);
         this.processingTitle = page.getByText(/진행$/).nth(1);
 
-
         // 통합차트 닫기~
         this.closeIntegratedChart = page.locator('div').filter({ hasText: /^3D Meta-VuMark-Vu$/ }).getByRole('button').nth(3);
         this.confirmButton = page.getByRole('button', { name: '확인' });
@@ -83,7 +82,6 @@ class Setting {
 
         // 전체선택
         this.selectAllButton = page.getByText('전체선택', { exact: true });
-
 
         // 창분할
         ///////
@@ -159,7 +157,6 @@ class Setting {
         this.registerHistoryTaking = page.getByRole('button', { name: '+ 문진등록' });
         this.historyTakingChange = page.locator('div').filter({ hasText: /문진(\s*\(\d+\))?$/ }).getByRole('img').nth(3);
 
-
     }
 
     async enterSetting() {
@@ -229,12 +226,10 @@ class Setting {
     async registerDefault() {
 
         const isChecked = await this.registerDefaultButton.isChecked();
-
         // 등록화면 기본 노출 ON 상태 일 때,
         if (isChecked) {
 
             // 등록화면 기본 노출 off로 변경하는 거~
-
             await expect(this.registerDefaultButton).toBeVisible();
             await this.registerDefaultButton.click();
             await this.page.waitForTimeout(1000);
@@ -338,9 +333,7 @@ class Setting {
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-
         await this.page.waitForTimeout(2000);
-
         await expect(this.historyTaking).not.toBeVisible();
         console.log('문진 해제되어서 안보여요~');
     }
@@ -359,7 +352,6 @@ class Setting {
         } else if (!prescriptionChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('처방전 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -382,11 +374,9 @@ class Setting {
             await this.phoneCallSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('통화 체크 해제 했어여~');
-
         } else if (!phoneCallChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('통화 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -409,11 +399,9 @@ class Setting {
             await this.messageSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('메시지 체크 해제 했어여~');
-
         } else if (!messageChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('메시지 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -436,11 +424,9 @@ class Setting {
             await this.paymentSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('수납 체크 해제 했어여~');
-
         } else if (!paymentChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('수납 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -463,11 +449,9 @@ class Setting {
             await this.penchartSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('펜차트 체크 해제 했어여~');
-
         } else if (!penchartChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('펜차트 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -490,11 +474,9 @@ class Setting {
             await this.skinCareSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('피부관리 체크 해제 했어여~');
-
         } else if (!skinCareChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('피부관리 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -517,11 +499,9 @@ class Setting {
             await this.nursingSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('간호 체크 해제 했어여~');
-
         } else if (!nursingChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('간호 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -544,11 +524,9 @@ class Setting {
             await this.surgicalNursingSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('수술간호 체크 해제 했어여~');
-
         } else if (!surgicalNursingChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('수술간호 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -571,11 +549,9 @@ class Setting {
             await this.surgerySetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('시/수술 체크 해제 했어여~');
-
         } else if (!surgeryChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('시/수술 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -598,11 +574,9 @@ class Setting {
             await this.treatmentSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('진료 체크 해제 했어여~');
-
         } else if (!treatmentChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('진료 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -625,11 +599,9 @@ class Setting {
             await this.consultationSetting.click();
             await this.page.waitForLoadState("domcontentloaded");
             console.log('상담 체크 해제 했어여~');
-
         } else if (!consultationChecked) {
             await expect(this.confirmButton).toBeVisible();
             console.log('상담 해제 되어 있어여~');
-
         }
 
         await expect(this.confirmButton).toBeVisible();
@@ -984,8 +956,5 @@ class Setting {
 
         console.log('화면 분할에서 한 화면으로 바꿨어여~~~');
     }
-
-
-
 
 } export { Setting };

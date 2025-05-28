@@ -3,12 +3,8 @@ import { expect } from "playwright/test";
 class LogoutPage {
   constructor(page) {
     this.page = page;
-    this.emailInput = page.getByRole("textbox", {
-      name: "아이디(이메일)를 입력하세요",
-    });
-    this.passwordInput = page.getByRole("textbox", {
-      name: "비밀번호를 입력하세요",
-    });
+    this.emailInput = page.getByRole("textbox", {name: "아이디(이메일)를 입력하세요"});
+    this.passwordInput = page.getByRole("textbox", {name: "비밀번호를 입력하세요"});
     this.loginButton = page.getByRole("button", { name: "로그인" });
     this.logoutButton = page.getByRole("button", { name: "로그아웃" });
     this.logoutModalText = page.getByText('로그아웃하시겠습니까?');

@@ -64,62 +64,61 @@ class Payment {
         this.selectedVisitRouteText = '';
 
          // 접수메모
-         this.memoTitle = page.locator('label').filter({ hasText: '수납메모' });
-         this.memoTemplate = page.getByText('자주 쓰는 상용구');
-         this.memoEnter = page.locator('.ql-editor p'); // quill 에디터 라서 일부러 locator 이용
+        this.memoTitle = page.locator('label').filter({ hasText: '수납메모' });
+        this.memoTemplate = page.getByText('자주 쓰는 상용구');
+        this.memoEnter = page.locator('.ql-editor p'); // quill 에디터 라서 일부러 locator 이용
          // page.getByRole('paragraph').filter({ hasText: /^$/ });
-         this.enteredMemoText = '';
+        this.enteredMemoText = '';
         
-         this.pendingButton = page.getByRole('button', { name: '수납대기로 저장' });
-         this.pendingCategory = page.getByRole('button', { name: '수납대기' }).nth(1);
-         
-         this.pendingSuccessText = page.getByText('수납을 생성했습니다');
-         this.editSuccessText = page.getByText('수납을 수정했습니다. 연결된 접수정보가 업데이트 됩니다.');
+        this.pendingButton = page.getByRole('button', { name: '수납대기로 저장' });
+        this.pendingCategory = page.getByRole('button', { name: '수납대기' }).nth(1);
+        
+        this.pendingSuccessText = page.getByText('수납을 생성했습니다');
+        this.editSuccessText = page.getByText('수납을 수정했습니다. 연결된 접수정보가 업데이트 됩니다.');
 
-         this.pendingStatus = page.getByRole('cell', { name: '수납대기', exact: true });
+        this.pendingStatus = page.getByRole('cell', { name: '수납대기', exact: true });
 
          // 수납처리
-         this.processPaymentButton = page.getByRole('button', { name: '수납처리' });
+        this.processPaymentButton = page.getByRole('button', { name: '수납처리' });
 
          // 과세
-         this.notFreeTitle = page.getByRole('paragraph').filter({ hasText: /^과세$/ });
+        this.notFreeTitle = page.getByRole('paragraph').filter({ hasText: /^과세$/ });
          // 비과세
-         this.freeTitle = page.getByRole('paragraph').filter({ hasText: '비과세' });
+        this.freeTitle = page.getByRole('paragraph').filter({ hasText: '비과세' });
          // 카드
-         this.cardTitle = page.getByText('카드').nth(1);
-         this.cardFullAmount = page.locator('.sc-eifrsQ').first();
+        this.cardTitle = page.getByText('카드').nth(1);
+        this.cardFullAmount = page.locator('.sc-eifrsQ').first();
 
          // 현금
-         this.cashTitle = page.getByText('현금').nth(4);
-         this.cashInput = page.getByRole('textbox', { name: 'CashPaymentField' }).nth(1);
-         this.inputCashPrice = '750000';
-         
-         this.saveButton = page.getByRole('button', { name: '저장' });
-         this.confirmButton = page.getByRole('button', { name: '확인' });
-         this.editModalInforText = page.getByText('위 내용으로 결산/통계 내용이 업데이트 됩니다');
+        this.cashTitle = page.getByText('현금').nth(4);
+        this.cashInput = page.getByRole('textbox', { name: 'CashPaymentField' }).nth(1);
+        this.inputCashPrice = '750000';
+        
+        this.saveButton = page.getByRole('button', { name: '저장' });
+        this.confirmButton = page.getByRole('button', { name: '확인' });
+        this.editModalInforText = page.getByText('위 내용으로 결산/통계 내용이 업데이트 됩니다');
 
-         this.noDataText = page.getByRole('cell', { name: '등록된 내용이 없습니다' });
+        this.noDataText = page.getByRole('cell', { name: '등록된 내용이 없습니다' });
 
          // 미수
-         this.unpaidCategory = page.getByRole('button', { name: '미수' });
-         this.unpaidStatus = page.getByRole('cell', { name: '미수', exact: true });
+        this.unpaidCategory = page.getByRole('button', { name: '미수' });
+        this.unpaidStatus = page.getByRole('cell', { name: '미수', exact: true });
 
          // 수납취소
-         this.cancelButton = page.getByRole('button', { name: '수납취소' }).nth(1);
-         this.cancelInfoText = page.getByText('전체 수납(미수)취소 처리됩니다');
-         this.cancelSuccessText = page.getByText('수납취소 처리되었습니다');
+        this.cancelButton = page.getByRole('button', { name: '수납취소' }).nth(1);
+        this.cancelInfoText = page.getByText('전체 수납(미수)취소 처리됩니다');
+        this.cancelSuccessText = page.getByText('수납취소 처리되었습니다');
 
-         this.cancelCategory = page.getByRole('button', { name: '수납취소' });
+        this.cancelCategory = page.getByRole('button', { name: '수납취소' });
 
-         this.cancelStatus = page.getByRole('cell', { name: '수납취소', exact: true });
+        this.cancelStatus = page.getByRole('cell', { name: '수납취소', exact: true });
 
          // 현금 영수증
-         this.cashReceipt = page.getByText('현금영수증(계좌이체, 현금)').nth(1);
+        this.cashReceipt = page.getByText('현금영수증(계좌이체, 현금)').nth(1);
 
          // 완납
-         this.payFullCategory = page.getByRole('button', { name: '완납' });
-         this.payFullStatus = page.getByRole('cell', { name: '완납', exact: true });
-
+        this.payFullCategory = page.getByRole('button', { name: '완납' });
+        this.payFullStatus = page.getByRole('cell', { name: '완납', exact: true });
 
     }
 
