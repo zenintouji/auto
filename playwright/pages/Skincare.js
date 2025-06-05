@@ -79,7 +79,7 @@ class Skincare {
         await this.skinCare.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('피부관리 진입 성공');
+        console.log('✅ 피부관리 진입 성공');
     }
 
     async enterAddSurgery() {
@@ -87,7 +87,7 @@ class Skincare {
         await this.addingSurgeryButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 추가 팝업 진입 성공');
+        console.log('✅ 시/수술 추가 팝업 진입 성공');
     }
 
     async addSurgery() {
@@ -101,7 +101,7 @@ class Skincare {
         await this.selectOptionValue.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 카테고리: ', this.searchedSurgeryCategory);
+        console.log('🔍 시/수술 카테고리: ', this.searchedSurgeryCategory);
 
         await expect(this.searchSurgeryName).toBeVisible();
         await this.searchSurgeryName.click();
@@ -112,25 +112,25 @@ class Skincare {
         await this.selectOptionValue.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술명: ', this.searchedSurgeryName);
+        console.log('🔍 시/수술명: ', this.searchedSurgeryName);
 
         await expect(this.searchButton).toBeVisible();
         await this.searchButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 검색 성공~');
+        console.log('✅ 시/수술 검색 성공~');
 
         await expect(this.addingButton).toBeVisible();
         await this.addingButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 추가 성공~');
+        console.log('✅ 시/수술 추가 성공~');
     }
 
     async checkAddingSuccessText() {
         await expect(this.addingSuccessText).toBeVisible();
         
-        console.log('추가 성공 스낵바 확인 성공~~~');
+        console.log('✅ 추가 성공 스낵바 확인 성공~~~');
     }
 
     async closeSurgeryModal() {
@@ -140,7 +140,7 @@ class Skincare {
 
         await expect(this.addingSurgeryTitle).not.toBeVisible();
 
-        console.log('시/수술 추가 모달 닫기 성공~~');
+        console.log('✅ 시/수술 추가 모달 닫기 성공~~');
     }
 
     async checkAddSurgery() {
@@ -148,7 +148,7 @@ class Skincare {
         await expect(this.page.getByRole('cell', { name: this.searchedSurgeryCategory })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.searchedSurgeryName })).toBeVisible();
 
-        console.log('시/수술 추가 잘 됐어여~~');
+        console.log('✅ 시/수술 추가 잘 됐어여~~');
     }
 
     ///// 피부관리 진행
@@ -160,7 +160,7 @@ class Skincare {
 
         await expect(this.progressSkincareTitle).toBeVisible();
 
-        console.log('피부관리 진행 선택 성공~~');
+        console.log('✅ 피부관리 진행 선택 성공~~');
     }
 
     // 피부 관리사
@@ -174,7 +174,7 @@ class Skincare {
         this.selectedSkincareCounselorText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
 
-        console.log('피부관리사: ', this.selectedSkincareCounselorText);
+        console.log('🔍 피부관리사: ', this.selectedSkincareCounselorText);
 
         await this.page.waitForLoadState('domcontentloaded');
     }
@@ -190,7 +190,7 @@ class Skincare {
         this.selectedDoctorText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
 
-        console.log('의사: ', this.selectedDoctorText);
+        console.log('🔍 의사: ', this.selectedDoctorText);
 
         await this.page.waitForLoadState('domcontentloaded');
     }
@@ -206,7 +206,7 @@ class Skincare {
         this.selectedCounselorText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click(); 
 
-        console.log('상담사: ', this.selectedCounselorText);
+        console.log('🔍 상담사: ', this.selectedCounselorText);
 
         await this.page.waitForLoadState('domcontentloaded');
     }
@@ -215,8 +215,8 @@ class Skincare {
         await expect(this.page.getByRole('cell', { name: this.searchedSurgeryCategory }).nth(1)).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.searchedSurgeryName }).nth(1)).toBeVisible();
 
-        console.log('추가된 시/수술 카테고리: ', this.searchedSurgeryCategory);
-        console.log('추가된 시/수술명: ', this.searchedSurgeryName);
+        console.log('🔍 추가된 시/수술 카테고리: ', this.searchedSurgeryCategory);
+        console.log('🔍 추가된 시/수술명: ', this.searchedSurgeryName);
     }
 
     // 피부관리내용
@@ -232,7 +232,7 @@ class Skincare {
 
         this.enteredMemoText = await this.memoEnter.innerText();
 
-        console.log('피부관리내용: ', this.enteredMemoText);
+        console.log('🔍 피부관리내용: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -241,12 +241,12 @@ class Skincare {
         await this.saveButton.click(); 
         await this.page.waitForLoadState('domcontentloaded');
 
-        console.log('피부관리 저장 성공~~');
+        console.log('✅ 피부관리 저장 성공~~');
     }
 
     async checkSaveSuccessText() {
         await expect(this.saveSuccessText).toBeVisible();
-        console.log('저장 스낵바 확인 성공~');
+        console.log('✅ 저장 스낵바 확인 성공~');
     }
 
     // 확인
@@ -259,7 +259,7 @@ class Skincare {
         await this.page.waitForLoadState('domcontentloaded');
 
         await expect(this.page.getByRole('cell', { name: formattedDate })).toBeVisible(); 
-
+        console.log('🔍 일자: ', formattedDate);
         await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible(); 
 
         await this.verifyVisibleByName('cell', this.selectedSkincareCounselorText);
@@ -268,6 +268,8 @@ class Skincare {
 
         await expect(this.page.getByRole('cell', { name: this.searchedSurgeryCategory })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.searchedSurgeryName })).toBeVisible();
+
+        console.log('✅ 선택 값들 전부 내역에 잘 들어가 있어요~');s
     }
 
     async verifyVisibleByName(role, nameText) {
@@ -279,18 +281,18 @@ class Skincare {
                 const text = await elements.nth(i).innerText();
                 if (text.trim() === nameText.trim()) {
                     await expect(elements.nth(i)).toBeVisible();
-                    console.log(`${nameText} 이거 겹치네여~~~ 잘 들어가 있어여~~`);
+                    console.log(`✅ ${nameText} 이거 겹치네여~~~ 잘 들어가 있어여~~`);
                     return true;
                 }
             }
-            console.log(`${nameText} 중복 항목 일치 항목 없어여~~`);
+            console.log(`✅ ${nameText} 중복 항목 일치 항목 없어여~~`);
             return false;
         } else if (count === 1) {
             await expect(elements.first()).toBeVisible();
-            console.log('항목 하나 밖에 없네유, 잘 들어 있어여~~');
+            console.log('✅ 항목 하나 밖에 없네유, 잘 들어 있어여~~');
             return true;
         } else {
-            console.log(`${nameText} 항목이 없어여~~`);
+            console.log(`🚫 ${nameText} 항목이 없어여~~`);
             return false;
         }
     }
@@ -300,7 +302,7 @@ class Skincare {
         await this.page.getByRole('cell', { name: this.enteredMemoText }).dblclick();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.progressSkincareTitle).toBeVisible();
-        console.log('예약 수정 진입 성공');
+        console.log('✅ 예약 수정 진입 성공');
     }
 
     // 피부 관리사
@@ -314,7 +316,7 @@ class Skincare {
         this.selectedSkincareCounselorText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
 
-        console.log('피부관리사 수정: ', this.selectedSkincareCounselorText);
+        console.log('🔍 피부관리사 수정: ', this.selectedSkincareCounselorText);
 
         await this.page.waitForLoadState('domcontentloaded');
     }
@@ -330,7 +332,7 @@ class Skincare {
         this.selectedDoctorText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
 
-        console.log('의사 수정: ', this.selectedDoctorText);
+        console.log('🔍 의사 수정: ', this.selectedDoctorText);
 
         await this.page.waitForLoadState('domcontentloaded');
     }
@@ -346,7 +348,7 @@ class Skincare {
         this.selectedCounselorText = await this.editOptionValue.innerText();
         await this.editOptionValue.click(); 
 
-        console.log('상담사 수정: ', this.selectedCounselorText);
+        console.log('🔍 상담사 수정: ', this.selectedCounselorText);
 
         await this.page.waitForLoadState('domcontentloaded');
     }
@@ -368,7 +370,7 @@ class Skincare {
 
         this.enteredMemoText = await this.memoEnter.innerText();
 
-        console.log('피부관리내용 수정: ', this.enteredMemoText);
+        console.log('🔍 피부관리내용 수정: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -376,26 +378,26 @@ class Skincare {
         await expect(this.editButton).toBeVisible();
         await this.editButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('피부관리 수정 버튼 선택 성공');
+        console.log('✅ 피부관리 수정 버튼 선택 성공');
     }
 
     async checkEditSuccessText() {
         await expect(this.editSuccessText).toBeVisible();
-        console.log('수정 스낵바 확인 성공');
+        console.log('✅ 수정 스낵바 확인 성공');
     }
 
     async selectSkincare() {
         await expect(this.selectChart).toBeVisible();
         await this.selectChart.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 선택 성공');
+        console.log('✅ 차트 선택 성공');
     }
 
     async deleteSkincare() {
         await expect(this.deleteButton).toBeVisible();
         await this.deleteButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('삭제 버튼 선택 성공');
+        console.log('✅ 삭제 버튼 선택 성공');
     }
 
     async deletePopup() {
@@ -403,19 +405,19 @@ class Skincare {
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('삭제 성공');
+        console.log('✅ 삭제 성공');
     }
 
     async checkDeleteSuccessText() {
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('삭제 스낵바 확인 성공');
+        console.log('✅ 삭제 스낵바 확인 성공');
     }
 
     async deleteRemainingSkincare() {
         await expect(this.deleteIconButton).toBeVisible();
         await this.deleteIconButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('시/수술 항목 삭제 버튼 선택 성공');
+        console.log('✅ 시/수술 항목 삭제 버튼 선택 성공');
     }
 
     async deleteSurgeryPopup() {
@@ -423,12 +425,12 @@ class Skincare {
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('시/수술 삭제 성공');
+        console.log('✅ 시/수술 삭제 성공');
     }
 
     async checkDeleteSurgerySuccessText() {
         await expect(this.deleteSurgeryPopupText).toBeVisible();
-        console.log('시/수술 항목 삭제 스낵바 확인 성공');
+        console.log('✅ 시/수술 항목 삭제 스낵바 확인 성공');
     }
 
 } export { Skincare };

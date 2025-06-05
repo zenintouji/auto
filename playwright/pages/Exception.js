@@ -11,7 +11,7 @@ class Exception {
         if (await popupButton.isVisible()) {
             await popupButton.click();
         }
-        console.log('팝업 종료 성공');
+        console.log('✅ 팝업 종료 성공');
     }
 
     async closeBannerIfExists() {
@@ -22,7 +22,7 @@ class Exception {
             await this.page.waitForTimeout(2000);
             await this.page.waitForLoadState('domcontentloaded');
         }
-        console.log('새로고침 선택 후 대기 성공')
+        console.log('✅ 새로고침 선택 후 대기 성공')
     }
 
 }

@@ -16,9 +16,9 @@ class Announcement {
         this.confirmButton = page.getByRole('button', { name: '확인' });
 
         // 일일 공지 관련 버튼
-        this.dailyEditButton = page.locator('div').filter({ hasText: /v2공지_작성_자동화모든 공지를 불러왔습니다\.$/ }).getByRole('button').nth(1);
-        this.dailyFixButton = page.locator('div').filter({ hasText: /v2공지_작성_자동화_수정모든 공지를 불러왔습니다\.$/ }).getByRole('button').nth(3);
-        this.dailyDeleteButton = page.locator('div').filter({ hasText: /v2공지_작성_자동화_수정모든 공지를 불러왔습니다\.$/ }).getByRole('button').nth(2);
+        this.dailyEditButton = page.locator('div').filter({ hasText: /공지_작성_자동화모든 공지를 불러왔습니다\.$/ }).getByRole('button').nth(1);
+        this.dailyFixButton = page.locator('div').filter({ hasText: /공지_작성_자동화_수정모든 공지를 불러왔습니다\.$/ }).getByRole('button').nth(3);
+        this.dailyDeleteButton = page.locator('div').filter({ hasText: /공지_작성_자동화_수정모든 공지를 불러왔습니다\.$/ }).getByRole('button').nth(2);
 
         // 전체 공지 관련 버튼
         this.fullEditButton = page.locator('.MuiButtonBase-root.MuiIconButton-root').nth(3);
@@ -38,6 +38,12 @@ class Announcement {
         this.announceText = page.getByText(this.ANNOUNCE_TEXT);
         this.announceEditText = page.getByText(this.ANNOUNCE_TEXT_EDIT);
         // this.announceText = page.getByText('공지_작성_자동화');
+        this.announceTextForHover = page.locator('div.quill-text p', { hasText: this.ANNOUNCE_TEXT });
+        // page.locator('div.quill-text >> text=공지_작성_자동화');
+        this.announceEditTextForHover = page.locator('div.quill-text p', { hasText: this.ANNOUNCE_TEXT_EDIT });
+        // page.locator('div.quill-text >> text=공지_작성_자동화');
+
+        // this.announceText = page.locator('.quill-text p', { hasText: this.ANNOUNCE_TEXT });
 
     }
 
@@ -46,7 +52,7 @@ class Announcement {
         await expect(this.announcement).toBeVisible();
         await this.announcement.click();
         await expect(this.createButton).not.toBeVisible();
-        console.log('공지사항 접기 성공');
+        console.log('✅ 공지사항 접기 성공');
     }
     
     // 공지사항 펼치기
@@ -55,7 +61,7 @@ class Announcement {
         await expect(this.announcement).toBeVisible();
         await this.announcement.click();
         await expect(this.createButton).toBeVisible();
-        console.log('공지사항 펼치기 성공');
+        console.log('✅ 공지사항 펼치기 성공');
     }
 
     // 작성 선택
@@ -63,7 +69,7 @@ class Announcement {
         await expect(this.createButton).toBeVisible();
         await this.createButton.click();
         await expect(this.typeOfAnnounce).toBeVisible();
-        console.log('공지사항 작성 선택 성공');
+        console.log('✅ 공지사항 작성 선택 성공');
     }
 
     // 작성 취소
@@ -71,7 +77,7 @@ class Announcement {
         await expect(this.cancelButton).toBeVisible();
         await this.cancelButton.click();
         await expect(this.typeOfAnnounce).not.toBeVisible();
-        console.log('공지사항 작성 취소 성공');
+        console.log('✅ 공지사항 작성 취소 성공');
     }
 
     
@@ -80,7 +86,7 @@ class Announcement {
         await expect(this.dailyAnnouncement).toBeVisible();
         await this.dailyAnnouncement.click();
         await expect(this.typeOfAnnounce).toBeVisible();
-        console.log('일일공지 선택');
+        console.log('✅ 일일공지 선택 성공');
     }
     
     // 전체공지 선택
@@ -88,7 +94,7 @@ class Announcement {
         await expect(this.fullAnnouncement).toBeVisible();
         await this.fullAnnouncement.click();
         await expect(this.typeOfAnnounce).toBeVisible();
-        console.log('전체공지 선택');
+        console.log('✅ 전체공지 선택 성공');
     }
 
     // 일일공지 내용 작성 까지만
@@ -98,6 +104,7 @@ class Announcement {
         await this.announceInput.fill(this.ANNOUNCE_TEXT);
         // await this.page.waitForTimeout(1000);
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('📋 일일공지 작성 성공');
     }
 
     // 전체공지 내용 작성 까지만
@@ -107,31 +114,35 @@ class Announcement {
         await this.announceInput.fill(this.ANNOUNCE_TEXT);
         // await this.page.waitForTimeout(1000);
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('📋 전체공지 내용 작성 성공');
     }
 
     // 저장 버튼 선택
     async saveAnnounce() {
         await expect(this.saveButton).toBeVisible();
         await this.saveButton.click();
+        console.log('✅ 저장 버튼 선택 성공');
     }
 
 
     // 저장 성공 스낵바 문구
     async saveSuccessCheck() {
         await expect(this.saveSuccessText).toBeVisible();
-        console.log('공지 저장 성공');
+        console.log('✅ 저장 스낵바 확인 성공');
     }
 
     // 일일공지 수정 선택 까지만
     async editDailyAnnounce() {
         await expect(this.announceText).toBeVisible();
         await expect(this.announceText).toBeEnabled();
-        await this.announceText.hover();
+        await this.announceTextForHover.hover();
         // await this.page.waitForTimeout(2000);
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.dailyEditButton).toBeVisible();
         await this.dailyEditButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('📋 일일공지 수정 선택 성공');
+
         await expect(this.typeOfAnnounce).toBeVisible();
         await expect(this.announceText).toBeVisible();
     }
@@ -139,12 +150,13 @@ class Announcement {
     // 전체공지 수정 선택 까지만
     async editFullAnnounce() {
         await expect(this.announceText).toBeVisible();
-        await this.announceText.hover();
+        await this.announceTextForHover.hover();
         // await this.page.waitForTimeout(2000);
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.fullEditButton).toBeVisible();
         await this.fullEditButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('📋 전체공지 수정 선택 성공');
         await expect(this.typeOfAnnounce).toBeVisible();
         await expect(this.announceText).toBeVisible();
     }
@@ -156,66 +168,79 @@ class Announcement {
         await this.announceInput.fill(this.ANNOUNCE_TEXT_EDIT);
         // await this.page.waitForTimeout(1000);
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('📋 공지내용 작성 성공');
     }
 
     // 공지내용 수정 확인
     async checkAnnounceEdit() {
         await expect(this.announceEditText).toBeVisible();
-        console.log('공지 수정 성공');
+        console.log('✅ 공지 수정 성공');
     }
 
     // 일일공지 고정 선택 까지
     async fixDailyAnnounce() {
         await expect(this.announceEditText).toBeVisible();
         await expect(this.announceEditText).toBeEnabled();
-        await this.announceEditText.hover();
+        await this.announceEditTextForHover.hover();
         // await this.page.waitForTimeout(2000);
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.dailyFixButton).toBeVisible();
         await this.dailyFixButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
         await expect(this.announceEditText).toBeVisible();
+        console.log('🛠️ 일일공지 고정 성공');
     }
 
     // 전체공지 고정 선택 까지
     async fixFullAnnounce() {
         await expect(this.announceEditText).toBeVisible();
         await expect(this.announceEditText).toBeEnabled();
-        await this.announceEditText.hover();
+        await this.announceEditTextForHover.hover();
         // await this.page.waitForTimeout(2000);
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.fullFixButton).toBeVisible();
         await this.fullFixButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
         await expect(this.announceEditText).toBeVisible();
+        console.log('🛠️ 전체공지 고정 성공');
     }
 
     // 일일공지 삭제
     async deleteDailyAnnounce() {
         await expect(this.announceEditText).toBeVisible();
         await expect(this.announceEditText).toBeEnabled();
-        await this.announceEditText.hover();
+        await this.announceEditTextForHover.hover();
         // await this.page.waitForTimeout(2000);
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.dailyDeleteButton).toBeVisible();
         await this.dailyDeleteButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 일일공지 삭제 팝업 진입 성공');
+
         await expect(this.deleteModalText).toBeVisible();
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('일일공지 삭제 성공');
+        console.log('✅ 일일공지 삭제 성공');
     }
 
     async deleteFullAnnounce() {
         await expect(this.announceEditText).toBeVisible();
         await expect(this.announceEditText).toBeEnabled();
-        await this.announceEditText.hover();
+        await this.announceEditTextForHover.hover();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.fullDeleteButton).toBeVisible();
         await this.fullDeleteButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 전체공지 삭제 팝업 진입 성공');
+
         await expect(this.deleteModalText).toBeVisible();
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
+        await this.page.waitForLoadState('domcontentloaded');
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('전체공지 삭제 성공');
+        console.log('✅ 전체공지 삭제 성공');
     }
 
     

@@ -41,7 +41,7 @@ class customerSearch {
         // await this.page.waitForLoadState('domcontentloaded');
         await expect(this.nameCategory).toBeVisible();
         await expect(this.resultSearchName).toBeVisible();
-        console.log('고객명 검색 성공');
+        console.log('✅ 고객명 검색 성공');
     }
 
     async searhCustomerNumber() {
@@ -56,13 +56,14 @@ class customerSearch {
         await this.resultSearchNumber.waitFor();
         await expect(this.numberCategory).toBeVisible();
         await expect(this.resultSearchNumber).toBeVisible();
-        console.log('전화번호 검색 성공');
+        console.log('✅ 전화번호 검색 성공');
     }
 
     async chartClose() {
         await expect(this.closeButton).toBeVisible();
         await this.closeButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 닫기 버튼 선택 성공');
     }
 
     async searchWrongChartNumber() {
@@ -74,7 +75,7 @@ class customerSearch {
         await this.searchButton.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.notFoundMessage).toBeVisible();
-        console.log('틀린 차트번호 결과 확인 성공');
+        console.log('✅ 틀린 차트번호 결과 확인 성공');
     }
 
     async searchChartNumber() {
@@ -101,7 +102,7 @@ class customerSearch {
         await this.searchButton.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.notFoundMessage).toBeVisible();
-        console.log('고객의 틀린 생일 검색 결과 확인 성공');
+        console.log('✅ 고객의 틀린 생일 검색 결과 확인 성공');
     }
 
     async searchBirth() {
@@ -114,7 +115,7 @@ class customerSearch {
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.birthCategory).toBeVisible();
         await expect(this.resultSearchBirth).toBeVisible();
-        console.log('고객의 생일 검색 결과 확인 성공');
+        console.log('✅ 고객의 생일 검색 결과 확인 성공');
     }
 
     

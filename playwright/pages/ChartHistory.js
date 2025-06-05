@@ -45,7 +45,7 @@ class ChartHistory {
         // await this.page.waitForLoadState('domcontentloaded');
         await expect(this.nameCategory).toBeVisible();
         await expect(this.resultSearchName).toBeVisible();
-        console.log('고객명 검색 성공');
+        console.log('✅ 고객명 검색 성공');
     }
 
     async enterInIntegratedChart() {
@@ -53,23 +53,26 @@ class ChartHistory {
         await this.customerName.dblclick();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.integratedChartTitle).toBeVisible();
-        console.log('통합차트 진입 성공');
+        console.log('✅ 통합차트 진입 성공');
     }
 
     async checkChartHistoryName() {
         await expect(this.nameCharting).toBeVisible();
+        console.log('✅ 차팅이력 확인 성공');
     }
 
     async selectDepartment() {
         await expect(this.comboDepartment).toBeVisible();
         await this.comboDepartment.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 부서 콤보박스 선택 성공');
     }
 
     async checkChartHistory() {
         for (let i = 0; i < 7; i++) {
             const selectDepartment = this.department.nth(i);
             const optionCheck = await selectDepartment.innerText();
-            console.log(`부서 ${i + 1}:`, optionCheck);
+            console.log(`🔍 부서 ${i + 1}:`, optionCheck);
 
             if (i === 0) {
                 await selectDepartment.click();
@@ -82,7 +85,7 @@ class ChartHistory {
             await this.focusOnBackground.click();
             for (let j = 0; j < 7; j +=2) {
                 await expect(this.reservationBadge.nth(j)).toBeVisible();
-                console.log('예약 찾기 성공');
+                console.log('✅ 예약 찾기 성공');
                 await expect(this.comboDepart).toBeVisible();
                 break;
             }
@@ -92,14 +95,14 @@ class ChartHistory {
     async selectDepart() {
         await expect(this.comboDepart).toBeVisible();
         await this.comboDepart.click();
-        console.log('부서 선택 성공');
+        console.log('✅ 부서 선택 성공');
     }
 
     async uncheckDepartment() {
         for (let i = 0; i < 7; i++) {
             const selectDepartment = this.department.nth(i);
             const uncheckOption = await selectDepartment.innerText();
-            console.log(`해제한 부서 ${i + 1}:`, uncheckOption);
+            console.log(`🔍 해제한 부서 ${i + 1}:`, uncheckOption);
             await selectDepartment.click();
             await this.page.waitForTimeout(1000);
         }
@@ -112,7 +115,7 @@ class ChartHistory {
         await this.foldList.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.foldList).not.toBeVisible();
-        console.log('차팅이력 영역 접기 성공');
+        console.log('✅ 차팅이력 영역 접기 성공');
     }
 
     async spreadHistoryList() {
@@ -120,7 +123,7 @@ class ChartHistory {
         await this.spreadList.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.spreadList).not.toBeVisible();
-        console.log('차팅이력 영역 펼치기 성공');
+        console.log('✅ 차팅이력 영역 펼치기 성공');
     }
 
 }

@@ -40,7 +40,7 @@ class HistoryTaking {
     this.checkStatus = page.getByRole("cell", { name: "완료" });
     this.checkStatus2 = page.getByRole("cell", { name: "미완료" });
 
-    this.selectAllForms = page.locator(".survey-list-table-wrapper > .sc-hmdomO > thead > tr > th").first();
+    this.selectAllForms = page.locator('input[type="checkbox"][data-indeterminate="false"]').first();
 
     this.deletePopupText = page.getByText("정말로 삭제하시겠습니까?");
 
@@ -51,7 +51,7 @@ class HistoryTaking {
     await expect(this.historyTakingChart).toBeVisible();
     await this.historyTakingChart.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log("문진 차트 진입 성공");
+    console.log("✅ 문진 차트 진입 성공");
   }
 
   // 문진 선택 진입
@@ -59,7 +59,7 @@ class HistoryTaking {
     await expect(this.registButton).toBeVisible();
     await this.registButton.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('문진 선택 진입 성공');
+    console.log('✅ 문진 선택 진입 성공');
   }
 
   async selectHistoryTaking() {
@@ -71,14 +71,14 @@ class HistoryTaking {
     await expect(this.confirmButton).toBeVisible();
     await this.confirmButton.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('문진 선택 성공');
+    console.log('✅ 문진 선택 성공');
   }
 
   async enterHistoryTaking() {
     await expect(this.formTitle).toBeVisible();
     await expect(this.formDiscription).toBeVisible();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('문진 등록 입력 시작');
+    console.log('▶️ 문진 등록 입력 시작');
   }
 
   async essayQuestionAnswer() {
@@ -89,7 +89,7 @@ class HistoryTaking {
     await this.selectEssayAnswer.type('주관식_답변_자동화', { delay: 50});
     this.essayAnswer = await this.selectEssayAnswer.inputValue();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('주관식 질문 답변 성공');
+    console.log('✅ 주관식 질문 답변 성공');
   }
 
   async choiceOne() {
@@ -97,7 +97,7 @@ class HistoryTaking {
     await expect(this.multipleForOneAnswer).toBeVisible();
     await this.multipleForOneAnswer.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('객관식 1건 선택 성공');
+    console.log('✅ 객관식 1건 선택 성공');
   }
 
   async choiceMultiple() {
@@ -111,7 +111,7 @@ class HistoryTaking {
     await expect(this.multipleAnswer3).toBeVisible();
     await this.multipleAnswer3.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('객관식 다건 선택 성공');
+    console.log('✅ 객관식 다건 선택 성공');
   }
 
   async checkAgreeToUse() {
@@ -119,19 +119,19 @@ class HistoryTaking {
     await expect(this.checkAgree).toBeVisible();
     await this.checkAgree.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('이용동의 선택 성공');
+    console.log('✅ 이용동의 선택 성공');
   }
 
   async saveForm() {
     await expect(this.saveButton).toBeVisible();
     await this.saveButton.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('저장 성공');
+    console.log('✅ 저장 성공');
   }
 
   async checkSaveSuccess() {
     await expect(this.saveSuccessText).toBeVisible();
-    console.log('저장 성공 스낵바 확인 성공');
+    console.log('✅ 저장 스낵바 확인 성공');
   }
 
   async checkHistoryTaking() {
@@ -143,21 +143,22 @@ class HistoryTaking {
 
     await this.page.waitForLoadState('domcontentloaded');
     await expect(this.page.getByRole('cell', { name: formattedDate })).toBeVisible();
+    console.log('🔍 일자: ', formattedDate);
     await expect(this.page.getByRole('cell', { name: '문진 자동화' })).toBeVisible();
     await this.page.waitForLoadState('domcontentloaded');
-    console.log('저장 내용 확인 성공');
+    console.log('✅ 저장 내용 확인 성공');
   }
 
   async TemporarySave() {
     await expect(this.temporarySaveButton).toBeVisible();
     await this.temporarySaveButton.click();
     await this.page.waitForLoadState("domcontentloaded");
-    console.log('임시 저장 성공');
+    console.log('✅ 임시 저장 성공');
   }
 
   async checkTemporarySaveSuccess() {
     await expect(this.tempSaveSuccessText).toBeVisible();
-    console.log('임시 저장 스낵바 확인 성공');
+    console.log('✅ 임시 저장 스낵바 확인 성공');
   }
 
   async checkIncompleteHistoryTaking() {
@@ -171,7 +172,7 @@ class HistoryTaking {
     await expect(this.page.getByRole('cell', { name: formattedDate }).nth(0)).toBeVisible();
     await expect(this.page.getByRole('cell', { name: '문진 자동화' }).nth(0)).toBeVisible();
     await this.page.waitForLoadState('domcontentloaded');
-    console.log('저장 내용 확인 성공');
+    console.log('✅ 저장 내용 확인 성공');
   }
 
   async selectForm() {
@@ -179,14 +180,14 @@ class HistoryTaking {
     await this.selectAllForms.click();
     await this.page.waitForLoadState('domcontentloaded');
     await expect(this.deleteButton).toBeVisible();
-    console.log('전체선택 성공');
+    console.log('✅ 전체선택 성공');
   }
 
   async deleteForm() {
     await expect(this.deleteButton).toBeVisible();
     await this.deleteButton.click();
     await this.page.waitForLoadState('domcontentloaded');
-    console.log('삭제 버튼 선택 성공');
+    console.log('✅ 삭제 버튼 선택 성공');
   }
 
   async deletePopup() {
@@ -194,12 +195,12 @@ class HistoryTaking {
     await expect(this.confirmButton).toBeVisible();
     await this.confirmButton.click();
     await this.page.waitForLoadState('domcontentloaded');
-    console.log('삭제 성공');
+    console.log('✅ 삭제 성공');
   }
 
   async deleteSuccess() {
     await expect(this.deleteSuccessText).toBeVisible();
-    console.log('삭제 스낵바 확인 성공');
+    console.log('✅ 삭제 스낵바 확인 성공');
   }
 
 }

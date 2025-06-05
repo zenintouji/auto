@@ -20,7 +20,7 @@ class LoginPage {
   async login(username, password, retryCount = 0) {
     const MAX_RETRY = 5;
 
-    console.log(`로그인 시도: ${retryCount + 1}회차`);
+    console.log(`⚠️ 로그인 시도: ${retryCount + 1}회차`);
 
     await expect(this.emailInput).toBeVisible();
     await this.emailInput.fill(username);
@@ -37,11 +37,11 @@ class LoginPage {
 
     await this.page.waitForURL(/\/(login|crm)/);
     const currentURL = await this.page.url();
-    console.log('📍현재 URL: ', currentURL); // 이모찌 ㅋㅋㅋ
+    console.log('📍 현재 URL: ', currentURL); // 이모찌 ㅋㅋㅋ
 
     if (currentURL.includes('/login') || await this.loginButton.isVisible()) {
       if (retryCount >= MAX_RETRY) {
-        throw new Error("로그인 실패 => 최대 시도 초과함")
+        throw new Error("❌ 로그인 실패 => 최대 시도 초과함")
       }
       
       console.log('⚠️ 로그인 실패 감지됨 → 다시 시도함');
@@ -101,7 +101,7 @@ class LoginPage {
     ];
     const urlRegex = new RegExp(`/crm/(${VALID_PATHS.map(p => p.replace(/\//g, '\\').replace(/-/g, '\\-')).join('|')})`);
     await expect(this.page).toHaveURL(urlRegex);
-    console.log('로그인 성공');
+    console.log('✅ 로그인 성공');
   }
 
   async isLoggedin() {

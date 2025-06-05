@@ -32,12 +32,12 @@ class LogoutPage {
     ]);
 
     if (await this.isLoginFailed()) {
-      console.log("Login failed, then retry");
+      console.log("⚠️ 로그인 실패 감지됨 → 다시 시도함");
       await this.retryLogin(username, password);
     }
 
     await expect(this.page).not.toHaveURL('https://unocare.co.kr/login');
-    console.log('로그인 성공');
+    console.log('✅ 로그인 성공');
   }
 
   async isLoggedIn() {
@@ -58,7 +58,7 @@ class LogoutPage {
     await expect(this.logoutModalText).toBeVisible();
     await expect(this.confirmButton).toBeVisible();
     await this.confirmButton.click();
-    console.log('로그아웃 성공');
+    console.log('✅ 로그아웃 성공');
   }
 
   async isLoginFailed() {

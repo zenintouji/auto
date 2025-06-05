@@ -135,7 +135,7 @@ class SeeDoctor {
         await expect(this.treatment).toBeVisible();
         await this.treatment.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('진료 진입 성공');
+        console.log('✅ 진료 진입 성공');
     }
 
     async selectCreateTreatment() {
@@ -143,7 +143,7 @@ class SeeDoctor {
         await this.createTreatmentButton.click();
         await this.page.waitForLoadState("domcontentloaded");
         await expect(this.createTreatmentTitle).toBeVisible();
-        console.log('진료 등록 진입 성공');
+        console.log('✅ 진료 등록 진입 성공');
     }
 
     // 의사
@@ -155,7 +155,7 @@ class SeeDoctor {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedDoctorText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('의사: ', this.selectedDoctorText);
+        console.log('🔍 의사: ', this.selectedDoctorText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -168,7 +168,7 @@ class SeeDoctor {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgicalCategoryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('시/수술 카테고리: ', this.selectedSurgicalCategoryText);
+        console.log('🔍 시/수술 카테고리: ', this.selectedSurgicalCategoryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -181,7 +181,7 @@ class SeeDoctor {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('시/수술명: ', this.selectedSurgeryText);
+        console.log('🔍 시/수술명: ', this.selectedSurgeryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -195,7 +195,7 @@ class SeeDoctor {
         await this.memoEnter.type('진료_내용_입력_자동화', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('진료내용: ', this.enteredMemoText);
+        console.log('🔍 진료내용: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -210,7 +210,7 @@ class SeeDoctor {
         const page1Promise = this.page.waitForEvent('popup');
         await this.createPrescriptionButton.click();
         this.page1 = await page1Promise;
-        console.log('처방전 작성 선택 확인 성공');
+        console.log('✅ 처방전 작성 선택 확인 성공');
     }
 
     // 처방전 안내 닫기
@@ -221,7 +221,7 @@ class SeeDoctor {
         await expect(alertPopupTitle).toBeVisible();
         await expect(alertPopupCloseButton).toBeVisible();
         await alertPopupCloseButton.click();
-        console.log('안내 팝업 닫기 선택 확인 성공');
+        console.log('✅ 안내 팝업 닫기 선택 확인 성공');
     }
 
     async registerPrescription() {
@@ -231,12 +231,12 @@ class SeeDoctor {
         const pharmacyCopy = this.page1.getByRole('button', { name: '[V]약국제출용' });
         await expect(personalCopy).toBeVisible();
         await expect(pharmacyCopy).toBeVisible();
-        console.log('처방전 제출 용도 확인 성공');
+        console.log('✅ 처방전 제출 용도 확인 성공');
         
         // 처방전 제목
         const prescriptionTitle = this.page1.getByRole('heading', { name: '처    방    전' });
         await expect(prescriptionTitle).toBeVisible();
-        console.log('처방전 제목 확인 성공');
+        console.log('✅ 처방전 제목 확인 성공');
 
         // 처방전 종류
         const healthInsurance = this.page1.getByRole('button', { name: '[ ]건강보험' }); 
@@ -252,7 +252,7 @@ class SeeDoctor {
         await expect(autoInsurance).toBeVisible();
         await expect(others).toBeVisible();
         await expect(infoText).toBeVisible();
-        console.log('처방전 종류 확인 성공');
+        console.log('✅ 처방전 종류 확인 성공');
 
         // 요양기관번호
         const providerCode = this.page1.getByRole('cell', { name: '요양기관기호 :' });
@@ -263,11 +263,11 @@ class SeeDoctor {
         const rrnBack = this.page1.getByRole('cell', { name: '- 1234567' }).getByRole('textbox').nth(1);
 
         await expect(providerCode).toBeVisible();
-        console.log('요양기관번호 확인 성공');
+        console.log('✅ 요양기관번호 확인 성공');
         await expect(patientName).toBeVisible();
         await expect(rrnFront).toBeVisible();
         await expect(rrnBack).toBeVisible();
-        console.log('환자 정보 확인 성공');
+        console.log('✅ 환자 정보 확인 성공');
         
         // 요양기관
         const clinicTitle = this.page1.getByRole('cell', { name: '의료기관' });
@@ -287,7 +287,7 @@ class SeeDoctor {
         await expect(registerButton).toBeVisible();
         await registerButton.click();
         await this.page1.waitForLoadState("domcontentloaded");
-        console.log('묶음 처방 리스트의 등록 성공');
+        console.log('✅ 묶음 처방 리스트의 등록 성공');
         await this.page1.waitForTimeout(2000);
 
         const temporaryButton = this.page1.getByRole('button', { name: '임시저장' });
@@ -296,12 +296,12 @@ class SeeDoctor {
         await expect(temporaryButton).toBeVisible();
         await temporaryButton.click();
         await this.page1.waitForLoadState("domcontentloaded");
-        console.log('처방전 작성완료 성공');
+        console.log('✅ 처방전 작성완료 성공');
         await expect(temporarySuccessText).toBeVisible();
-        console.log('임시저장 스낵바 확인 성공');
+        console.log('✅ 임시저장 스낵바 확인 성공');
         await this.page.bringToFront();
         await expect(this.prescriptionHeader).toBeVisible();
-        console.log('통합차트로 이동 확인 성공');
+        console.log('✅ 통합차트로 이동 확인 성공');
         await this.page.waitForLoadState("domcontentloaded");
 
     }
@@ -318,7 +318,7 @@ class SeeDoctor {
         console.log('presciprtionCountBefore: ', this.prescriptionCountBefore);
 
         expect(prescriptionCountAfter).toBe(this.prescriptionCountBefore + 1);
-        console.log('처방전 잘 저장되어서 숫자 1 증가 했어여~');
+        console.log('✅ 처방전 잘 저장되어서 숫자 1 증가 했어여~');
     }
 
     // 펜차트 이미지
@@ -328,7 +328,7 @@ class SeeDoctor {
         await expect(this.penchartSampleButton).toBeVisible();
         await this.penchartSampleButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('펜차트 샘플함 선택 성공');
+        console.log('✅ 펜차트 샘플함 선택 성공');
         await expect(this.penchartTitle).toBeVisible();
     }
 
@@ -336,21 +336,21 @@ class SeeDoctor {
         const firstImage = this.page.locator('[aria-label$=".jpg"], [aria-label$=".png"]').first();
         await expect(firstImage).toBeVisible();
         this.loadedImageLabel = await firstImage.getAttribute('aria-label');
-        console.log('선택한 이미지 라벨: ', this.loadedImageLabel);
+        console.log('🔍 선택한 이미지 라벨: ', this.loadedImageLabel);
         await firstImage.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('임의의 이미지 선택 성공');
+        console.log('✅ 임의의 이미지 선택 성공');
         await expect(this.loadButton).toBeVisible();
         await this.loadButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('이미지 불러오기 성공');
+        console.log('✅ 이미지 불러오기 성공');
 
         this.loadedImageCount += 1;
     }
 
     async checkLoadImageSuccessText() {
         await expect(this.loadImageSuccessText).toBeVisible();
-        console.log('이미지 불러오기 스낵바 확인 성공');
+        console.log('✅ 이미지 불러오기 스낵바 확인 성공');
     }
 
     // 저장버튼
@@ -358,12 +358,12 @@ class SeeDoctor {
         await expect(this.saveButton).toBeVisible();
         await this.saveButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('진료 저장 성공');
+        console.log('✅ 진료 저장 성공');
     }
 
     async checkSaveSuccessText() {
         await expect(this.saveSuccessText).toBeVisible();
-        console.log('저장 완료 스낵바 확인 성공');
+        console.log('✅ 저장 완료 스낵바 확인 성공');
     }
 
 
@@ -382,7 +382,7 @@ class SeeDoctor {
         await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: `${this.loadedImageCount}건` })).toBeVisible();
-        console.log('펜차트 몇 건: ', this.loadedImageCount);
+        console.log('🔍 펜차트 몇 건: ', this.loadedImageCount);
 
     }
 
@@ -395,18 +395,18 @@ class SeeDoctor {
                 const text = await elements.nth(i).innerText();
                 if (text.trim() === nameText.trim()) {
                     await expect(elements.nth(i)).toBeVisible();
-                    console.log(`${nameText} 이거 겹치네여~~~ 잘 들어가 있어여~~`);
+                    console.log(`✅ ${nameText} 이거 겹치네여~~~ 잘 들어가 있어여~~`);
                     return true;
                 }
             }
-            console.log(`${nameText} 중복 항목 일치 항목 없어여~~`);
+            console.log(`✅ ${nameText} 중복 항목 일치 항목 없어여~~`);
             return false;
         } else if (count === 1) {
             await expect(elements.first()).toBeVisible();
-            console.log('항목 하나 밖에 없네유, 잘 들어 있어여~~');
+            console.log('✅ 항목 하나 밖에 없네유, 잘 들어 있어여~~');
             return true;
         } else {
-            console.log(`${nameText} 항목이 없어여~~`);
+            console.log(`🚫 ${nameText} 항목이 없어여~~`);
             return false;
         }
     }
@@ -416,7 +416,7 @@ class SeeDoctor {
         await this.page.getByRole('cell', { name: this.enteredMemoText }).dblclick();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.editTreatmentTitle).toBeVisible();
-        console.log('진료 수정 진입 성공');
+        console.log('✅ 진료 수정 진입 성공');
     }
 
     // 의사
@@ -428,7 +428,7 @@ class SeeDoctor {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedDoctorText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log('의사 수정: ', this.selectedDoctorText);
+        console.log('🔍 의사 수정: ', this.selectedDoctorText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -436,7 +436,7 @@ class SeeDoctor {
     async addingSurgeryCategory() {
         await expect(this.addingSurgeryCategoryButton).toBeVisible();
         await this.addingSurgeryCategoryButton.click();
-        console.log('시/수술 카테고리 추가 성공');
+        console.log('🔍 시/수술 카테고리 추가 성공');
     }
 
     // 시/수술 카테고리
@@ -448,7 +448,7 @@ class SeeDoctor {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedSurgicalCategoryText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log('시/수술 카테고리 수정: ', this.selectedSurgicalCategoryText);
+        console.log('🔍 시/수술 카테고리 수정: ', this.selectedSurgicalCategoryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -461,7 +461,7 @@ class SeeDoctor {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('시/수술명 수정: ', this.selectedSurgeryText);
+        console.log('🔍 시/수술명 수정: ', this.selectedSurgeryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -475,7 +475,7 @@ class SeeDoctor {
         await this.memoEnter.type('진료_내용_입력_자동화_수정', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('진료내용 수정: ', this.enteredMemoText);
+        console.log('🔍 진료내용 수정: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -483,13 +483,13 @@ class SeeDoctor {
         await expect(this.editCompleteButton).toBeVisible();
         await this.editCompleteButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('진료 수정 성공');
+        console.log('✅ 진료 수정 성공');
     }
     
 
     async checkEditSuccessText() {
         await expect(this.editSuccessText).toBeVisible();
-        console.log('진료 수정 스낵바 확인 성공');
+        console.log('✅ 진료 수정 스낵바 확인 성공');
     }
 
     // 차트출력
@@ -498,19 +498,19 @@ class SeeDoctor {
     async selectPrintTreatment() {
         await expect(this.selectChart).toBeVisible();
         await expect(this.printChartButton).toBeDisabled();
-        console.log('차트 미선택 시, 버튼 비활성화 확인 성공');
+        console.log('✅ 차트 미선택 시, 버튼 비활성화 확인 성공');
 
         await this.selectChart.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 선택 성공');
+        console.log('✅ 차트 선택 성공');
 
         await expect(this.printChartButton).toBeVisible();
         await expect(this.printChartButton).toBeEnabled();
-        console.log('차트출력 버튼 선택 가능 확인 성공');
+        console.log('✅ 차트출력 버튼 선택 가능 확인 성공');
 
         await this.printChartButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트출력 모달 진입 성공');
+        console.log('✅ 차트출력 모달 진입 성공');
     }
 
     async checkPrintTreatment() {
@@ -519,30 +519,30 @@ class SeeDoctor {
 
         await expect(this.chartNumberHeader).toBeVisible();
         this.chartNumber = await this.page.locator('input.MuiInputBase-input.Mui-disabled[value]').first().inputValue();
-        console.log('차트번호 가져오기: ', this.chartNumber);
+        console.log('🔍 차트번호 가져오기: ', this.chartNumber);
 
         await expect(this.patientNameHeader).toBeVisible();
         this.patientName = await this.page.locator('input.MuiInputBase-input.Mui-disabled[value]').nth(1).inputValue();
-        console.log('환자 성명 가져오기: ', this.patientName);
+        console.log('🔍 환자 성명 가져오기: ', this.patientName);
 
         await expect(this.patientPhoneNumberHeader).toBeVisible();
         this.patientPhoneNumber = await this.page.locator('input.MuiInputBase-input.Mui-disabled[value]').nth(3).inputValue();
-        console.log('환자 전화번호 가져오기: ', this.patientPhoneNumber);
+        console.log('🔍 환자 전화번호 가져오기: ', this.patientPhoneNumber);
 
         await expect(this.prescriptionSelectHeader).toBeVisible();
         await expect(this.cancelButton).toBeVisible();
         await this.cancelButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 출력 모달 닫기 성공');
+        console.log('✅ 차트 출력 모달 닫기 성공');
     }
 
     async compareValueFromPrintModal() {
         await expect(this.page.locator('.chart-number')).toHaveText(this.chartNumber);
-        console.log('통합차트 > 고객정보에 차트번호랑 같아여~');
+        console.log('✅ 통합차트 > 고객정보에 차트번호랑 같아여~');
         await expect(this.page.locator('div.name').filter({ hasText: this.patientName })).toBeVisible();
-        console.log('통합차트 > 고객정보에 이름이랑 같아여~');
+        console.log('✅ 통합차트 > 고객정보에 이름이랑 같아여~');
         await expect(this.page.locator('div.MuiStack-root').filter({ hasText: this.patientPhoneNumber })).toBeVisible();
-        console.log('통합차트 > 고객정보에 전화번호랑 같아여~');
+        console.log('✅ 통합차트 > 고객정보에 전화번호랑 같아여~');
     }
 
     // 진료 삭제
@@ -553,28 +553,28 @@ class SeeDoctor {
         await this.deleteButton.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.deleteModalText).toBeVisible();
-        console.log('진료 삭제 팝업 노출 확인 성공');
+        console.log('✅ 진료 삭제 팝업 노출 확인 성공');
     }
 
     async deleteChart() {
         await expect(this.deleteModalText).toBeVisible();
         await expect(this.deleteIncludePenchart).toBeVisible();
-        console.log('펜차트 포함 삭제 라디오 버튼 노출 확인 성공');
+        console.log('✅ 펜차트 포함 삭제 라디오 버튼 노출 확인 성공');
         await this.deleteIncludePenchart.click();
         await this.page.waitForLoadState('domcontentloaded');
 
         await expect(this.deleteOnlyChart).toBeVisible();
-        console.log('차트만 삭제 라디오 버튼 노출 확인 성공');
+        console.log('✅ 차트만 삭제 라디오 버튼 노출 확인 성공');
 
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 삭제 버튼 선택 성공');
+        console.log('✅ 차트 삭제 버튼 선택 성공');
     }
 
     async checkDeleteSuccessText() {
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('차트 삭제 스낵바 확인 성공');
+        console.log('✅ 차트 삭제 스낵바 확인 성공');
     }
 
     // 처방전 진입
@@ -584,7 +584,7 @@ class SeeDoctor {
         await expect(this.precsription).toBeVisible();
         await this.precsription.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('처방전 진입 성공');
+        console.log('✅ 처방전 진입 성공');
     }
 
     async deletePrescription() {
@@ -595,21 +595,19 @@ class SeeDoctor {
         await expect(this.deleteButtonInPrescription).toBeVisible();
         await this.deleteButtonInPrescription.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('처방전 삭제 버튼 선택 성공');
+        console.log('✅ 처방전 삭제 버튼 선택 성공');
     }
 
     async deletePopup() {
         await expect(this.deletePopupText).toBeVisible();
         await expect(this.confirmButtonInPrescription).toBeVisible();
         await this.confirmButtonInPrescription.click();
-        console.log('처방전 삭제 확인 성공');
+        console.log('✅ 처방전 삭제 확인 성공');
     }
 
     async checkDeleteSuccess() {
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('삭제 스낵바 확인 성공');
+        console.log('✅ 삭제 스낵바 확인 성공');
     }
-
-
 
 } export { SeeDoctor };

@@ -126,14 +126,14 @@ class Payment {
         await expect(this.paymentChart).toBeVisible();
         await this.paymentChart.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log("수납 차트 진입 성공");
+        console.log("✅ 수납 차트 진입 성공");
     }
 
     async registPayment() {
         await expect(this.registPaymentButton).toBeVisible();
         await this.registPaymentButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('수납 등록 진입 성공 확인');
+        console.log('✅ 수납 등록 진입 성공 확인');
         await expect(this.registPaymentTitle).toBeVisible();
     }  
     
@@ -142,7 +142,7 @@ class Payment {
         await this.addingSurgeryButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 추가 팝업 진입 성공 확인');
+        console.log('✅ 시/수술 추가 팝업 진입 성공 확인');
 
         await expect(this.addingPopupTitle).toBeVisible();
         await expect(this.addingSurgeryTabTitle).toBeVisible();
@@ -157,7 +157,7 @@ class Payment {
         await this.selectOptionValue.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 카테고리 :', this.searchedSurgeryCategory);
+        console.log('🔍 시/수술 카테고리 :', this.searchedSurgeryCategory);
 
         // 시/수술명 검색 > 선택
 
@@ -170,7 +170,7 @@ class Payment {
         await this.selectOptionValue.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술명: ', this.searchedSurgeryName);
+        console.log('🔍 시/수술명: ', this.searchedSurgeryName);
 
         // 검색
 
@@ -178,7 +178,7 @@ class Payment {
         await this.searchButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 카테고리, 시/수술명 검색 성공 확인');
+        console.log('✅ 시/수술 카테고리, 시/수술명 검색 성공 확인');
 
         // 값 전부 넣기
         this.surgeryPrice = await this.page.getByRole('row', { name: this.searchedSurgeryCategory }).getByRole('textbox').nth(1).inputValue();
@@ -188,22 +188,22 @@ class Payment {
         await this.addingButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('시/수술 카테고리 추가 성공 확인');
-        console.log('시/수술 가격: ', this.surgeryPrice);
-        console.log('시/수술 VAT제외 가격: ', this.surgeryVat);
+        console.log('✅ 시/수술 카테고리 추가 성공 확인');
+        console.log('🔍 시/수술 가격: ', this.surgeryPrice);
+        console.log('🔍 시/수술 VAT제외 가격: ', this.surgeryVat);
 
         // 팝업 닫기
         await expect(this.closePopupButton).toBeVisible();
         await this.closePopupButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('시/수술 카테고리 추가 팝업 닫기 성공 확인');
+        console.log('✅ 시/수술 카테고리 추가 팝업 닫기 성공 확인');
     }
 
     async addProduction() {
         await expect(this.addingProductionButton).toBeVisible();
         await this.addingProductionButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('제품 추가 팝업 진입 성공 확인');
+        console.log('✅ 제품 추가 팝업 진입 성공 확인');
 
         await expect(this.addingPopupTitle).toBeVisible();
         await expect(this.addingProductionTabTitle).toBeVisible();
@@ -219,7 +219,7 @@ class Payment {
         await this.searchButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('제품 검색 성공 확인');
+        console.log('✅ 제품 검색 성공 확인');
         
         this.productionName = await this.page.getByRole('cell', { name: '수납자동화 제품명 과세' }).innerText();
         this.productionNameFree = await this.page.getByRole('cell', { name: '수납자동화 제품명 비과세' }).innerText();
@@ -229,26 +229,26 @@ class Payment {
         this.productFreePrice = await this.page.getByRole('row', { name: new RegExp(`^추가 ${this.productionNameFree}`) }).getByRole('textbox').nth(1).inputValue();
         this.productFreePriceVat = await this.page.getByRole('row', { name: new RegExp(`^추가 ${this.productionNameFree}`) }).getByRole('textbox').nth(2).inputValue();
         // 검색 추가
-        console.log('과세 제품 이름: ', this.productionName);
-        console.log('비과세 제품 이름: ', this.productionNameFree);
+        console.log('🔍 과세 제품 이름: ', this.productionName);
+        console.log('🔍 비과세 제품 이름: ', this.productionNameFree);
         ///////////
-        console.log('과세 제품 가격: ', this.productPrice);
-        console.log('과세 제품 VAT제외 가격: ', this.productPriceVat);
-        console.log('비과세 제품 가격: ', this.productFreePrice);
-        console.log('비과세 제품 VAT제외 가격: ', this.productFreePriceVat);
+        console.log('🔍 과세 제품 가격: ', this.productPrice);
+        console.log('🔍 과세 제품 VAT제외 가격: ', this.productPriceVat);
+        console.log('🔍 비과세 제품 가격: ', this.productFreePrice);
+        console.log('🔍 비과세 제품 VAT제외 가격: ', this.productFreePriceVat);
         await expect(this.addingButton.nth(0)).toBeVisible();
         await this.addingButton.nth(0).click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('첫 번째 제품 추가 성공 확인');
+        console.log('✅ 첫 번째 제품 추가 성공 확인');
         await expect(this.addingButton.nth(1)).toBeVisible();
         await this.addingButton.nth(1).click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('두 번째 제품 추가 성공 확인');
+        console.log('✅ 두 번째 제품 추가 성공 확인');
         /// 팝업 닫기
         await expect(this.closePopupButton).toBeVisible();
         await this.closePopupButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('시/수술 카테고리 추가 팝업 닫기 성공 확인');
+        console.log('✅ 시/수술 카테고리 추가 팝업 닫기 성공 확인');
     }
 
     async checkAddSurgery() {
@@ -257,7 +257,7 @@ class Payment {
         await expect(this.page.locator('#app').getByRole('cell', { name: this.searchedSurgeryName })).toBeVisible();
         await expect(this.page.locator('#app').getByRole('cell', { name: `${this.surgeryPrice} ${this.surgeryVat}` })).toBeVisible();
         await expect(this.page.locator('#app').getByRole('cell', { name: this.surgeryPrice, exact: true })).toBeVisible();
-        console.log('시/수술 카테고리 추가한 내용들 정상적으로 들어가있어요~~~');
+        console.log('✅ 시/수술 카테고리 추가한 내용들 정상적으로 들어가있어요~~~');
     }
 
     async checkAddProduction() {
@@ -268,7 +268,7 @@ class Payment {
         await expect(this.page.getByRole('cell', { name: `${this.productFreePrice} ${this.productFreePriceVat}` })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.productPrice, exact: true })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.productFreePrice, exact: true })).toBeVisible();
-        console.log('제품 추가한 내용들도 정상적으로 들어가있어요~~~~~~');
+        console.log('✅ 제품 추가한 내용들도 정상적으로 들어가있어요~~~~~~');
     }
 
     async checkPayDayAndMethod() {

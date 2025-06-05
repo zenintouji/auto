@@ -13,7 +13,7 @@ class Consultation {
         this.editSuccessButton = page.getByRole('button', { name: '수정완료' });
         this.editButton = page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > .sc-jsJBEP > td:nth-child(2)');
         this.addingSurgeryCategory = page.getByRole('button', { name: '+', exact: true });
-        this.selectConsultChart = page.locator('div:nth-child(2) > .sc-hmdomO > .sc-bXCLTC > tr > td').first();
+        this.selectConsultChart = page.locator('input[type="checkbox"][data-indeterminate="false"]').nth(1);
 
         this.selectOptionValue = page.getByRole('option').nth(0);
         this.editOptionValue = page.getByRole('option').nth(1); // 수정
@@ -83,7 +83,7 @@ class Consultation {
         await expect(this.consultationChart).toBeVisible();
         await this.consultationChart.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('상담차트 진입 성공');
+        console.log('✅ 상담차트 진입 성공');
     }
 
     // 상담등록 선택
@@ -91,7 +91,7 @@ class Consultation {
         await expect(this.regiConsultButton).toBeVisible();
         await this.regiConsultButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('상담등록 진입 성공');
+        console.log('✅ 상담등록 진입 성공');
     }
 
     // 상담사
@@ -104,7 +104,7 @@ class Consultation {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedCounselorText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click(); 
-        console.log('상담사: ', this.selectedCounselorText);
+        console.log('🔍 상담사: ', this.selectedCounselorText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -118,7 +118,7 @@ class Consultation {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgicalCategoryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('시/수술 카테고리: ', this.selectedSurgicalCategoryText);
+        console.log('🔍 시/수술 카테고리: ', this.selectedSurgicalCategoryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -132,7 +132,7 @@ class Consultation {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('시/수술명: ', this.selectedSurgeryText);
+        console.log('✅ 시/수술명: ', this.selectedSurgeryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -146,7 +146,7 @@ class Consultation {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedConsultResultText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('상담결과: ', this.selectedConsultResultText);
+        console.log('✅ 상담결과: ', this.selectedConsultResultText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -160,7 +160,7 @@ class Consultation {
         await this.memoEnter.type('상담_내용_입력_자동화', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('접수메모: ', this.enteredMemoText);
+        console.log('🔍 접수메모: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -169,7 +169,7 @@ class Consultation {
         await expect(this.penchartButton).toBeVisible();
         await this.penchartButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('펜차트 진입 성공');
+        console.log('✅ 펜차트 진입 성공');
     }
 
     async gettingPenchart() {
@@ -181,23 +181,24 @@ class Consultation {
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.gettingButton).toBeVisible();
         await this.gettingButton.click();
-        console.log('이미지 불러오기 성공');
+        console.log('✅ 이미지 불러오기 성공');
     }
 
     async checkGettingSuccessText() {
         await expect(this.gettingSuccessText).toBeVisible();
-        console.log('샘플함 이미지 불러오기 성공');
+        console.log('✅ 샘플함 이미지 불러오기 성공');
     }
 
     async selectSaveButton() {
         await expect(this.saveButton).toBeVisible();
         await this.saveButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 상담 저장 성공');
     }
 
     async saveSuccessText() {
         await expect(this.savingSuccessText).toBeVisible();
-        console.log('상담 생성 성공');
+        console.log('✅ 저장 스낵바 확인 성공');
     }
 
     async checkConsultationSuccess() {
@@ -209,19 +210,20 @@ class Consultation {
 
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.page.getByRole('cell', { name: formattedDate })).toBeVisible();      
+        console.log('🔍 일자 확인 성공, ', formattedDate);
         await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();    
         // await expect(this.page.getByRole('cell', { name: this.selectedCounselorText })).toBeVisible();
 
         const matchedCell = this.page.getByRole('cell', { name: this.selectedCounselorText });
         const count = await matchedCell.count();
-        console.log(`같은 텍스트 셀 수: ${count}`);
+        console.log(`🔍 같은 텍스트 셀 수: ${count}`);
         
         for (let i = 0; i < count; i++) {
             const cell = matchedCell.nth(i);
             const text = await cell.innerText();
             if (text.trim() === this.selectedCounselorText.trim()) {
                 await expect(cell).toBeVisible();
-                console.log('상담사: ', cell);
+                console.log('🔍 상담사: ', cell);
                 break;
             }
         }
@@ -230,7 +232,7 @@ class Consultation {
         await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.selectedConsultResultText })).toBeVisible();
 
-        console.log('상담 생성 내용 확인 성공');
+        console.log('✅ 상담 생성 내용 확인 성공');
     }
     
     //////////////
@@ -240,10 +242,10 @@ class Consultation {
 
 
     async selectEdit() {
-        await expect(this.editButton).toBeVisible();
-        await this.editButton.click();
+        await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();
+        await this.page.getByRole('cell', { name: this.enteredMemoText }).dblclick();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('상담 수정 진입 성공')
+        console.log('✅ 상담 수정 진입 성공')
     }
 
     // 상담사
@@ -256,7 +258,7 @@ class Consultation {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedCounselorText = await this.editOptionValue.innerText();
         await this.editOptionValue.click(); 
-        console.log('상담사 수정: ', this.selectedCounselorText);
+        console.log('🔍 상담사 수정: ', this.selectedCounselorText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -264,6 +266,7 @@ class Consultation {
         await expect(this.addingSurgeryCategory).toBeVisible();
         await this.addingSurgeryCategory.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 시/수술 카테고리 콤보박스 선택');
     }
 
     // 시/수술 카테고리
@@ -276,7 +279,7 @@ class Consultation {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedSurgicalCategoryText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log('시/수술 카테고리 수정: ', this.selectedSurgicalCategoryText);
+        console.log('🔍 시/수술 카테고리 수정: ', this.selectedSurgicalCategoryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -290,7 +293,7 @@ class Consultation {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log('시/수술명 수정: ', this.selectedSurgeryText);
+        console.log('🔍 시/수술명 수정: ', this.selectedSurgeryText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -304,7 +307,7 @@ class Consultation {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedConsultResultText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log('상담결과 수정: ', this.selectedConsultResultText);
+        console.log('🔍 상담결과 수정: ', this.selectedConsultResultText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -318,7 +321,7 @@ class Consultation {
         await this.memoEnter.type('상담_내용_입력_자동화_수정', { delay: 50});
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('접수메모 수정: ', this.enteredMemoText);
+        console.log('🔍 접수메모 수정: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -334,7 +337,7 @@ class Consultation {
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.gettingButton).toBeVisible();
         await this.gettingButton.click();
-        console.log('이미지 불러오기 성공');
+        console.log('✅ 이미지 불러오기 성공');
     }
 
     async removeImage() {
@@ -345,51 +348,55 @@ class Consultation {
         await this.imageRemoveButton.click();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.removeTarget).not.toBeVisible();
-        console.log('펜차트 이미지 수정 중 삭제 성공');
+        console.log('✅ 펜차트 이미지 수정 중 삭제 성공');
     }
 
     async selectEditButton() {
         await expect(this.editSuccessButton).toBeVisible();
         await this.editSuccessButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('상담 수정 진입 성공');
+        console.log('✅ 상담 수정 진입 성공');
     }
 
     async editSucceessText() {
         await expect(this.editSuccessText).toBeVisible();
-        console.log('상담 수정 성공');
+        console.log('✅ 상담 수정 성공');
     }
 
     async selectChart() {
         await expect(this.selectConsultChart).toBeVisible();
         await this.selectConsultChart.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 상담차트 선택 성공');
     }
 
     async selectDelete() {
         await expect(this.deleteButton).toBeVisible();
         await this.deleteButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 삭제 버튼 선택 성공');
     }
 
     async deletePopup() {
         await expect(this.deleteInfoText).toBeVisible();
-        console.log('삭제 팝업 진입 성공');
+        console.log('✅ 삭제 팝업 진입 성공');
         await expect(this.deletePenchartToo).toBeVisible();
         await expect(this.deleteOnlyChart).toBeVisible();
         await this.deletePenchartToo.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 펜차트 포함 삭제 선택 성공');
     }
 
     async selectConfirm() {
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
         await this.page.waitForLoadState('domcontentloaded');
+        console.log('✅ 확인 버튼 선택 성공');
     }
 
     async checkDeleteSuccessText() {
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('상담 삭제 성공');
+        console.log('✅ 삭제 스낵바 확인 성공');
     }
 
 }

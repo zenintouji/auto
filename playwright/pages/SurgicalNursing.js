@@ -72,7 +72,7 @@ class SurgicalNursing {
         await expect(this.surgicalNursingChart).toBeVisible();
         await this.surgicalNursingChart.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log("수술간호 차트 진입 성공");
+        console.log("✅ 수술간호 차트 진입 성공");
     }
 
     async selectRegistNursing() {
@@ -80,7 +80,7 @@ class SurgicalNursing {
         await this.registButton.click();
         await this.page.waitForLoadState("domcontentloaded");
         await expect(this.registSurgicalNursingTitle).toBeVisible();
-        console.log("간호 등록 진입 성공");
+        console.log("✅ 간호 등록 진입 성공");
     }
 
     // 의사
@@ -92,7 +92,7 @@ class SurgicalNursing {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedDoctorText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log("의사: ", this.selectedDoctorText);
+        console.log("🔍 의사: ", this.selectedDoctorText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -105,7 +105,7 @@ class SurgicalNursing {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedNurseText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log("간호사: ", this.selectedNurseText);
+        console.log("🔍 간호사: ", this.selectedNurseText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -119,7 +119,7 @@ class SurgicalNursing {
         this.selectedSurgicalCategoryText =
         await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log("시/수술 카테고리: ", this.selectedSurgicalCategoryText);
+        console.log("🔍 시/수술 카테고리: ", this.selectedSurgicalCategoryText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -132,7 +132,7 @@ class SurgicalNursing {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log("시/수술명: ", this.selectedSurgeryText);
+        console.log("🔍 시/수술명: ", this.selectedSurgeryText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -142,12 +142,12 @@ class SurgicalNursing {
         await this.startHour.click();
         await this.page.waitForLoadState('domcontentloaded');
         await this.startHour.type('9', { delay: 50 });
-        console.log('수술 시작시간 ~시 작성 성공~');
+        console.log('✅ 수술 시작시간 ~시 작성 성공~');
 
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.startMinute).toBeVisible();
         await this.startMinute.type('00', { delay: 50 });
-        console.log('수술 시작시간 ~분 작성 성공~');
+        console.log('✅ 수술 시작시간 ~분 작성 성공~');
     }
 
     async enterSurgeryEndTime() {
@@ -156,12 +156,12 @@ class SurgicalNursing {
         await this.endHour.click();
         await this.page.waitForLoadState('domcontentloaded');
         await this.endHour.type('9', { delay: 50 });
-        console.log('수술 종료시간 ~시 작성 성공');
+        console.log('✅ 수술 종료시간 ~시 작성 성공');
 
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.endMinute).toBeVisible();
         await this.endMinute.type('00', { delay: 50 });
-        console.log('수술 종료시간 ~분 작성 성공~');
+        console.log('✅ 수술 종료시간 ~분 작성 성공~');
     }
 
     async enterMemo() {
@@ -173,7 +173,7 @@ class SurgicalNursing {
         await this.memoEnter.type('수술간호_내용_입력_자동화', { delay: 50 });
         await this.page.waitForLoadState('domcontentloaded');
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log('수술간호 내용: ', this.enteredMemoText);
+        console.log('🔍 수술간호 내용: ', this.enteredMemoText);
         await this.page.waitForLoadState('domcontentloaded');
     }
 
@@ -181,12 +181,12 @@ class SurgicalNursing {
         await expect(this.saveButton).toBeVisible();
         await this.saveButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('저장 버튼 선택 성공');
+        console.log('✅ 저장 버튼 선택 성공');
     }
 
     async checkCreateSuccessText() {
         await expect(this.createSuccessText).toBeVisible();
-        console.log('저장 스낵바 확인 성공');
+        console.log('✅ 저장 스낵바 확인 성공');
     }
 
     // 성공 후 체크 
@@ -198,15 +198,15 @@ class SurgicalNursing {
         const formattedDate = `-${mm}-${dd}`;
 
         await expect(this.page.getByRole('cell', { name: formattedDate })).toBeVisible();
-        console.log('일자 잘 들어가 있어여 => ', formattedDate);
+        console.log('✅ 일자 잘 들어가 있어여 => ', formattedDate);
         await this.verifyVisibleByName('cell', this.selectedDoctorText);
         await this.verifyVisibleByName('cell', this.selectedNurseText);
         await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
-        console.log('수술 카테고리 잘 들어가 있어여 => ', this.selectedSurgicalCategoryText);
+        console.log('✅ 수술 카테고리 잘 들어가 있어여 => ', this.selectedSurgicalCategoryText);
         await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
-        console.log('수술명 잘 들어가 있어여 => ', this.selectedSurgeryText);
+        console.log('✅ 수술명 잘 들어가 있어여 => ', this.selectedSurgeryText);
         await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();
-        console.log('수술간호 내용 잘 들어가 있어여 => ', this.enteredMemoText);
+        console.log('✅ 수술간호 내용 잘 들어가 있어여 => ', this.enteredMemoText);
 
     }
 
@@ -219,18 +219,18 @@ class SurgicalNursing {
                 const text = await elements.nth(i).innerText();
                 if (text.trim() === nameText.trim()) {
                     await expect(elements.nth(i)).toBeVisible();
-                    console.log(`${nameText} 이거 겹치네여~~~ 잘 들어가 있어여~~`);
+                    console.log(`✅ ${nameText} 이거 겹치네여~~~ 잘 들어가 있어여~~`);
                     return true;
                 }
             }
-            console.log(`${nameText} 중복 항목 일치 항목 없어여~~`);
+            console.log(`✅ ${nameText} 중복 항목 일치 항목 없어여~~`);
             return false;
         } else if (count === 1) {
             await expect(elements.first()).toBeVisible();
-            console.log('항목 하나 밖에 없네유, 잘 들어 있어여~~');
+            console.log('✅ 항목 하나 밖에 없네유, 잘 들어 있어여~~');
             return true;
         } else {
-            console.log(`${nameText} 항목이 없어여~~`);
+            console.log(`🚫 ${nameText} 항목이 없어여~~`);
             return false;
         }
     }
@@ -243,7 +243,7 @@ class SurgicalNursing {
         await this.page.getByRole('cell', { name: this.enteredMemoText }).dblclick();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.editSurgicalNursingTitle).toBeVisible();
-        console.log('수술간호 수정 진입 성공');
+        console.log('✅ 수술간호 수정 진입 성공');
     }
 
     // 의사
@@ -255,7 +255,7 @@ class SurgicalNursing {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedDoctorText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log("의사: ", this.selectedDoctorText);
+        console.log("🔍 의사: ", this.selectedDoctorText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -268,7 +268,7 @@ class SurgicalNursing {
         await expect(this.editOptionValue).toBeVisible();
         this.selectedNurseText = await this.editOptionValue.innerText();
         await this.editOptionValue.click();
-        console.log("간호사: ", this.selectedNurseText);
+        console.log("🔍 간호사: ", this.selectedNurseText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -295,7 +295,7 @@ class SurgicalNursing {
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
         await this.selectOptionValue.click();
-        console.log("시/수술명: ", this.selectedSurgeryText);
+        console.log("🔍 시/수술명: ", this.selectedSurgeryText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -310,7 +310,7 @@ class SurgicalNursing {
         await this.memoEnter.type("수술간호내용_입력_자동화_수정", { delay: 50 });
         await this.page.waitForLoadState("domcontentloaded");
         this.enteredMemoText = await this.memoEnter.innerText();
-        console.log("간호내용: ", this.enteredMemoText);
+        console.log("🔍 간호내용: ", this.enteredMemoText);
         await this.page.waitForLoadState("domcontentloaded");
     }
 
@@ -318,12 +318,12 @@ class SurgicalNursing {
         await expect(this.editSuccessButton).toBeVisible();
         await this.editSuccessButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log("간호 수정 성공");
+        console.log("✅ 간호 수정 성공");
     }
     
     async checkEditSuccess() {
         await expect(this.editSuccessText).toBeVisible();
-        console.log('수정 스낵바 확인 성공')
+        console.log('✅ 수정 스낵바 확인 성공')
     }
 
     ///////
@@ -333,14 +333,14 @@ class SurgicalNursing {
         await expect(this.selectChart).toBeVisible();
         await this.selectChart.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('차트 선택 성공');
+        console.log('✅ 차트 선택 성공');
     }
 
     async selectDeleteButton() {
         await expect(this.deleteButton).toBeVisible();
         await this.deleteButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('삭제 버튼 선택 성공');
+        console.log('✅ 삭제 버튼 선택 성공');
     }
 
     async deletePopup() {
@@ -348,12 +348,12 @@ class SurgicalNursing {
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
         await this.page.waitForLoadState('domcontentloaded');
-        console.log('수술간호차트 삭제 성공');
+        console.log('✅ 수술간호차트 삭제 성공');
     }
 
     async checkDeleteSuccessText() {
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('삭제 스낵바 확인 성공');
+        console.log('✅ 삭제 스낵바 확인 성공');
     }
 
 } export { SurgicalNursing };

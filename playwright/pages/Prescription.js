@@ -30,7 +30,7 @@ class Prescription {
     async doctorNameTaking() {
         await expect(this.doctorNameLocation).toBeVisible();
         this.doctorName = await this.doctorNameLocation.innerText();
-        console.log('의사 이름: ', this.doctorName);
+        console.log('🔍 의사 이름: ', this.doctorName);
 
     }
 
@@ -38,7 +38,7 @@ class Prescription {
         await expect(this.precsription).toBeVisible();
         await this.precsription.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('처방전 진입 성공');
+        console.log('✅ 처방전 진입 성공');
     }
 
     async enterCreatePrescription() {
@@ -46,7 +46,7 @@ class Prescription {
         const page1Promise = this.page.waitForEvent('popup');
         await this.createPrescriptionButton.click();
         this.page1 = await page1Promise;
-        console.log('처방전 작성 선택 확인 성공');
+        console.log('✅ 처방전 작성 선택 확인 성공');
     }
 
     async closeAlertPopup() {
@@ -56,7 +56,7 @@ class Prescription {
         await expect(alertPopupTitle).toBeVisible();
         await expect(alertPopupCloseButton).toBeVisible();
         await alertPopupCloseButton.click();
-        console.log('안내 팝업 닫기 선택 확인 성공');
+        console.log('✅ 안내 팝업 닫기 선택 확인 성공');
     }
 
     async registerPrescription() {
@@ -66,12 +66,12 @@ class Prescription {
         const pharmacyCopy = this.page1.getByRole('button', { name: '[V]약국제출용' });
         await expect(personalCopy).toBeVisible();
         await expect(pharmacyCopy).toBeVisible();
-        console.log('처방전 제출 용도 확인 성공');
+        console.log('✅ 처방전 제출 용도 확인 성공');
         
         // 처방전 제목
         const prescriptionTitle = this.page1.getByRole('heading', { name: '처    방    전' });
         await expect(prescriptionTitle).toBeVisible();
-        console.log('처방전 제목 확인 성공');
+        console.log('✅ 처방전 제목 확인 성공');
 
         // 처방전 종류
         const healthInsurance = this.page1.getByRole('button', { name: '[ ]건강보험' }); 
@@ -87,7 +87,7 @@ class Prescription {
         await expect(autoInsurance).toBeVisible();
         await expect(others).toBeVisible();
         await expect(infoText).toBeVisible();
-        console.log('처방전 종류 확인 성공');
+        console.log('✅ 처방전 종류 확인 성공');
 
         // 요양기관번호
         const providerCode = this.page1.getByRole('cell', { name: '요양기관기호 :' });
@@ -98,11 +98,11 @@ class Prescription {
         const rrnBack = this.page1.getByRole('cell', { name: '- 1234567' }).getByRole('textbox').nth(1);
 
         await expect(providerCode).toBeVisible();
-        console.log('요양기관번호 확인 성공');
+        console.log('✅ 요양기관번호 확인 성공');
         await expect(patientName).toBeVisible();
         await expect(rrnFront).toBeVisible();
         await expect(rrnBack).toBeVisible();
-        console.log('환자 정보 확인 성공');
+        console.log('✅ 환자 정보 확인 성공');
         
         // 요양기관
         const clinicTitle = this.page1.getByRole('cell', { name: '의료기관' });
@@ -112,7 +112,7 @@ class Prescription {
         await expect(clinicTitle).toBeVisible();
         await expect(clinicName).toBeVisible();
         await expect(infoText2).toBeVisible();
-        console.log('요양기관 정보 확인 성공');
+        console.log('✅ 요양기관 정보 확인 성공');
 
         // 묶음 처방 리스트
         const bundlePrescriptionsTitle = this.page1.getByText('묶음 처방 리스트');
@@ -122,7 +122,7 @@ class Prescription {
         await expect(registerButton).toBeVisible();
         await registerButton.click();
         await this.page1.waitForLoadState("domcontentloaded");
-        console.log('묶음 처방 리스트의 등록 성공');
+        console.log('✅ 묶음 처방 리스트의 등록 성공');
         await this.page1.waitForTimeout(2000);
 
         const temporaryButton = this.page1.getByRole('button', { name: '임시저장' });
@@ -131,12 +131,12 @@ class Prescription {
         await expect(temporaryButton).toBeVisible();
         await temporaryButton.click();
         await this.page1.waitForLoadState("domcontentloaded");
-        console.log('처방전 작성완료 성공');
+        console.log('✅ 처방전 작성완료 성공');
         await expect(temporarySuccessText).toBeVisible();
-        console.log('임시저장 스낵바 확인 성공');
+        console.log('✅ 임시저장 스낵바 확인 성공');
         await this.page.bringToFront();
         await expect(this.prescriptionHeader).toBeVisible();
-        console.log('통합차트로 이동 확인 성공');
+        console.log('✅ 통합차트로 이동 확인 성공');
     }
 
     async checkRegister() {
@@ -152,21 +152,21 @@ class Prescription {
 
         const matchedCell = this.page.getByRole('cell', { name: this.doctorName });
         const count = await matchedCell.count();
-        console.log(`같은 의사이름 수: ${count}`);
+        console.log(`🔍 같은 의사이름 수: ${count}`);
         
         for (let i = 0; i < count; i++) {
             const cell = matchedCell.nth(i);
             const text = await cell.innerText();
             if (text.trim() === this.doctorName.trim()) {
                 await expect(cell).toBeVisible();
-                console.log('의사 이름: ', cell);
+                console.log('🔍 의사 이름: ', cell);
                 break;
             }
         }
         await expect(this.othersStatus).toBeVisible();
         await expect(this.temporarySave).toBeVisible();
 
-        console.log('처방전 작성 완료 잘 되어 있어요~');
+        console.log('✅ 처방전 작성 완료 잘 되어 있어요~');
     }
 
     async enterEditPrescription() {
@@ -180,7 +180,7 @@ class Prescription {
         const page3Promise = this.page.waitForEvent('popup');
         await this.page.getByRole('cell', { name: formattedDate }).dblclick();
         this.page3 = await page3Promise;
-        console.log('처방전 수정 진입 성공');
+        console.log('✅ 처방전 수정 진입 성공');
 
     }
 
@@ -192,7 +192,7 @@ class Prescription {
         await expect(alertPopupTitle).toBeVisible();
         await expect(alertPopupCloseButton).toBeVisible();
         await alertPopupCloseButton.click();
-        console.log('안내 팝업 닫기 선택 확인 성공');
+        console.log('✅ 안내 팝업 닫기 선택 확인 성공');
     }
 
     async editPrescription() {
@@ -202,7 +202,7 @@ class Prescription {
         const healthInsurance = this.page3.getByRole('button', { name: '[ ]건강보험' });
         await healthInsurance.click();
         await this.page3.waitForLoadState("domcontentloaded");
-        console.log('처방전 종류 건강보험 선택 성공');
+        console.log('✅ 처방전 종류 건강보험 선택 성공');
         
         await this.page3.waitForTimeout(2000);
         const usageDirectionInput = this.page3.locator('input[placeholder="입력하세요"]').first();
@@ -217,14 +217,14 @@ class Prescription {
         await expect(completeButton).toBeVisible();
         await completeButton.click();
         await this.page3.waitForLoadState("domcontentloaded");
-        console.log('처방전 작성완료 성공');
+        console.log('✅ 처방전 작성완료 성공');
 
         await expect(completeSuccessText).toBeVisible();
-        console.log('작성완료 스낵바 확인 성공');
+        console.log('✅ 작성완료 스낵바 확인 성공');
 
         await this.page.bringToFront();
         await expect(this.prescriptionHeader).toBeVisible();
-        console.log('통합차트로 이동 확인 성공');
+        console.log('✅ 통합차트로 이동 확인 성공');
     }
 
     async checkEdit() {
@@ -240,25 +240,25 @@ class Prescription {
 
         const matchedCell = this.page.getByRole('cell', { name: this.doctorName });
         const count = await matchedCell.count();
-        console.log(`같은 의사이름 수: ${count}`);
+        console.log(`🔍 같은 의사이름 수: ${count}`);
         
         for (let i = 0; i < count; i++) {
             const cell = matchedCell.nth(i);
             const text = await cell.innerText();
             if (text.trim() === this.doctorName.trim()) {
                 await expect(cell).toBeVisible();
-                console.log('의사 이름: ', cell);
+                console.log('🔍 의사 이름: ', cell);
                 break;
             }
         }
         await expect(this.othersStatus).not.toBeVisible();
         await expect(this.healthInsuranceStatus).toBeVisible();
-        console.log('기타 => 건강보험 변경 확인~');
+        console.log('✅ 기타 => 건강보험 변경 확인~');
         await expect(this.temporarySave).not.toBeVisible();
         await expect(this.fullySaved).toBeVisible();
-        console.log('임시저장 => 저장완료 변경 확인~~');
+        console.log('✅ 임시저장 => 저장완료 변경 확인~~');
 
-        console.log('처방전 수정 완료 잘 되어 있어요~');
+        console.log('✅ 처방전 수정 완료 잘 되어 있어요~');
     }
 
     async deletePrescription() {
@@ -268,21 +268,20 @@ class Prescription {
         await expect(this.deleteButton).toBeVisible();
         await this.deleteButton.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('처방전 삭제 버튼 선택 성공');
+        console.log('✅ 처방전 삭제 버튼 선택 성공');
     }
 
     async deletePopup() {
         await expect(this.deletePopupText).toBeVisible();
         await expect(this.confirmButton).toBeVisible();
         await this.confirmButton.click();
-        console.log('처방전 삭제 확인 성공');
+        console.log('✅ 처방전 삭제 확인 성공');
     }
 
     async checkDeleteSuccess() {
         await expect(this.deleteSuccessText).toBeVisible();
-        console.log('삭제 스낵바 확인 성공');
+        console.log('✅ 삭제 스낵바 확인 성공');
     }
-
     
 }
 
