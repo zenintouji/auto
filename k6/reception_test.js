@@ -4,15 +4,15 @@ import { check, sleep } from "k6";
 // import { start } from "repl";
 
 export const options = {
-  vus: 10, // 동시 사용자 수
+  vus: 1, // 동시 사용자 수
   //   duration: '30s', // 테스트 시간
-  iterations: 120, // 1000번 요청 하는거
+  iterations: 2, // 1000번 요청 하는거
 };
 
 // const BASE_URL = "https://api.dev.unocare.co.kr/registrations"; // 접수 dev
 const BASE_URL = "https://api.test.unocare.co.kr/registrations"; // 접수 test
 
-const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0Nzg3NTU0MSwianRpIjoiNDkxZDUzZmUtZmMwMi00ZDdjLTg4NGYtNjAxZGQ5MDFkZjliIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0Nzg3NTU0MSwiZXhwIjoxNzQ3OTMzMTQxfQ.GfD658kCNb48als4yNSljWxFj1TUjMgB1CR8db6Psx4"; // 필요 시 토큰 추가
+const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0OTAwMzQxNiwianRpIjoiZjMwNmI1ZmEtOThkMC00OTIwLTllNTctYjg3ODRiMjgwYmQ0IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0OTAwMzQxNiwiZXhwIjoxNzQ5MDYxMDE2fQ.oGdpcgXx6XoTHsW0gLNFf-BlDcrdvplXdpbV1kaunoE"; // 필요 시 토큰 추가
 
 export default function () {
 
@@ -28,7 +28,7 @@ export default function () {
   const endHour = baseHour + Math.floor((totalMinutes + 30) / 60);
   const endMinute = (totalMinutes + 30) % 60;
 
-  const formatTime = (h, m) => `2025-05-22 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
+  const formatTime = (h, m) => `2025-06-04 ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 
   const startAt = formatTime(startHour, startMinute);
   const endAt = formatTime(endHour, endMinute); // 30분 후로 설정
@@ -46,7 +46,7 @@ export default function () {
     customerId: 602895, 
     // 602906, 602903, 602766, 521815, 602740, 602895, => test
 
-    date: "2025-05-22",
+    date: "2025-06-04",
     departmentId: 1782,
     // 1913, 1914, 1915, 1916, 1924, 1925, 1926, 1781, 1782, => test
 
