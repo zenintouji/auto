@@ -24,7 +24,6 @@ test('Integrated Chart > Adding Surgery', async ({ page }) => {
   const surgery = new Surgery(page);
   const addsurgery = new AddSurgery(page);
 
-
 // 로그인 페이지 접속
 await loginPage.goto();
 

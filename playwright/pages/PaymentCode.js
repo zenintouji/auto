@@ -1,39 +1,36 @@
 import { expect } from "playwright/test";
 
-class AddSurgery {
+class PaymentCode {
     constructor(page) {
         this.page = page;
         
-        this.createSurgeryCodeButton = page.getByRole('button', { name: '+시/수술코드 생성' });
+        this.addSurgeryButton = page.getByRole('button', { name: '추가' });
         this.addCategoryButton = page.getByRole('button', { name: '카테고리 추가' });
-
         this.inputCategoryName = page.getByRole('textbox', { name: '추가할 카테고리명을 입력하세요' });
         this.categoryNameText = '';
-        this.inputSurgeryName = page.getByRole('textbox', { name: '시/수술명을 입력하세요' });
-        this.surgeryNameText = '';
-        this.surgeryNonTaxNameText = '';
 
         this.saveButton = page.getByRole('button', { name: '저장' });
         this.saveSuccessText = page.getByText('저장되었습니다');
 
         this.categoryCombobox = page.getByRole('combobox', { name: '카테고리를 선택해주세요' });
 
+        this.inputSurgeryName = page.getByRole('textbox', { name: '시/수술명을 입력하세요' });
+        this.surgeryNameText = '';
         this.addSurgeryCount = page.getByRole('cell', { name: '- 1 + 회' }).locator('button[name="plus"]');
-        this.taxCheckBox = page.getByRole('table').locator('tbody').getByRole('cell').filter({ hasText: /^$/ }).locator('div').nth(1)
+
+        this.termOfSurgery = page.getByRole('combobox', { name: '없음' });
+        
+        this.editOptionValue = page.getByRole('option').nth(1);
+        this.selectedTermOfSurgery = '';
+        this.taxCheckBox = page.getByRole('checkbox');
+
         this.inputPrice = page.getByRole('textbox').nth(2);
         this.surgeryPriceText = '';
+        this.surgeryNonTaxNameText = '';
 
         this.addListButton = page.getByRole('cell', { name: '+', exact: true }).getByRole('button');
 
-        this.closeAddSurgeryModalButton = page.getByRole('button', { name: 'close' });
-        this.closeIntegratedChartButton = page.locator('div').filter({ hasText: /^3D Meta-VuMark-Vu$/ }).getByRole('button').nth(3);
-
-        this.paymentCodeMenu = page.getByRole('button', { name: '수납코드 설정' });
-
-        this.inputSearchCategory = page.getByRole('textbox', { name: '카테고리 검색' });
-        this.inputSearchSurgeryName = page.getByRole('textbox', { name: '시/수술명 검색' });
-
-        this.searchButton = page.getByRole('button', { name: '검색' });
+        this.saveButton = page.getByRole('button', { name: '저장' });
         this.deleteButton = page.getByRole('button', { name: '삭제' });
         this.confirmButton = page.getByRole('button', { name: '확인' });
         this.nonUsingButton = page.getByRole('button', { name: '미사용' });
@@ -42,21 +39,18 @@ class AddSurgery {
         this.deleteModalText = page.getByText('정말로 삭제하시겠습니까?');
         this.nonUsingModalText = page.getByText('미사용 처리 하시겠습니까?');
         this.usingModalText = page.getByText('사용 처리 하시겠습니까?');
-
+        
         this.deleteSuccessText = page.getByText('삭제되었습니다');
         this.nonUsingSuccessText = page.getByText('미사용 처리되었습니다');
         this.usingSuccessText = page.getByText('사용 처리되었습니다');
-
-        
-
     }
 
-    async selectCreateSurgeryCode() {
-        await expect(this.createSurgeryCodeButton).toBeVisible();
-        await this.createSurgeryCodeButton.click();
+    async selectAddSurgeryButton() {
+        await expect(this.addSurgeryButton).toBeVisible();
+        await this.addSurgeryButton.click();
         await this.page.waitForLoadState("domcontentloaded");
 
-        console.log('✅ 시/수술 추가 팝업 진입 성공');
+        console.log('✅ 시/수술 추가 버튼 선택 성공');
     }
 
     async selectAddCategory() {
@@ -78,7 +72,7 @@ class AddSurgery {
         console.log('🟢 카테고리 이름 입력 성공');
         console.log('🟢 카테고리 이름: ', this.categoryNameText);
     }
-    
+
     async selectSaveCategory() {
         await expect(this.saveButton).toBeVisible();
         await this.saveButton.click();
@@ -90,8 +84,6 @@ class AddSurgery {
         await expect(this.saveSuccessText).toBeVisible();
         console.log('✅ 저장 완료 스낵바 확인 성공');
     }
-    // 카테고리 추가완료요~~~
-    ////////////////////
 
     async selectCategory() {
         await expect(this.categoryCombobox).toBeVisible();
@@ -123,11 +115,22 @@ class AddSurgery {
         console.log('🟢 시/수술 횟수 증가 성공');
     }
 
-    async selectTaxCheckBox() {
+    async selectTermOfSurgery() {
+        await expect(this.termOfSurgery).toBeVisible();
+        await this.termOfSurgery.click();
+        await this.page.waitForLoadState("domcontentloaded");
+        await expect(this.editOptionValue).toBeVisible();
+        this.selectedTermOfSurgery = await this.editOptionValue.innerText();
+        await this.editOptionValue.click();
+        console.log('🔍 적정시술주기: ', this.selectedTermOfSurgery);
+        await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    async selectTax() {
         await expect(this.taxCheckBox).toBeVisible();
         await this.taxCheckBox.click();
         await this.page.waitForLoadState("domcontentloaded");
-        console.log('🟢 시/수술 과세 선택 성공');
+        console.log('🟢 과세 선택 성공');
     }
 
     async addPrice() {
@@ -170,68 +173,48 @@ class AddSurgery {
         console.log('✅ 시/수술 저장 성공');
     }
 
-    async closeAddSurgeryModal() {
-        await expect(this.closeAddSurgeryModalButton).toBeVisible();
-        await this.closeAddSurgeryModalButton.click();
-        await this.page.waitForLoadState("domcontentloaded");
-
-        console.log('✅ 시/수술 추가 팝업 닫기 성공');
-    }
-
-    async closeIntegratedChart() {
-        await expect(this.closeIntegratedChartButton).toBeVisible();
-        await this.closeIntegratedChartButton.click();
-        await this.page.waitForLoadState("domcontentloaded");
-
-        console.log('✅ 통합차트 닫기 성공');
-    }
-
-    // 수납코드 설정 ㄱㄱ
-    ////////////////
-
-    async enterPaymentCode() {
-        await expect(this.paymentCodeMenu).toBeVisible();
-        await this.paymentCodeMenu.click();
-        await this.page.waitForLoadState("domcontentloaded");
-
-        console.log('✅ 수납코드 설정 진입 성공');
-    }
-
-    async searchCategory() {
-        await expect(this.inputSearchCategory).toBeVisible();
-        await this.inputSearchCategory.click();
-        await this.page.waitForLoadState("domcontentloaded");
-        await this.inputSearchCategory.type('삭제용', { delay: 50 });
-        await this.page.waitForLoadState("domcontentloaded");
-
-        console.log('✅ 수납코드 설정 카테고리 검색어 입력 성공');
-    }
-
-    async searchSurgeryName() {
-        await expect(this.inputSearchSurgeryName).toBeVisible();
-        await this.inputSearchSurgeryName.click();
-        await this.page.waitForLoadState("domcontentloaded");
-        await this.inputSearchSurgeryName.type('삭제용', { delay: 50 });
-        await this.page.waitForLoadState("domcontentloaded");
-
-        console.log('✅ 수납코드 설정 시/수술명 검색어 입력 성공');
-    }
-
-    async selectSearchButton() {
-        await expect(this.searchButton).toBeVisible();
-        await this.searchButton.click();
-        await this.page.waitForLoadState("domcontentloaded");
-
-        console.log('✅ 수납코드 설정 검색 성공');
-
+    async checkSaveResult() {
         await expect(this.page.getByText(this.categoryNameText)).toBeVisible();
+        console.log('✅ 카테고리 잘 들어가 있어여~ ', this.categoryNameText);
         await expect(this.page.getByText(this.surgeryNameText)).toBeVisible();
+        console.log('✅ 과세 시/수술명 잘 들어가 있어여~ ', this.surgeryNameText);
         await expect(this.page.getByText(this.surgeryNonTaxNameText)).toBeVisible();
+        console.log('✅ 비과세 시/수술명 잘 들어가 있어여~ ', this.surgeryNonTaxNameText);
 
-        console.log('🟢 카테고리, 시/수술명 잘 노출돼요~');
+        await this.verifyVisibleByText(this.selectedTermOfSurgery);
+        // await this.verifyVisibleByText(this.surgeryPriceText);
+        
     }
 
-    // 삭제
+    async verifyVisibleByText(text) {
+        const elements = this.page.getByText(text, { exact: true });
+        const count = await elements.count();
+
+        if (count === 0) {
+            console.log(`🚫 "${text}" 텍스트가 있는 요소를 못 찾았어요`);
+            expect.soft(false).toBe(true); // 강제 실패 
+            return;
+        }
+        
+        for (let i = 0; i < count; i++) {
+            const target = elements.nth(i);
+            const isVisible = await target.isVisible();
+            const content = await target.textContent();
+
+            if (isVisible && content?.trim() === text.trim()) {
+                console.log(`✅ "${text}" 텍스트 보이는 요소 확인 완료`);
+                await expect(target).toBeVisible();
+                return;
+            }
+        }
+
+        console.log(`🚫 "${text}" 텍스트는 있지만, 보이는 요소는 없어요`);
+        expect.soft(false).toBe(true); // 강제 실패
+    }
+
+
+
+     // 삭제
     async deleteNonTax() {
         await expect(this.deleteButton.nth(2)).toBeVisible();
         await this.deleteButton.nth(2).click();
@@ -283,8 +266,8 @@ class AddSurgery {
 
     // 시/수술명 사용
     async usingSurgery() {
-        await expect(this.usingButton).toBeVisible();
-        await this.usingButton.click();
+        await expect(this.usingButton.first()).toBeVisible();
+        await this.usingButton.first().click();
         await this.page.waitForLoadState("domcontentloaded");
 
         console.log('✅ 사용 선택 성공');
@@ -332,6 +315,4 @@ class AddSurgery {
     }
 
 
-
-
-} export { AddSurgery };
+} export { PaymentCode };
