@@ -364,9 +364,11 @@ class Reservation {
         await this.verifyVisibleByName('cell', this.selectedDoctorText);
         await this.verifyVisibleByName('cell', this.selectedCounselorText);
         await this.verifyVisibleByName('cell', this.selectedAssistText);
+        await this.verifyVisibleByName('cell', this.selectedSurgicalCategoryText);
+        await this.verifyVisibleByName('cell', this.selectedSurgeryText);
         
-        await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
-        await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
+        // await expect(this.page.getByRole('cell', { name: this.selectedSurgicalCategoryText })).toBeVisible();
+        // await expect(this.page.getByRole('cell', { name: this.selectedSurgeryText })).toBeVisible();
         await expect(this.page.getByRole('cell', { name: this.enteredMemoText })).toBeVisible();
         await this.verifyVisibleByName('cell', this.selectedWriterText);
         const combinedTime = `${formattedDate} ${this.savedTime}`;
