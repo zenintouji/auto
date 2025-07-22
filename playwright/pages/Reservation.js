@@ -8,7 +8,6 @@ class Reservation {
         // 예약 등록
         this.createReservationButton = page.getByRole('button', { name: '+ 예약등록' });
         this.createReservationTitle = page.getByText('예약 등록');
-
         
         // 첫 번째 옵션
         this.selectOptionValue = page.getByRole('option').nth(0);
@@ -31,6 +30,10 @@ class Reservation {
         this.visitTimeTitle = page.locator('label').filter({ hasText: '방문시간' });
         this.visitTimeType = page.getByRole('combobox', { name: '-' });
         this.selectVisitTimeText = '';
+
+        // 일자
+        this.dayTitle = page.getByText('일자');
+        this.dayInput = page.getByRole('textbox', { name: '날짜선택' });
 
         // 예상소요시간
         this.expectedTimeTitle = page.locator('label').filter({ hasText: '예상 소요시간' });
@@ -57,9 +60,9 @@ class Reservation {
         this.assistType = page.getByRole('combobox', { name: '어시스트를 선택하세요' });
         this.selectedAssistText = '';
 
-        // 작성자
-        this.writerTitle = page.locator('label').filter({ hasText: '작성자' });
-        this.editWriterTitle = page.getByText('작성자').nth(1);
+        // 담당자
+        this.writerTitle = page.locator('label').filter({ hasText: '담당자' });
+        this.editWriterTitle = page.getByText('담당자').nth(1);
         this.writerType = page.getByRole('combobox', { name: '작성자를 선택하세요' });
         this.selectedWriterText = '';
 
@@ -88,6 +91,7 @@ class Reservation {
         // 스낵바
         this.saveSuccessText = page.getByText('예약을 등록했습니다');
         this.editSuccessText = page.getByText('예약 및 예약문자를 변경했습니다');
+        this.editSuccessText2 = page.getByText('예약을 변경했습니다');
         this.cancelSuccessText = page.getByText('예약이 취소되었습니다');
         this.deleteSuccessText = page.getByText('삭제되었습니다');
         
@@ -98,11 +102,13 @@ class Reservation {
         this.reservationEditTitle = page.getByText('예약 수정');
         this.addingSurgeryCategoryButton = page.getByRole('button', { name: '+', exact: true });
         this.editCompleteButton = page.getByRole('button', { name: '수정완료' });
+        this.askForSendingMessage = page.getByText('[즉시 전송 문자]가 있습니다. 전송하시겠습니까?');
+        this.askForSendingReservatedMessage = page.getByText('[즉시 전송 예약문자]가 있습니다.전송하시겠습니까?다른 예약문자 취소는 [문자설정]에서 가능합니다.미리보기');
 
         // 예약 취소
         //////////
 
-        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(2);
+        this.selectChart = page.getByRole('cell').filter({ hasText: /^$/ }).nth(0);
         this.cancelReservationButton = page.getByRole('button', { name: '예약취소' });
         this.cancelMessage = page.getByText('[즉시 전송 예약문자]가 있습니다.전송하시겠습니까?다른 예약문자 취소는 [문자설정]에서 가능합니다.미리보기');
         this.cancelMessageNow = page.getByText('[즉시 전송 문자]가 있습니다. 전송하시겠습니까?');
@@ -156,6 +162,61 @@ class Reservation {
         await this.selectOptionValue.click();
         console.log('🔍 예약부서: ', this.selectedDepartmentText);
         await this.page.waitForLoadState('domcontentloaded');
+    }
+
+    // 일자 변경용
+    // 오늘 날짜 입력
+    async changeDateToToday() {
+        const today = new Date();
+        const formatDate = (date) => { return date.toISOString().split('T')[0].replace(/-/g, '/'); };
+
+        const todayStr = formatDate(today);
+
+        await expect(this.dayTitle).toBeVisible();
+        await expect(this.dayInput).toBeVisible();
+        await this.dayInput.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.dayInput.fill(todayStr);
+        await this.page.waitForTimeout(2000);
+        console.log('🔍 오늘 날짜: ', todayStr);
+    }
+
+    // 어제
+    async changeDateToYesterday() {
+        const today = new Date();
+        const yesterday = new Date();
+
+        yesterday.setDate(today.getDate() - 1);
+        const formatDate = (date) => { return date.toISOString().split('T')[0].replace(/-/g, '/'); };
+
+        const yesterdayStr = formatDate(yesterday);
+
+        await expect(this.dayTitle).toBeVisible();
+        await expect(this.dayInput).toBeVisible();
+        await this.dayInput.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.dayInput.fill(yesterdayStr);
+        await this.page.waitForTimeout(2000);
+        console.log('🔍 어제 날짜: ', yesterdayStr);
+    }
+
+    async changeDatetoTomorrow() {
+        const today = new Date();
+        const tomorrow = new Date();
+
+        tomorrow.setDate(today.getDate() + 1);
+
+        const formatDate = (date) => { return date.toISOString().split('T')[0].replace(/-/g, '/'); };
+
+        const tomorrowStr = formatDate(tomorrow);
+
+        await expect(this.dayTitle).toBeVisible();
+        await expect(this.dayInput).toBeVisible();
+        await this.dayInput.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.dayInput.fill(tomorrowStr);
+        await this.page.waitForTimeout(2000);
+        console.log('🔍 내일 날짜: ', tomorrowStr);
     }
 
     // 일자 확인
@@ -283,6 +344,10 @@ class Reservation {
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.selectOptionValue).toBeVisible();
         this.selectedSurgeryText = await this.selectOptionValue.innerText();
+
+        // if (this.selectedSurgeryText === '+ 시/수술 코드 생성') {
+            
+        // }
         await this.selectOptionValue.click();
         console.log('🔍 시/수술명: ', this.selectedSurgeryText);
         await this.page.waitForLoadState('domcontentloaded');
@@ -608,8 +673,35 @@ class Reservation {
     
 
     async checkEditSuccessText() {
-        await expect(this.editSuccessText).toBeVisible();
-        console.log('✅ 예약 수정 스낵바 확인 성공');
+        await this.page.waitForTimeout(2000);
+        if (await this.editSuccessText2.isVisible()) {
+            await expect(this.editSuccessText2).toBeVisible();
+            console.log('✅ 예약 수정 스낵바 확인 성공');
+        } else {
+            if (await this.askForSendingMessage.isVisible()) {
+                await expect(this.askForSendingMessage).toBeVisible();
+                await expect(this.notSending).toBeVisible();
+                await this.notSending.click();
+                console.log('✅ 미전송 선택 성공');
+                await this.page.waitForTimeout(1000);
+                await expect(this.editSuccessText).toBeVisible();
+                console.log('✅ 예약 수정 스낵바 확인 성공');
+
+            } else if (await this.askForSendingReservatedMessage.isVisible()) {
+                await expect(this.askForSendingReservatedMessage).toBeVisible();
+                await expect(this.notSending).toBeVisible();
+                await this.notSending.click();
+                console.log('✅ 미전송 선택 성공');
+                await this.page.waitForTimeout(1000);
+                await expect(this.editSuccessText).toBeVisible();
+                console.log('✅ 예약 수정 스낵바 확인 성공');
+
+            } else {
+                await expect(this.editSuccessText).toBeVisible();
+                console.log('✅ 예약 수정 스낵바 확인 성공');
+            }
+            
+        }
     }
 
 
@@ -663,6 +755,7 @@ class Reservation {
     async deleteReservation() {
         await expect(this.selectChart).toBeVisible();
         await this.selectChart.click();
+        await this.page.waitForTimeout(1000);
         await this.page.waitForLoadState('domcontentloaded');
         console.log('✅ 차트 선택 성공');
         await expect(this.deleteButton).toBeVisible();
