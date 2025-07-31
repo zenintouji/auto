@@ -7,15 +7,21 @@ export const options = {
 };
 
 const BASE_URL = 'https://api.staging.unocare.co.kr/admin/centrex'; // API 엔드포인트
-const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODMzNjY4MiwianRpIjoiZjBjY2Y1YzEtNjE0MC00Mzg1LWExNDEtNGI0NzczOWNmODZjIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJ0eXBlIjoiYWRtaW4ifSwibmJmIjoxNzQ4MzM2NjgyLCJleHAiOjE3NDgzNDc0ODJ9.iYKTtaHwlTNx8hDl3oKPyYF8PFJuxGm1fSCHhZss1EI'; // JWT 토큰 입력
+const TOKEN = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1MzMzNzk5MSwianRpIjoiYzY5M2U2ZjYtZTYyMS00MzZhLWE2NTctNTZmYzZlMGFkYzU5IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJ0eXBlIjoiYWRtaW4ifSwibmJmIjoxNzUzMzM3OTkxLCJleHAiOjE3NTMzNDg3OTF9.x1efje9yKLyRaVdx5SjNMBUlhiIuicic7uVo3h_a7jg'; // JWT 토큰 입력
 
 export default function () {
-  const iter = __ITER; // 현재 반복 횟수
+  // const iter = __ITER; // 현재 반복 횟수
+  const randomNumber = Math.floor(10000000 + Math.random() * 90000000);
+  const phoneNumber = `070${String(randomNumber).slice(0, 4)}${String(randomNumber).slice(4)}`;
+  const carriers = ['SK', 'LGI', 'KT'];
+  const carrierRandom = carriers[Math.floor(Math.random() * carriers.length)];
 
   const payload = JSON.stringify({
-    accountId: `${iter + 1}`, // 예: 1, 2, 3, ...
-    accountPassword: `${iter + 1}`,
-    carrier: 'SK',
+    // accountId: `${iter + 1}`, // 예: 1, 2, 3, ...
+    // accountPassword: `${iter + 1}`,
+    accountId: phoneNumber,
+    accountPassword: phoneNumber,
+    carrier: carrierRandom,
     clinicId: 1,
   });
 
@@ -34,7 +40,8 @@ export default function () {
     console.error(`❌ error! response: ${res.status} - ${res.body}`);
   }
 
-  console.log(`📨 계정 등록 완료: accountId ${iter + 1}`);
+  // console.log(`📨 계정 등록 완료: accountId ${iter + 1}`);
+  console.log(`📨 계정 등록 완료: accountId ${phoneNumber}`);
 
   // sleep(1); // 요청 사이 간격
 }

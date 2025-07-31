@@ -412,7 +412,8 @@ class Reservation {
         const combinedText = `${formattedDate} ${time}`;
         await expect(this.page.getByRole('cell', { name: combinedText })).toBeVisible();
         console.log('🔍 일시: ', combinedText);
-        await expect(this.page.getByRole('cell', { name: this.selectedReservationText })).toBeVisible(); 
+        // await expect(this.page.getByRole('cell', { name: this.selectedReservationText })).toBeVisible(); 
+        await this.verifyVisibleByName('cell', this.selectedReservationText);
         
         const departmentInfo = this.selectedDepartmentText.split('-');
         const category = departmentInfo[0];

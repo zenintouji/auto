@@ -112,6 +112,7 @@ class WalkInReception {
 
         // 고객명
         this.customerName = page.getByRole('cell', { name: '자동화_신규고객' });
+        this.simpleReceptionName = page.getByRole('cell', { name: '간편접수_확인' });
 
         // 통합차트
         this.integratedChartTitle = page.getByText('통합차트');
@@ -326,6 +327,15 @@ class WalkInReception {
     async enterInIntegratedChart() {
         await expect(this.customerName).toBeVisible();
         await this.customerName.dblclick();
+        await this.page.waitForLoadState('domcontentloaded');
+        await expect(this.integratedChartTitle).toBeVisible();
+        console.log('✅ 통합차트 진입 성공');
+    }
+
+    // 간편접수 
+    async simpleReceptionIntegratedChart() {
+        await expect(this.simpleReceptionName).toBeVisible();
+        await this.simpleReceptionName.dblclick();
         await this.page.waitForLoadState('domcontentloaded');
         await expect(this.integratedChartTitle).toBeVisible();
         console.log('✅ 통합차트 진입 성공');

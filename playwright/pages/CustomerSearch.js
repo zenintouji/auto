@@ -14,6 +14,7 @@ class customerSearch {
 
         this.nameCategory = page.getByRole('cell', { name: '고객명' });
         this.resultSearchName = page.getByRole('cell', { name: '자동화_신규고객' });
+        this.resultSimpleReceptionName = page.getByRole('cell', { name: '간편접수_확인' });
 
         this.chartCategory = page.getByRole('cell', { name: '차트번호' });
         this.resultSearchChart = page.getByRole('cell', { name: '1234568' });
@@ -41,6 +42,22 @@ class customerSearch {
         // await this.page.waitForLoadState('domcontentloaded');
         await expect(this.nameCategory).toBeVisible();
         await expect(this.resultSearchName).toBeVisible();
+        console.log('✅ 고객명 검색 성공');
+    }
+
+    async searchSimpleReceptionName() {
+        await expect(this.searchBox).toBeVisible();
+        await this.searchBox.click();
+        await this.page.waitForLoadState('domcontentloaded');
+        await this.searchBox.fill('간편접수_확인');
+        await expect(this.searchButton).toBeVisible();
+        await this.searchButton.click();
+        // 고객조회 팝업 등장하면서 노출 확인 
+        await this.nameCategory.waitFor();
+        await this.resultSimpleReceptionName.waitFor();
+        // await this.page.waitForLoadState('domcontentloaded');
+        await expect(this.nameCategory).toBeVisible();
+        await expect(this.resultSimpleReceptionName).toBeVisible();
         console.log('✅ 고객명 검색 성공');
     }
 
