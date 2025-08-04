@@ -6,20 +6,18 @@ import { check, sleep } from "k6";
 export const options = {
   vus: 1, // 동시 사용자 수
   //   duration: '30s', // 테스트 시간
-  iterations: 2, // 1000번 요청 하는거
+  iterations: 100, // 1000번 요청 하는거
 };
 
-// const BASE_URL = "https://api.dev.unocare.co.kr/registrations"; // 접수 dev
-const BASE_URL = "https://api.test.unocare.co.kr/registrations"; // 접수 test
+const BASE_URL = "https://api.staging.unocare.co.kr/appointments"; // 접수 test
 
-const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0OTAwMzQxNiwianRpIjoiZjMwNmI1ZmEtOThkMC00OTIwLTllNTctYjg3ODRiMjgwYmQ0IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc0OTAwMzQxNiwiZXhwIjoxNzQ5MDYxMDE2fQ.oGdpcgXx6XoTHsW0gLNFf-BlDcrdvplXdpbV1kaunoE"; // 필요 시 토큰 추가
+const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NDI4ODAxNiwianRpIjoiZTcwOTY3ODAtNmQ3Ny00ZTRiLWJiYzItMGNjYWM5OWQxNDI3IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc1NDI4ODAxNiwiZXhwIjoxNzU0MzQ1NjE2fQ.rm1t54vu6b7TVYp9fEH2FsdImmkBfHauT9v1JDaQul8"; // 필요 시 토큰 추가
 
 export default function () {
 
   const baseHour = 10; // 시작 시간
   const intervalMin = 30; // 30분 간격으로
   const iter = __ITER; // 현재 반복 횟수 (0부터 시작함 ㅇㅇ)
-
 
   const totalMinutes = iter * intervalMin;
   const startHour = baseHour + Math.floor(totalMinutes / 60);
@@ -33,32 +31,35 @@ export default function () {
   const startAt = formatTime(startHour, startMinute);
   const endAt = formatTime(endHour, endMinute); // 30분 후로 설정
 
+  // customerid 증가 ㅇㅇ
+  const baseCustomerId = 870257;
+  const customerId = baseCustomerId + iter;
+
   const payload = JSON.stringify({
     acquisitionChannelId: null,
-    assistId: 3906,
-    // 3906, 3905, 3885, 3884, 3883, 3882, => test
+    // assistId: null,
 
     category: "CONSULTING",
-    counselorId: 3884,
-    // 3890, 3887, 3886, 3885, 3884, 3883, => test
+    // counselorId: null,
 
     createdBy: 1,
-    customerId: 602895, 
-    // 602906, 602903, 602766, 521815, 602740, 602895, => test
+    customerId: customerId, 
 
-    date: "2025-06-04",
-    departmentId: 1782,
-    // 1913, 1914, 1915, 1916, 1924, 1925, 1926, 1781, 1782, => test
+    // date: "2025-08-06",
+    departmentId: 15866,
 
-    doctorId: 3886,
-    // 3889, 3888, 3886, 3885, 3884, 3883, => test
+    // doctorId: null,
+    // sendSMS: 
 
-    endAt: endAt,
-    estimatedServiceMinutes: 30,
-    isNewCustomer: false,
-    memo: `<p>접수 부하 테스트 ${iter + 1}</p>`,
-    startAt: startAt,
-    treatmentItemIds: [],
+    endAt: "2025-08-06 21:30",
+    // endAt,
+    sendSms: [3635, 3636],
+    // estimatedServiceMinutes: 30,
+    // isNewCustomer: false,
+    // memo: `<p>자동전송용 예약 테스트 ${iter + 1}</p>`,
+    startAt: "2025-08-06 21:00",
+    // startAt,
+    // treatmentItemIds: [],
   });
 
 
@@ -77,12 +78,11 @@ export default function () {
   
   if (!success) {
     console.error(`❌ error! response: ${res.status} - ${res.body}`);
+  } else {
+    // console.log(`✅ 접수 ${iter + 1}: ${startAt} ~ ${endAt} (고객ID: ${customerId})`);
+    console.log(`✅ 예약 ${iter + 1}: 고객ID: ${customerId}`);
   }
 
-  console.log(`접수 ${iter + 1}: ${startAt} ~ ${endAt}`);
-//   console.log(`상담 차트 등록 ${iter + 1} 완료`);
+  sleep(0.2); // 딜레이 추가 약간씩
 
 }
-
-
-

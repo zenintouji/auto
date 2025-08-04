@@ -66,7 +66,7 @@ class EmployeeManagement {
         console.log('✅ 직원 신규등록 진입 성공');
     }
 
-    async enterEmail() {
+    async enterEmail() {s
         await expect(this.emailInput).toBeVisible();
         await this.emailInput.click();
         await this.page.waitForLoadState('domcontentloaded');
