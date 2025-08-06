@@ -6,12 +6,12 @@ import { check, sleep } from "k6";
 export const options = {
   vus: 1, // 동시 사용자 수
   //   duration: '30s', // 테스트 시간
-  iterations: 100, // 1000번 요청 하는거
+  iterations: 20, // 1000번 요청 하는거
 };
 
 const BASE_URL = "https://api.staging.unocare.co.kr/appointments"; // 접수 test
 
-const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NDI4ODAxNiwianRpIjoiZTcwOTY3ODAtNmQ3Ny00ZTRiLWJiYzItMGNjYWM5OWQxNDI3IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc1NDI4ODAxNiwiZXhwIjoxNzU0MzQ1NjE2fQ.rm1t54vu6b7TVYp9fEH2FsdImmkBfHauT9v1JDaQul8"; // 필요 시 토큰 추가
+const TOKEN = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc1NDI5OTg0MCwianRpIjoiZWI2ZTczMmItNTA5ZC00OWZlLWJjNGEtNzRhY2JmN2FkNDM1IiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5Ijp7ImlkIjoxLCJlbWFpbCI6ImRldkB0ZXN0LmNvbSIsInR5cGUiOiJ1c2VyIn0sIm5iZiI6MTc1NDI5OTg0MCwiZXhwIjoxNzU0MzU3NDQwfQ.pxQQ7T4sgEhVQECtkhvEp1FYYEPFrTfJ48As9RkSpFA"; // 필요 시 토큰 추가
 
 export default function () {
 
@@ -35,35 +35,49 @@ export default function () {
   const baseCustomerId = 870257;
   const customerId = baseCustomerId + iter;
 
+  // 예약 시
+  // const payload = JSON.stringify({
+  //   acquisitionChannelId: null,
+  //   assistId: null,
+
+  //   category: "CONSULTING",
+  //   counselorId: null,
+
+  //   createdBy: 1,
+  //   customerId: customerId, 
+
+  //   date: "2025-08-06",
+  //   departmentId: 15874,
+
+  //   doctorId: null,
+
+  //   endAt: endAt,
+  //   sendSms: [],
+  //   // 3651, 3635, 3636
+  //   estimatedServiceMinutes: 30,
+  //   isNewCustomer: false,
+  //   memo: `<p>자동전송용 예약 테스트 ${iter + 1}</p>`,
+  //   startAt: startAt,
+  //   treatmentItemIds: [],
+  // });
+
+  // 바로 예약 시
   const payload = JSON.stringify({
     acquisitionChannelId: null,
-    // assistId: null,
 
     category: "CONSULTING",
-    // counselorId: null,
 
     createdBy: 1,
     customerId: customerId, 
 
-    // date: "2025-08-06",
-    departmentId: 15866,
+    departmentId: 15874,
 
-    // doctorId: null,
-    // sendSMS: 
-
-    endAt: "2025-08-06 21:30",
+    endAt: "2025-08-10 21:30",
     // endAt,
-    sendSms: [3635, 3636],
-    // estimatedServiceMinutes: 30,
-    // isNewCustomer: false,
-    // memo: `<p>자동전송용 예약 테스트 ${iter + 1}</p>`,
-    startAt: "2025-08-06 21:00",
-    // startAt,
-    // treatmentItemIds: [],
+    sendSms: [3651],
+    // 3635, 3636
+    startAt: "2025-08-10 21:00",
   });
-
-
-//   });
 
   const headers = {
     "Content-Type": "application/json",
@@ -79,7 +93,10 @@ export default function () {
   if (!success) {
     console.error(`❌ error! response: ${res.status} - ${res.body}`);
   } else {
-    // console.log(`✅ 접수 ${iter + 1}: ${startAt} ~ ${endAt} (고객ID: ${customerId})`);
+    // 일반 예약 시
+    // console.log(`✅ 접수 ${iter + 1}: ${startAt} ~ ${endAt} (고객ID: ${customerId})`); 
+
+    // 바로 예약 시
     console.log(`✅ 예약 ${iter + 1}: 고객ID: ${customerId}`);
   }
 
